@@ -1,0 +1,4632 @@
+openapi: 3.0.1
+info:
+  title: Pier API
+  version: ''
+paths:
+  /applications:
+    post:
+      operationId: applications_create
+      tags:
+        - Applications
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+              examples:
+                Example1:
+                  value:
+                    id: app_f0467657bba948e6a87292e182132848
+                    borrower_id: bor_a1d0c30d77104f35b4c842b99132624e
+                    credit_type: consumer_installment_loan
+                    rejection_reasons: []
+                    status: pending
+                    lender_of_record: pier
+                    created_on: '2022-12-31T01:36:52.606Z'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Create an application
+      security: &ref_0
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                borrower_id:
+                  type: string
+                  description: >-
+                    The `borrower_id` of the borrower the application is for
+                    (1-256 chars)
+                  example: bor_a1d0c30d77104f35b4c842b99132624e
+                credit_type:
+                  $ref: '#/components/schemas/CreditType'
+                  description: The type of credit product.
+                requested_amount:
+                  type: integer
+                  nullable: true
+                  description: >-
+                    If the borrower requests an amount in their application, the
+                    requested loan or credit line amount (in cents).
+                third_party_disbursement_destination:
+                  type: string
+                  nullable: true
+                  description: >-
+                    For credit applications of type `consumer_bnpl`, the third
+                    party (i.e. merchant) receiving the funds is
+              required:
+                - borrower_id
+                - credit_type
+            examples:
+              Example1:
+                value:
+                  borrower_id: bor_a1d0c30d77104f35b4c842b99132624e
+                  credit_type: consumer_installment_loan
+                  requested_amount: 200000
+    get:
+      description: List all applications associated with your account
+      operationId: applications_getAll
+      tags:
+        - Applications
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Application'
+              examples:
+                Example1:
+                  value:
+                    - id: app_f0467657bba948e6a87292e182132848
+                      borrower_id: bor_d965bea9f47a4b108562642dbb1dae9f
+                      credit_type: consumer_revolving_line_of_credit
+                      rejection_reasons: []
+                      status: approved
+                      offers:
+                        - type: revolving_line_of_credit_offer
+                          amount: 1000000
+                          apr: 0
+                          annual_fee: 0
+                          billing_cycle: 30
+                          finance_charge: 0
+                          grace_period:
+                            term: 21
+                            interest_rate: 0
+                          interest_rate: 0
+                          late_payment_fee: 0
+                          origination_fee: 0
+                          minimum_payment:
+                            type: interest_plus_percentage_of_principal
+                            value: 500
+                      lender_of_record: pier
+                      created_on: '2022-12-31T01:36:52.606Z'
+                      decisioned_on: '2023-01-17T05:31:52.955Z'
+                    - id: app_f0467657bba948e6a87292e182132848
+                      borrower_id: bor_a1d0c30d77104f35b4c842b99132624e
+                      credit_type: consumer_installment_loan
+                      rejection_reasons: []
+                      status: pending
+                      lender_of_record: pier
+                      created_on: '2022-12-31T01:36:52.606Z'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: List all applications
+      security: *ref_0
+  /applications/{application_id}/approve:
+    post:
+      operationId: applications_approve
+      tags:
+        - Applications
+      parameters:
+        - name: application_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/ApplicationId'
+          examples:
+            Example1:
+              value: app_f0467657bba948e6a87292e182132848
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+              examples:
+                Example1:
+                  value:
+                    id: app_f0467657bba948e6a87292e182132848
+                    borrower_id: bor_d965bea9f47a4b108562642dbb1dae9f
+                    credit_type: consumer_revolving_line_of_credit
+                    rejection_reasons: []
+                    status: approved
+                    offers:
+                      - type: revolving_line_of_credit_offer
+                        amount: 1000000
+                        apr: 0
+                        annual_fee: 0
+                        billing_cycle: 30
+                        finance_charge: 0
+                        grace_period:
+                          term: 21
+                          interest_rate: 0
+                        interest_rate: 0
+                        late_payment_fee: 0
+                        origination_fee: 0
+                        minimum_payment:
+                          type: interest_plus_percentage_of_principal
+                          value: 500
+                    lender_of_record: pier
+                    created_on: '2022-12-31T01:36:52.606Z'
+                    decisioned_on: '2023-01-17T05:31:52.955Z'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Approve an application
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Offer'
+            examples:
+              Example1:
+                value:
+                  - type: loan_offer
+                    amount: 1000000
+                    grace_period:
+                      term: 0
+                      interest_rate: 0
+                    interest_rate: 0
+                    origination_fee: 0
+                    payment_period: monthly
+                    late_payment_fee: 0
+                    first_payment_date: '2022-12-31'
+                    term:
+                      term_type: months
+                      term: 36
+  /applications/{application_id}/reject:
+    post:
+      description: >-
+        Updates the status of a credit application to `rejected` and returns a
+        user readable rejection reason, to be used in the adverse action notice
+      operationId: applications_reject
+      tags:
+        - Applications
+      parameters:
+        - name: application_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/ApplicationId'
+          examples:
+            Example1:
+              value: app_f0467657bba948e6a87292e182132848
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+              examples:
+                Example1:
+                  value:
+                    rejection_reasons:
+                      - bank_balance_too_low
+                    id: app_f0467657bba948e6a87292e182132848
+                    borrower_id: bor_1677bbbaf21a4954bb114bd9c4348d8a
+                    credit_type: consumer_installment_loan
+                    status: rejected
+                    lender_of_record: pier
+                    created_on: '2022-12-31T02:20:35.934Z'
+                    decisioned_on: '2022-12-31T02:21:01.842Z'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Reject an application
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                rejection_reasons:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/RejectionReason'
+              required:
+                - rejection_reasons
+            examples:
+              Example1:
+                value:
+                  rejection_reasons:
+                    - bank_balance_too_low
+  /applications/{application_id}:
+    get:
+      description: Get an application by its id
+      operationId: applications_get
+      tags:
+        - Applications
+      parameters:
+        - name: application_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/ApplicationId'
+          examples:
+            Example1:
+              value: app_f0467657bba948e6a87292e182132848
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Application'
+              examples:
+                Example1:
+                  value:
+                    id: app_f0467657bba948e6a87292e182132848
+                    borrower_id: bor_d965bea9f47a4b108562642dbb1dae9f
+                    credit_type: consumer_revolving_line_of_credit
+                    rejection_reasons: []
+                    status: approved
+                    offers:
+                      - type: revolving_line_of_credit_offer
+                        amount: 1000000
+                        apr: 0
+                        annual_fee: 0
+                        billing_cycle: 30
+                        finance_charge: 0
+                        grace_period:
+                          term: 21
+                          interest_rate: 0
+                        interest_rate: 0
+                        late_payment_fee: 0
+                        origination_fee: 0
+                        minimum_payment:
+                          type: interest_plus_percentage_of_principal
+                          value: 500
+                    lender_of_record: pier
+                    created_on: '2022-12-31T01:36:52.606Z'
+                    decisioned_on: '2023-01-17T05:31:52.955Z'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get an application by ID
+      security: *ref_0
+  /token:
+    post:
+      description: >-
+        Get a JWT token for use with the Pier API by passing in a valid
+        `client_id`/`secret` in the body
+      operationId: auth_getToken
+      tags:
+        - Auth
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+              examples:
+                Example1:
+                  value:
+                    token: >-
+                      eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get a JWT token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthRequest'
+            examples:
+              Example1:
+                value:
+                  client_id: '1234567890'
+                  secret: '1234567890'
+  /borrowers/business:
+    post:
+      description: Creates a business borrower. Business borrowers must have a unique EIN.
+      operationId: borrowers_createBusinessBorrower
+      tags:
+        - Borrowers
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessBorrower'
+              examples:
+                Example1:
+                  value:
+                    address:
+                      line_1: 15 Market St
+                      line_2: null
+                      city: San Francisco
+                      state: NJ
+                      zip: '94133'
+                    business_contact:
+                      first_name: alex
+                      last_name: montana
+                      phone: '4155555555'
+                      email: alex@acme.co
+                      title: COO
+                    beneficial_owners:
+                      - address:
+                          line_1: 15 Market St
+                          line_2: null
+                          city: San Francisco
+                          state: CA
+                          zip: '91133'
+                        date_of_birth: '1991-12-18'
+                        email: jdoe@acme.com
+                        first_name: Jane
+                        last_name: Dough
+                        percent_ownership: 2500
+                        phone: '4155555555'
+                        ssn: '123456789'
+                        id: 63ae91f8eae458cb0d79f77e
+                    id: bor_18e5a3726b3943cda2635f40e1041ba4
+                    business_name: Apple Landscaping
+                    business_type: corporation
+                    dba_name: Apple Landscaping
+                    ein: '130256721'
+                    incorporation_date: '2000-12-12'
+                    kyb_completion_date: '2022-11-15'
+                    phone: '4152556465'
+                    state_of_incorporation: DE
+                    created_on: '2022-12-30T07:23:36.665Z'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Create a business borrower
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BusinessBorrowerRequest'
+            examples:
+              Example1:
+                value:
+                  address:
+                    line_1: 15 Market St
+                    line_2: null
+                    city: San Francisco
+                    state: NJ
+                    zip: '94133'
+                  business_contact:
+                    first_name: alex
+                    last_name: montana
+                    phone: '4155555555'
+                    email: alex@acme.co
+                    title: COO
+                  beneficial_owners:
+                    - address:
+                        line_1: 15 Market St
+                        line_2: null
+                        city: San Francisco
+                        state: CA
+                        zip: '91133'
+                      date_of_birth: '1991-12-18'
+                      email: jdoe@acme.com
+                      first_name: Jane
+                      last_name: Dough
+                      percent_ownership: 2500
+                      phone: '4155555555'
+                      ssn: '123456789'
+                      id: 63ae91f8eae458cb0d79f77e
+                  business_name: Apple Landscaping
+                  business_type: corporation
+                  dba_name: Apple Landscaping
+                  ein: '130256721'
+                  incorporation_date: '2000-12-12'
+                  kyb_completion_date: '2022-11-15'
+                  phone: '4152556465'
+                  state_of_incorporation: DE
+  /borrowers/business/{borrower_id}:
+    patch:
+      description: >-
+        Updates an existing borrower. The full borrower object less a few
+        unchangeable fields needs to be
+
+        supplied in the update request.
+      operationId: borrowers_updateBusinessBorrower
+      tags:
+        - Borrowers
+      parameters:
+        - name: borrower_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/BusinessBorrowerId'
+          examples:
+            Example1:
+              value: bor_18e5a3726b3943cda2635f40e1041ba4
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BusinessBorrower'
+              examples:
+                Example1:
+                  value:
+                    address:
+                      line_1: 15 Market St
+                      line_2: null
+                      city: San Francisco
+                      state: NJ
+                      zip: '94133'
+                    business_contact:
+                      first_name: alex
+                      last_name: montana
+                      phone: '4155555555'
+                      email: alex@acme.co
+                      title: COO
+                    beneficial_owners:
+                      - address:
+                          line_1: 15 Market St
+                          line_2: null
+                          city: San Francisco
+                          state: CA
+                          zip: '91133'
+                        date_of_birth: '1991-12-18'
+                        email: jdoe@acme.com
+                        first_name: Jane
+                        last_name: Dough
+                        percent_ownership: 2500
+                        phone: '4155555555'
+                        ssn: '123456789'
+                        id: 63ae91f8eae458cb0d79f77e
+                    id: bor_18e5a3726b3943cda2635f40e1041ba4
+                    business_name: Apple Landscaping
+                    business_type: corporation
+                    dba_name: Apple Landscaping
+                    ein: '130256721'
+                    incorporation_date: '2000-12-12'
+                    kyb_completion_date: '2022-11-15'
+                    phone: '4152556465'
+                    state_of_incorporation: DE
+                    created_on: '2022-12-30T07:23:36.665Z'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Update a business borrower
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBusinessBorrowerRequest'
+            examples:
+              Example1:
+                value:
+                  address:
+                    line_1: 15 Market St
+                    line_2: null
+                    city: San Francisco
+                    state: NJ
+                    zip: '94133'
+                  business_contact:
+                    first_name: alex
+                    last_name: montana
+                    phone: '4155555555'
+                    email: alex@acme.co
+                    title: COO
+                  beneficial_owners:
+                    - address:
+                        line_1: 15 Market St
+                        line_2: null
+                        city: San Francisco
+                        state: CA
+                        zip: '91133'
+                      date_of_birth: '1991-12-18'
+                      email: jdoe@acme.com
+                      first_name: Jane
+                      last_name: Dough
+                      percent_ownership: 2500
+                      phone: '4155555555'
+                      ssn: '123456789'
+                      id: 63ae91f8eae458cb0d79f77e
+                  business_name: Apple Landscaping
+                  business_type: corporation
+                  dba_name: Apple Landscaping
+                  incorporation_date: '2000-12-12'
+                  kyb_completion_date: '2022-11-15'
+                  phone: '4152556465'
+                  state_of_incorporation: DE
+  /borrowers/consumer:
+    post:
+      description: |-
+        Create a consumer borrower. The created consumer resource is returned
+        in the response.
+      operationId: borrowers_createConsumerBorrower
+      tags:
+        - Borrowers
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsumerBorrowerResponse'
+              examples:
+                Example1:
+                  value:
+                    address:
+                      line_1: 15 Main Street
+                      line_2: null
+                      city: Austin
+                      state: TX
+                      zip: '73301'
+                    id: bor_a1d0c30d77104f35b4c842b99132624e
+                    date_of_birth: '1991-12-18'
+                    email: jdough@acme.co
+                    first_name: Jane
+                    last_name: Dough
+                    kyc_completion_date: '2022-11-15'
+                    created_on: '2022-12-31T00:58:47.828Z'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Create a consumer borrower
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ConsumerBorrowerRequest'
+            examples:
+              Example1:
+                value:
+                  address:
+                    line_1: 15 Main Street
+                    line_2: Unit 204
+                    city: Austin
+                    state: TX
+                    zip: '73301'
+                  date_of_birth: '1991-12-18'
+                  email: jdough@acme.co
+                  first_name: Jane
+                  last_name: Dough
+                  ssn: '999888777'
+                  kyc_completion_date: '2022-11-15'
+                  kyc_status: approved
+  /borrowers/consumer/{borrower_id}:
+    patch:
+      description: >-
+        Updates an existing borrower. The full borrower object less a few
+        unchangeable fields needs to be
+
+        supplied in the update request.
+      operationId: borrowers_updateConsumerBorrower
+      tags:
+        - Borrowers
+      parameters:
+        - name: borrower_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/ConsumerBorrowerId'
+          examples:
+            Example1:
+              value: bor_a1d0c30d77104f35b4c842b99132624e
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsumerBorrowerResponse'
+              examples:
+                Example1:
+                  value:
+                    address:
+                      line_1: 15 Main Street
+                      line_2: null
+                      city: Austin
+                      state: TX
+                      zip: '73301'
+                    id: bor_a1d0c30d77104f35b4c842b99132624e
+                    date_of_birth: '1991-12-18'
+                    email: jdough@acme.co
+                    first_name: Jane
+                    last_name: Dough
+                    kyc_completion_date: '2022-11-15'
+                    created_on: '2022-12-31T00:58:47.828Z'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Update a consumer borrower
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateConsumerBorrowerRequest'
+            examples:
+              Example1:
+                value:
+                  address:
+                    line_1: 15 Main Street
+                    line_2: Unit 204
+                    city: Austin
+                    state: TX
+                    zip: '73301'
+                  date_of_birth: '1991-12-18'
+                  email: jdough@acme.co
+                  kyc_completion_date: '2022-11-15'
+                  kyc_status: approved
+  /borrowers/{borrower_id}:
+    get:
+      description: Retrieve one borrower by id
+      operationId: borrowers_getBorrower
+      tags:
+        - Borrowers
+      parameters:
+        - name: borrower_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/ConsumerBorrowerId'
+          examples:
+            Example1:
+              value: bor_a1d0c30d77104f35b4c842b99132624e
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsumerBorrowerResponse'
+              examples:
+                Example1:
+                  value:
+                    address:
+                      line_1: 15 Main Street
+                      line_2: null
+                      city: Austin
+                      state: TX
+                      zip: '73301'
+                    id: bor_a1d0c30d77104f35b4c842b99132624e
+                    date_of_birth: '1991-12-18'
+                    email: jdough@acme.co
+                    first_name: Jane
+                    last_name: Dough
+                    kyc_completion_date: '2022-11-15'
+                    created_on: '2022-12-31T00:58:47.828Z'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Retrieve a borrower by id
+      security: *ref_0
+  /borrowers:
+    get:
+      description: Retrieve all borrowers associated with your account
+      operationId: borrowers_listAllBorrowers
+      tags:
+        - Borrowers
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Borrower'
+              examples:
+                Example1:
+                  value:
+                    - type: business
+                      address:
+                        line_1: 15 Market St
+                        line_2: null
+                        city: San Francisco
+                        state: NJ
+                        zip: '94133'
+                      business_contact:
+                        first_name: alex
+                        last_name: montana
+                        phone: '4155555555'
+                        email: alex@acme.co
+                        title: COO
+                      beneficial_owners:
+                        - address:
+                            line_1: 15 Market St
+                            line_2: null
+                            city: San Francisco
+                            state: CA
+                            zip: '91133'
+                          date_of_birth: '1991-12-18'
+                          email: jdoe@acme.com
+                          first_name: Jane
+                          last_name: Dough
+                          percent_ownership: 2500
+                          phone: '4155555555'
+                          ssn: '123456789'
+                          id: 63ae91f8eae458cb0d79f77e
+                      id: bor_18e5a3726b3943cda2635f40e1041ba4
+                      business_name: Apple Landscaping
+                      business_type: corporation
+                      dba_name: Apple Landscaping
+                      ein: '130256721'
+                      incorporation_date: '2000-12-12'
+                      kyb_completion_date: '2022-11-15'
+                      phone: '4152556465'
+                      state_of_incorporation: DE
+                      created_on: '2022-12-30T07:23:36.665Z'
+                    - type: consumer
+                      address:
+                        line_1: 15 Main Street
+                        line_2: Unit 204
+                        city: Austin
+                        state: TX
+                        zip: '73301'
+                      date_of_birth: '1991-12-18'
+                      email: jdough@acme.co
+                      first_name: Jane
+                      last_name: Dough
+                      ssn: '999888777'
+                      kyc_completion_date: '2022-11-15'
+                      id: bor_a1d0c30d77104f35b4c842b99132624e
+                      created_on: '2022-12-30T07:23:36.665Z'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: List all borrowers
+      security: *ref_0
+  /configuration/webhook:
+    post:
+      description: Set a url to receive webhook events from Pier.
+      operationId: configuration_create_webhook
+      tags:
+        - Configuration
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+              examples:
+                Example1:
+                  value: Ok.
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Set webhook URL
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                url:
+                  type: string
+                  description: The `url` to send webhooks to
+                  example: https://example.com/webhook
+              required:
+                - url
+            examples:
+              Example1:
+                value:
+                  url: https://example.com/webhook
+    delete:
+      description: Delete the url that was set to receive webhook events from Pier.
+      operationId: configuration_delete_webhook
+      tags:
+        - Configuration
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+              examples:
+                Example1:
+                  value: Ok.
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Remove a webhook
+      security: *ref_0
+  /configuration/webhook-verification:
+    get:
+      description: The Pier public key to use to verify webhook signatures.
+      operationId: configuration_webhook_verification
+      tags:
+        - Configuration
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VerificationResponse'
+              examples:
+                Example1:
+                  value:
+                    public_key: |-
+                      -----BEGIN PUBLIC KEY-----
+                      MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ
+                      jkdfhdfjskfhsd==
+                      -----END PUBLIC KEY-----
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Verify a webhook with Pier public key
+      security: *ref_0
+  /configuration/lending_details:
+    post:
+      description: Only valid in Pilot Mode
+      operationId: configuration_set_lending_details
+      tags:
+        - Configuration
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LendingDetails'
+              examples:
+                Example1:
+                  value:
+                    address:
+                      line_1: 123 Main St
+                      line_2: Suite 100
+                      city: San Francisco
+                      state: CA
+                      zip: '94105'
+                    cs_phone: 415-555-5555
+                    cs_email: support@example.com
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Set lending details
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LendingDetails'
+            examples:
+              Example1:
+                value:
+                  address:
+                    line_1: 123 Main St
+                    line_2: Suite 100
+                    city: San Francisco
+                    state: CA
+                    zip: '94105'
+                  cs_phone: 415-555-5555
+                  cs_email: support@example.com
+    delete:
+      description: Only valid when lending through Pier.
+      operationId: configuration_delete_lending_details
+      tags:
+        - Configuration
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+              examples:
+                Example1:
+                  value: Ok.
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Remove lending details
+      security: *ref_0
+  /coverage/commercial:
+    get:
+      description: Retrieve state-by-state commercial coverage
+      operationId: coverage_retrieveCommercialCoverage
+      tags:
+        - Coverage
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/CommercialCoverage'
+              examples:
+                Example1:
+                  value:
+                    AL:
+                      limit_1:
+                        amount:
+                          min: 500000
+                          max: 25000000
+                      max_apr: 9999
+                      business_types:
+                        - corporation
+                        - partnership
+                        - llc
+                        - sole_proprietorship
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Retrieve commercial lending coverage
+      security: *ref_0
+  /coverage/consumer:
+    get:
+      description: Retrieve state-by-state consumer coverage list
+      operationId: coverage_retrieveConsumerCoverage
+      tags:
+        - Coverage
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/ConsumerCoverage'
+              examples:
+                Example1:
+                  value:
+                    AL:
+                      limit_1:
+                        amount:
+                          min: 150000
+                          max: 5000000
+                      max_apr: 0
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Retrieve consumer lending coverage
+      security: *ref_0
+  /rejection_reasons:
+    get:
+      description: >-
+        Retrieve a list of valid reasons to reject an applicant, along with
+        descriptions for each reason
+      operationId: coverage_retrieveRejectionReasons
+      tags:
+        - Coverage
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RetrieveRejectionReasonsResponse'
+              examples:
+                Example1:
+                  value:
+                    income_too_low: |
+                      Income does not meet requirement
+                    bank_balance_too_low: |
+                      Bank account balance is too low
+                    income_unpredictable: |
+                      Unable to predict regular pattern of income deposits
+                    user_account_duplicate: >
+                      Duplicate account (previously applied for a loan with a
+                      different email address)
+                    sdb_check_failed: |
+                      State database lending restriction
+                    bank_account_linking_error: |
+                      Unable to link to a supported banking institution
+                    mla_failed: >
+                      Under the Military Lending Act, loans to military
+                      personnel or their spouses and dependents cannot be made
+                      if the interest and expenses associated with the loan
+                      exceed an annual percentage rate (APR) of 36%. Due to
+                      these limits on military-related lending, we can't lend to
+                      members of the military or their spouses and dependents.
+                      Please feel free to contact us with any questions you may
+                      have about this notice!
+                    iddoc_failed: |
+                      Unable to verify identification documents
+                    no_checking_or_savings_data: >
+                      No data from supported financial institution. Unsupported
+                      financial institution is linked
+                    insufficient_bank_history: |
+                      Unable to pull enough bank history
+                    loan_location_no_license: >
+                      Unable to verify that your permanent residence is in a
+                      state
+                    address_invalid: |
+                      Unable to verify mailing address
+                    income_verification_failed: |
+                      Unable to verify qualified income over a sustained period
+                    stacking_behavior: >
+                      Recent deposits and withdrawals detected from other
+                      lenders
+                    ssn_verification_failed: |
+                      Unable to verify SSN number
+                    too_many_nsfs: >
+                      Multiple Returned checks or Insufficient Fund Fees
+                      detected
+                    fraud_risk_too_high: |
+                      Bank account has been flagged as potential fraud risk
+                    has_bankruptcy_history: |
+                      History of bankruptcy
+                    unable_to_verify_credit_information: |
+                      Unable to verify credit information
+                    credit_file_frozen: |
+                      Credit file is currently frozen
+                    processor_suspended: |
+                      Payment processor is unable to authenticate user
+                    cash_flow_verification_failed: >
+                      Cash flow analysis - income funds are quickly depleted
+                      from bank account after income deposit
+                    credit_score_too_low: |
+                      Your credit score does not meet our requirement
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Retrieve rejection reasons
+      security: *ref_0
+  /facilities:
+    post:
+      description: >-
+        A facility can be created for a given loan agreement with a status of
+        `signed`
+      operationId: facilities_create
+      tags:
+        - Facilities
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Facility'
+              examples:
+                Example1:
+                  value:
+                    terms:
+                      type: loan_offer
+                      amount: 1000000
+                      grace_period:
+                        term: 0
+                        interest_rate: 0
+                      interest_rate: 0
+                      origination_fee: 0
+                      payment_period: monthly
+                      late_payment_fee: 0
+                      first_payment_date: '2022-12-31'
+                      term:
+                        term_type: months
+                        term: 36
+                    id: fac_7264c6575a894548a386939434b0adf3
+                    application_id: app_ad1564ffb1d745f9ad482bb5182708e2
+                    borrower_id: bor_d965bea9f47a4b108562642dbb1dae9f
+                    loan_agreement_id: doc_234259b117854d0194bc5864a6c45b42
+                    credit_type: consumer_installment_loan
+                    status: active
+                    created_on: '2023-05-12T19:46:09.293Z'
+                    account_number: '401542198'
+                    balance: 5000000
+                    payoff_balance: 5000000
+                    origination_date: '2023-05-12'
+                    disbursement_date: '2023-05-12'
+                    remaining_term: 48
+                    payments_due: []
+                    amortization_schedule:
+                      - payment_date: '2023-11-02'
+                        interest_payment_amount: 0
+                        principal_payment_amount: 8333
+                        other_payment_amount: 0
+                        total_payment_amount: 8333
+                        balance_amount: 91667
+                        item_index: 1
+                      - payment_date: '2023-12-02'
+                        interest_payment_amount: 0
+                        principal_payment_amount: 8333
+                        other_payment_amount: 0
+                        total_payment_amount: 8333
+                        balance_amount: 83334
+                        item_index: 2
+                    repayment_bank_details:
+                      bank_account_number: '98989898'
+                      bank_routing_number: '021000021'
+                      type: checking
+                    transactions: []
+                    statements: []
+                    next_payment_amount: 124425
+                    next_payment_due_date: '2023-06-12'
+                    current_payment_due_date: '2023-06-12'
+                    last_payment_date: null
+                    principal_paid_thru: '2023-05-11'
+                    next_billing_date: '2023-05-28'
+                    interest_accrued_thru: '2023-05-11'
+                    next_accrual_cutoff_date: '2023-06-11'
+                    scheduled_payoff_date: '2027-05-12'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Create a facility
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                loan_agreement_id:
+                  $ref: '#/components/schemas/LoanAgreementId'
+                  description: >-
+                    The `loan_agreement_id` of the loan agreement to create a
+                    facility for
+              required:
+                - loan_agreement_id
+            examples:
+              Example1:
+                value:
+                  loan_agreement_id: dsb_18e5a3726b3943cda2635f40e1041ba4
+    get:
+      description: List all facilities on your account
+      operationId: facilities_listAll
+      tags:
+        - Facilities
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Facility'
+              examples:
+                Example1:
+                  value:
+                    - terms:
+                        type: loan_offer
+                        amount: 1000000
+                        grace_period:
+                          term: 0
+                          interest_rate: 0
+                        interest_rate: 0
+                        origination_fee: 0
+                        payment_period: monthly
+                        late_payment_fee: 0
+                        first_payment_date: '2022-12-31'
+                        term:
+                          term_type: months
+                          term: 36
+                      id: fac_7264c6575a894548a386939434b0adf3
+                      application_id: app_ad1564ffb1d745f9ad482bb5182708e2
+                      borrower_id: bor_d965bea9f47a4b108562642dbb1dae9f
+                      loan_agreement_id: doc_234259b117854d0194bc5864a6c45b42
+                      credit_type: consumer_installment_loan
+                      status: active
+                      created_on: '2023-05-12T19:46:09.293Z'
+                      account_number: '401542198'
+                      balance: 5000000
+                      payoff_balance: 5000000
+                      origination_date: '2023-05-12'
+                      disbursement_date: '2023-05-12'
+                      remaining_term: 48
+                      payments_due: []
+                      amortization_schedule:
+                        - payment_date: '2023-11-02'
+                          interest_payment_amount: 0
+                          principal_payment_amount: 8333
+                          other_payment_amount: 0
+                          total_payment_amount: 8333
+                          balance_amount: 91667
+                          item_index: 1
+                        - payment_date: '2023-12-02'
+                          interest_payment_amount: 0
+                          principal_payment_amount: 8333
+                          other_payment_amount: 0
+                          total_payment_amount: 8333
+                          balance_amount: 83334
+                          item_index: 2
+                      repayment_bank_details:
+                        bank_account_number: '98989898'
+                        bank_routing_number: '021000021'
+                        type: checking
+                      transactions: []
+                      statements: []
+                      next_payment_amount: 124425
+                      next_payment_due_date: '2023-06-12'
+                      current_payment_due_date: '2023-06-12'
+                      last_payment_date: null
+                      principal_paid_thru: '2023-05-11'
+                      next_billing_date: '2023-05-28'
+                      interest_accrued_thru: '2023-05-11'
+                      next_accrual_cutoff_date: '2023-06-11'
+                      scheduled_payoff_date: '2027-05-12'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: List all facilities
+      security: *ref_0
+  /facilities/{facility_id}/disbursements:
+    post:
+      description: Create a disbursement for a facility
+      operationId: facilities_disburse
+      tags:
+        - Facilities
+      parameters:
+        - name: facility_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/FacilityId'
+          examples:
+            Example1:
+              value: fac_234259b117854d0194bc5864a6c45b42
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Disbursement'
+              examples:
+                Example1:
+                  value:
+                    id: dsb_234259b117854d0194bc5864a6c45b42
+                    facility_id: fac_234259b117854d0194bc5864a6c45b42
+                    amount: 100000
+                    status: pending
+                    failure_reason: null
+                    date: '2023-02-27'
+                    created_on: '2023-02-27T00:00:00Z'
+                    transfer_type: standard
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Create a disbursement for a facility
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DisbursementRequest'
+            examples:
+              Example1:
+                value:
+                  amount: 100000
+                  disbursement_bank_account:
+                    bank_account_number: '98989898'
+                    bank_routing_number: '021000021'
+                    type: checking
+                  transfer_type: standard
+    get:
+      description: List disbursements for a facility
+      operationId: facilities_listDisbursementsForFacility
+      tags:
+        - Facilities
+      parameters:
+        - name: facility_id
+          in: path
+          description: The facility_id of the facility you want to list disbursements for
+          required: true
+          schema:
+            $ref: '#/components/schemas/FacilityId'
+          examples:
+            Example1:
+              value: fac_18e5a3726b3943cda2635f40e1041ba4
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Disbursement'
+              examples:
+                Example1:
+                  value:
+                    - id: dsb_234259b117854d0194bc5864a6c45b42
+                      facility_id: fac_234259b117854d0194bc5864a6c45b42
+                      amount: 100000
+                      status: pending
+                      failure_reason: null
+                      date: '2023-02-27'
+                      created_on: '2023-02-27T00:00:00Z'
+                      transfer_type: standard
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: List disbursements for a facility
+      security: *ref_0
+  /facilities/{facility_id}/close:
+    post:
+      description: Closes an active facility by setting its status to `closed`
+      operationId: facilities_close
+      tags:
+        - Facilities
+      parameters:
+        - name: facility_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/FacilityId'
+          examples:
+            Example1:
+              value: fac_18e5a3726b3943cda2635f40e1041ba4
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Facility'
+              examples:
+                Example1:
+                  value:
+                    terms:
+                      type: loan_offer
+                      amount: 1000000
+                      grace_period:
+                        term: 0
+                        interest_rate: 0
+                      interest_rate: 0
+                      origination_fee: 0
+                      payment_period: monthly
+                      late_payment_fee: 0
+                      first_payment_date: '2022-12-31'
+                      term:
+                        term_type: months
+                        term: 36
+                    id: fac_7264c6575a894548a386939434b0adf3
+                    application_id: app_ad1564ffb1d745f9ad482bb5182708e2
+                    borrower_id: bor_d965bea9f47a4b108562642dbb1dae9f
+                    loan_agreement_id: doc_234259b117854d0194bc5864a6c45b42
+                    credit_type: consumer_installment_loan
+                    created_on: '2023-01-17T04:59:21.773Z'
+                    status: closed
+                    account_number: '401542198'
+                    balance: 5000000
+                    payoff_balance: 5000000
+                    origination_date: '2023-05-12'
+                    disbursement_date: '2023-05-12'
+                    remaining_term: 48
+                    payments_due: []
+                    amortization_schedule: []
+                    repayment_bank_details:
+                      bank_account_number: '98989898'
+                      bank_routing_number: '021000021'
+                      type: checking
+                    transactions: []
+                    statements: []
+                    next_payment_amount: 124425
+                    next_payment_due_date: '2023-06-12'
+                    current_payment_due_date: '2023-06-12'
+                    last_payment_date: null
+                    principal_paid_thru: '2023-05-11'
+                    next_billing_date: '2023-05-28'
+                    interest_accrued_thru: '2023-05-11'
+                    next_accrual_cutoff_date: '2023-06-11'
+                    scheduled_payoff_date: '2027-05-12'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Close a facility
+      security: *ref_0
+  /facilities/{facility_id}/enable_autopay:
+    post:
+      description: Enables autopay for a facility
+      operationId: facilities_enable_autopay
+      tags:
+        - Facilities
+      parameters:
+        - name: facility_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/FacilityId'
+          examples:
+            Example1:
+              value: fac_234259b117854d0194bc5864a6c45b42
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Facility'
+              examples:
+                Example1:
+                  value:
+                    terms:
+                      type: loan_offer
+                      amount: 1000000
+                      grace_period:
+                        term: 0
+                        interest_rate: 0
+                      interest_rate: 0
+                      origination_fee: 0
+                      payment_period: monthly
+                      late_payment_fee: 0
+                      first_payment_date: '2022-12-31'
+                      term:
+                        term_type: months
+                        term: 36
+                    id: fac_7264c6575a894548a386939434b0adf3
+                    application_id: app_ad1564ffb1d745f9ad482bb5182708e2
+                    borrower_id: bor_d965bea9f47a4b108562642dbb1dae9f
+                    loan_agreement_id: doc_234259b117854d0194bc5864a6c45b42
+                    credit_type: consumer_installment_loan
+                    status: active
+                    created_on: '2023-05-12T19:46:09.293Z'
+                    account_number: '401542198'
+                    balance: 5000000
+                    payoff_balance: 5000000
+                    origination_date: '2023-05-12'
+                    disbursement_date: '2023-05-12'
+                    remaining_term: 48
+                    payments_due: []
+                    amortization_schedule:
+                      - payment_date: '2023-11-02'
+                        interest_payment_amount: 0
+                        principal_payment_amount: 8333
+                        other_payment_amount: 0
+                        total_payment_amount: 8333
+                        balance_amount: 91667
+                        item_index: 1
+                      - payment_date: '2023-12-02'
+                        interest_payment_amount: 0
+                        principal_payment_amount: 8333
+                        other_payment_amount: 0
+                        total_payment_amount: 8333
+                        balance_amount: 83334
+                        item_index: 2
+                    repayment_bank_details: null
+                    transactions: []
+                    statements: []
+                    next_payment_amount: 124425
+                    next_payment_due_date: '2023-06-12'
+                    current_payment_due_date: '2023-06-12'
+                    last_payment_date: null
+                    principal_paid_thru: '2023-05-11'
+                    next_billing_date: '2023-05-28'
+                    interest_accrued_thru: '2023-05-11'
+                    next_accrual_cutoff_date: '2023-06-11'
+                    scheduled_payoff_date: '2027-05-12'
+                    autopay:
+                      authorized: true
+                      bank_account:
+                        bank_account_number: '98989898'
+                        bank_routing_number: '021000021'
+                        type: checking
+                      authorization_timestamp: '2023-05-12T19:46:09.293Z'
+                      additional_amount: 0
+                      amount_type: statement_balance
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Enable autopay for a facility
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                bank_account:
+                  $ref: '#/components/schemas/BankAccount'
+                  description: The bank account details to use for scheduled payments
+                amount_type:
+                  $ref: '#/components/schemas/AutopayAmountType'
+                  description: >-
+                    The type of autopay amount, either minimum_payment or
+                    statement_balance
+                additional_amount:
+                  type: integer
+                  nullable: true
+                  description: >-
+                    The additional amount to pay on top of the minimum payment,
+                    in cents (e.g. 1000 = $10.00)
+              required:
+                - bank_account
+                - amount_type
+            examples:
+              Example1:
+                value:
+                  bank_account:
+                    bank_account_number: '98989898'
+                    bank_routing_number: '021000021'
+                    type: checking
+                  additional_amount: 0
+                  amount_type: statement_balance
+  /facilities/{facility_id}/disable_autopay:
+    post:
+      description: Disable autopay for a facility
+      operationId: facilities_disable_autopay
+      tags:
+        - Facilities
+      parameters:
+        - name: facility_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/FacilityId'
+          examples:
+            Example1:
+              value: fac_18e5a3726b3943cda2635f40e1041ba4
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Facility'
+              examples:
+                Example1:
+                  value:
+                    terms:
+                      type: loan_offer
+                      amount: 1000000
+                      grace_period:
+                        term: 0
+                        interest_rate: 0
+                      interest_rate: 0
+                      origination_fee: 0
+                      payment_period: monthly
+                      late_payment_fee: 0
+                      first_payment_date: '2022-12-31'
+                      term:
+                        term_type: months
+                        term: 36
+                    id: fac_7264c6575a894548a386939434b0adf3
+                    application_id: app_ad1564ffb1d745f9ad482bb5182708e2
+                    borrower_id: bor_d965bea9f47a4b108562642dbb1dae9f
+                    loan_agreement_id: doc_234259b117854d0194bc5864a6c45b42
+                    credit_type: consumer_installment_loan
+                    status: active
+                    created_on: '2023-05-12T19:46:09.293Z'
+                    account_number: '401542198'
+                    balance: 5000000
+                    payoff_balance: 5000000
+                    origination_date: '2023-05-12'
+                    disbursement_date: '2023-05-12'
+                    remaining_term: 48
+                    payments_due: []
+                    amortization_schedule:
+                      - payment_date: '2023-11-02'
+                        interest_payment_amount: 0
+                        principal_payment_amount: 8333
+                        other_payment_amount: 0
+                        total_payment_amount: 8333
+                        balance_amount: 91667
+                        item_index: 1
+                      - payment_date: '2023-12-02'
+                        interest_payment_amount: 0
+                        principal_payment_amount: 8333
+                        other_payment_amount: 0
+                        total_payment_amount: 8333
+                        balance_amount: 83334
+                        item_index: 2
+                    repayment_bank_details:
+                      bank_account_number: '98989898'
+                      bank_routing_number: '021000021'
+                      type: checking
+                    transactions: []
+                    statements: []
+                    next_payment_amount: 124425
+                    next_payment_due_date: '2023-06-12'
+                    current_payment_due_date: '2023-06-12'
+                    last_payment_date: null
+                    principal_paid_thru: '2023-05-11'
+                    next_billing_date: '2023-05-28'
+                    interest_accrued_thru: '2023-05-11'
+                    next_accrual_cutoff_date: '2023-06-11'
+                    scheduled_payoff_date: '2027-05-12'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Disable autopay for a facility
+      security: *ref_0
+  /facilities/{facility_id}/repayment_bank_details:
+    post:
+      description: Add repayment bank details for a facility
+      operationId: facilities_addRepaymentBankDetails
+      tags:
+        - Facilities
+      parameters:
+        - name: facility_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/FacilityId'
+          examples:
+            Example1:
+              value: fac_234259b117854d0194bc5864a6c45b42
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Facility'
+              examples:
+                Example1:
+                  value:
+                    terms:
+                      type: loan_offer
+                      amount: 1000000
+                      grace_period:
+                        term: 0
+                        interest_rate: 0
+                      interest_rate: 0
+                      origination_fee: 0
+                      payment_period: monthly
+                      late_payment_fee: 0
+                      first_payment_date: '2022-12-31'
+                      term:
+                        term_type: months
+                        term: 36
+                    id: fac_7264c6575a894548a386939434b0adf3
+                    application_id: app_ad1564ffb1d745f9ad482bb5182708e2
+                    borrower_id: bor_d965bea9f47a4b108562642dbb1dae9f
+                    loan_agreement_id: doc_234259b117854d0194bc5864a6c45b42
+                    credit_type: consumer_installment_loan
+                    status: active
+                    created_on: '2023-05-12T19:46:09.293Z'
+                    account_number: '401542198'
+                    balance: 5000000
+                    payoff_balance: 5000000
+                    origination_date: '2023-05-12'
+                    disbursement_date: '2023-05-12'
+                    remaining_term: 48
+                    payments_due: []
+                    amortization_schedule:
+                      - payment_date: '2023-11-02'
+                        interest_payment_amount: 0
+                        principal_payment_amount: 8333
+                        other_payment_amount: 0
+                        total_payment_amount: 8333
+                        balance_amount: 91667
+                        item_index: 1
+                      - payment_date: '2023-12-02'
+                        interest_payment_amount: 0
+                        principal_payment_amount: 8333
+                        other_payment_amount: 0
+                        total_payment_amount: 8333
+                        balance_amount: 83334
+                        item_index: 2
+                    repayment_bank_details:
+                      bank_account_number: '98989898'
+                      bank_routing_number: '021000021'
+                      type: checking
+                    transactions: []
+                    statements: []
+                    next_payment_amount: 124425
+                    next_payment_due_date: '2023-06-12'
+                    current_payment_due_date: '2023-06-12'
+                    last_payment_date: null
+                    principal_paid_thru: '2023-05-11'
+                    next_billing_date: '2023-05-28'
+                    interest_accrued_thru: '2023-05-11'
+                    next_accrual_cutoff_date: '2023-06-11'
+                    scheduled_payoff_date: '2027-05-12'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Add repayment bank details for a facility
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BankAccount'
+            examples:
+              Example1:
+                value:
+                  bank_account_number: '98989898'
+                  bank_routing_number: '021000021'
+                  type: checking
+  /facilities/{facility_id}:
+    get:
+      description: Retrieve a facility by its id
+      operationId: facilities_get
+      tags:
+        - Facilities
+      parameters:
+        - name: facility_id
+          in: path
+          description: The facility_id of the facility you want to retrieve
+          required: true
+          schema:
+            $ref: '#/components/schemas/FacilityId'
+          examples:
+            Example1:
+              value: fac_18e5a3726b3943cda2635f40e1041ba4
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Facility'
+              examples:
+                Example1:
+                  value:
+                    terms:
+                      type: loan_offer
+                      amount: 1000000
+                      grace_period:
+                        term: 0
+                        interest_rate: 0
+                      interest_rate: 0
+                      origination_fee: 0
+                      payment_period: monthly
+                      late_payment_fee: 0
+                      first_payment_date: '2022-12-31'
+                      term:
+                        term_type: months
+                        term: 36
+                    id: fac_7264c6575a894548a386939434b0adf3
+                    application_id: app_ad1564ffb1d745f9ad482bb5182708e2
+                    borrower_id: bor_d965bea9f47a4b108562642dbb1dae9f
+                    loan_agreement_id: doc_234259b117854d0194bc5864a6c45b42
+                    credit_type: consumer_installment_loan
+                    status: active
+                    created_on: '2023-05-12T19:46:09.293Z'
+                    account_number: '401542198'
+                    balance: 5000000
+                    payoff_balance: 5000000
+                    origination_date: '2023-05-12'
+                    disbursement_date: '2023-05-12'
+                    remaining_term: 48
+                    payments_due: []
+                    amortization_schedule:
+                      - payment_date: '2023-11-02'
+                        interest_payment_amount: 0
+                        principal_payment_amount: 8333
+                        other_payment_amount: 0
+                        total_payment_amount: 8333
+                        balance_amount: 91667
+                        item_index: 1
+                      - payment_date: '2023-12-02'
+                        interest_payment_amount: 0
+                        principal_payment_amount: 8333
+                        other_payment_amount: 0
+                        total_payment_amount: 8333
+                        balance_amount: 83334
+                        item_index: 2
+                    repayment_bank_details:
+                      bank_account_number: '98989898'
+                      bank_routing_number: '021000021'
+                      type: checking
+                    transactions: []
+                    statements: []
+                    next_payment_amount: 124425
+                    next_payment_due_date: '2023-06-12'
+                    current_payment_due_date: '2023-06-12'
+                    last_payment_date: null
+                    principal_paid_thru: '2023-05-11'
+                    next_billing_date: '2023-05-28'
+                    interest_accrued_thru: '2023-05-11'
+                    next_accrual_cutoff_date: '2023-06-11'
+                    scheduled_payoff_date: '2027-05-12'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Retrieve a facility
+      security: *ref_0
+  /facilities/disbursements:
+    get:
+      description: List disbursements for your account
+      operationId: facilities_listDisbursements
+      tags:
+        - Facilities
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Disbursement'
+              examples:
+                Example1:
+                  value:
+                    - id: dsb_234259b117854d0194bc5864a6c45b42
+                      facility_id: fac_234259b117854d0194bc5864a6c45b42
+                      amount: 100000
+                      status: pending
+                      failure_reason: null
+                      date: '2023-02-27'
+                      created_on: '2023-02-27T00:00:00Z'
+                      transfer_type: standard
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: List all disbursements for your account
+      security: *ref_0
+  /facilities/{facility_id}/statements:
+    get:
+      description: List statements for a facility
+      operationId: facilities_listStatementsForFacility
+      tags:
+        - Facilities
+      parameters:
+        - name: facility_id
+          in: path
+          description: The facility_id of the facility you want to list statements for
+          required: true
+          schema:
+            $ref: '#/components/schemas/FacilityId'
+          examples:
+            Example1:
+              value: fac_18e5a3726b3943cda2635f40e1041ba4
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Statement'
+              examples:
+                Example1:
+                  value:
+                    - id: stmt_deb6aba913d84feb987934f50c32bf03
+                      statement_date: '2023-03-17'
+                      facility_id: fac_234259b117854d0194bc5864a6c45b42
+                      url: >-
+                        https://app.docspring.com/submissions/sub_gjX2LS7c6FjqZt12hQ/download
+                      created_on: '2023-02-27T00:00:00Z'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: List statements for a facility
+      security: *ref_0
+  /facilities/{facility_id}/disbursements/{disbursement_id}:
+    get:
+      description: Retrieve a disbursement by its id
+      operationId: facilities_getDisbursementById
+      tags:
+        - Facilities
+      parameters:
+        - name: facility_id
+          in: path
+          description: The facility_id of the facility you want to retrieve
+          required: true
+          schema:
+            $ref: '#/components/schemas/FacilityId'
+          examples:
+            Example1:
+              value: fac_18e5a3726b3943cda2635f40e1041ba4
+        - name: disbursement_id
+          in: path
+          description: The disbursement_id of the disbursement you want to retrieve
+          required: true
+          schema:
+            $ref: '#/components/schemas/DisbursementId'
+          examples:
+            Example1:
+              value: dsb_18e5a3726b3943cda2635f40e1041ba4
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Disbursement'
+              examples:
+                Example1:
+                  value:
+                    id: dsb_234259b117854d0194bc5864a6c45b42
+                    facility_id: fac_234259b117854d0194bc5864a6c45b42
+                    amount: 100000
+                    status: pending
+                    failure_reason: null
+                    date: '2023-02-27'
+                    created_on: '2023-02-27T00:00:00Z'
+                    transfer_type: standard
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Retrieve a disbursement by its id
+      security: *ref_0
+  /facilities/{facility_id}/payoff_amounts:
+    get:
+      description: >-
+        Retrieve a list of payoff amount/date pairs for a facility for the next
+        10 days
+      operationId: facilities_getPayoffAmounts
+      tags:
+        - Facilities
+      parameters:
+        - name: facility_id
+          in: path
+          description: >-
+            The facility_id of the facility you want to retrieve payoff amounts
+            for
+          required: true
+          schema:
+            $ref: '#/components/schemas/FacilityId'
+          examples:
+            Example1:
+              value: fac_18e5a3726b3943cda2635f40e1041ba4
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayoffAmounts'
+              examples:
+                Example1:
+                  value:
+                    - amount: 504889
+                      date: '2023-12-08'
+                    - amount: 505112
+                      date: '2023-12-09'
+                    - amount: 505334
+                      date: '2023-12-10'
+                    - amount: 505556
+                      date: '2023-12-11'
+                    - amount: 505778
+                      date: '2023-12-12'
+                    - amount: 506001
+                      date: '2023-12-13'
+                    - amount: 506223
+                      date: '2023-12-14'
+                    - amount: 506445
+                      date: '2023-12-15'
+                    - amount: 506667
+                      date: '2023-12-16'
+                    - amount: 506866
+                      date: '2023-12-17'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Retrieve payoff amounts for a facility
+      security: *ref_0
+  /loan_agreements:
+    post:
+      description: >-
+        A loan agreement can be created for an application with a status of
+        approved. Expect 4-8 seconds of latency
+      operationId: loanAgreements_create
+      tags:
+        - LoanAgreements
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoanAgreement'
+              examples:
+                Example1:
+                  value:
+                    status: pending_signature
+                    id: doc_43da3b3f95c745e1985a71e9a00d6c27
+                    application_id: app_a9d2f388030d4f4296f80fc327e08d0d
+                    document_url: https://example.com/document-endpoint-unique-hash
+                    created_on: '2022-12-31T20:47:38.152Z'
+                    signature_timestamp: null
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Create a loan agreement
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                application_id:
+                  $ref: '#/components/schemas/ApplicationId'
+                  description: >-
+                    The `application_id` of the application to create the loan
+                    agreement for
+              required:
+                - application_id
+            examples:
+              Example1:
+                value:
+                  application_id: app_f0467657bba948e6a87292e182132848
+    get:
+      description: List all loan agreements on your account
+      operationId: loanAgreements_getAll
+      tags:
+        - LoanAgreements
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LoanAgreement'
+              examples:
+                Example1:
+                  value:
+                    - status: pending_signature
+                      id: doc_43da3b3f95c745e1985a71e9a00d6c27
+                      application_id: app_a9d2f388030d4f4296f80fc327e08d0d
+                      document_url: https://example.com/document-endpoint-unique-hash
+                      created_on: '2022-12-31T20:47:38.152Z'
+                      signature_timestamp: null
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: List all loan agreements
+      security: *ref_0
+  /loan_agreements/{loan_agreement_id}/sign:
+    post:
+      description: >-
+        Electronically signs a loan document and updates the application's
+        status to `accepted`
+      operationId: loanAgreements_sign
+      tags:
+        - LoanAgreements
+      parameters:
+        - name: loan_agreement_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/LoanAgreementId'
+          examples:
+            Example1:
+              value: doc_43da3b3f95c745e1985a71e9a00d6c27
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SignLoanAgreementResponse'
+              examples:
+                Example1:
+                  value:
+                    status: signed
+                    id: doc_96d13bec673c4eba8d44c9cda3bbb811
+                    application_id: app_a9d2f388030d4f4296f80fc327e08d0d
+                    signature_timestamp: '2022-12-31T21:10:47.610Z'
+                    document_url: https://example.com/document-endpoint-unique-hash
+                    created_on: '2022-12-31T21:07:16.642Z'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Sign a loan agreement
+      security: *ref_0
+  /loan_agreements/{loan_agreement_id}:
+    get:
+      description: Retrieve a loan agreement by its id
+      operationId: loanAgreements_get
+      tags:
+        - LoanAgreements
+      parameters:
+        - name: loan_agreement_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/LoanAgreementId'
+          examples:
+            Example1:
+              value: doc_43da3b3f95c745e1985a71e9a00d6c27
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoanAgreement'
+              examples:
+                Example1:
+                  value:
+                    status: pending_signature
+                    id: doc_43da3b3f95c745e1985a71e9a00d6c27
+                    application_id: app_a9d2f388030d4f4296f80fc327e08d0d
+                    document_url: https://example.com/document-endpoint-unique-hash
+                    created_on: '2022-12-31T20:47:38.152Z'
+                    signature_timestamp: null
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get a loan agreement by id
+      security: *ref_0
+  /payments:
+    post:
+      description: Instructs Pier to initiate an ACH payment for a loan
+      operationId: payments_submitPayment
+      tags:
+        - Payments
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+              examples:
+                Example1:
+                  value:
+                    id: pmt_18e5a3726b3943cda2635f40e1041ba4
+                    amount: 100000
+                    facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                    status: pending
+                    transfer_type: standard
+                    created_on: '2023-02-27T00:00:00Z'
+                    is_autopay: false
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Submit a loan payment
+      security: *ref_0
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentRequest'
+            examples:
+              Example1:
+                value:
+                  facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                  amount: 100000
+                  transfer_type: standard
+    get:
+      description: List all payments associated with your account
+      operationId: payments_getAll
+      tags:
+        - Payments
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Payment'
+              examples:
+                Example1:
+                  value:
+                    - id: pmt_18e5a3726b3943cda2635f40e1041ba4
+                      amount: 100000
+                      facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                      status: pending
+                      transfer_type: standard
+                      created_on: '2023-02-27T00:00:00Z'
+                      is_autopay: false
+                    - id: pmt_18e5a3726b3943cda2635f40e1041ba4
+                      amount: 100000
+                      facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                      status: processing
+                      transfer_type: standard
+                      created_on: '2023-02-27T00:00:00Z'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: List all payments
+      security: *ref_0
+  /payments/{payment_id}:
+    get:
+      description: Get a payment by its id
+      operationId: payments_get
+      tags:
+        - Payments
+      parameters:
+        - name: payment_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/PaymentId'
+          examples:
+            Example1:
+              value: pmt_18e5a3726b3943cda2635f40e1041ba4
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+              examples:
+                Example1:
+                  value:
+                    id: pmt_18e5a3726b3943cda2635f40e1041ba4
+                    amount: 100000
+                    facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                    status: pending
+                    transfer_type: standard
+                    created_on: '2023-02-27T00:00:00Z'
+                    is_autopay: false
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get a payment by ID
+      security: *ref_0
+components:
+  schemas:
+    ApplicationId:
+      title: ApplicationId
+      type: string
+    ApplicationStatus:
+      title: ApplicationStatus
+      type: string
+      enum:
+        - pending
+        - approved
+        - accepted
+        - declined
+        - incomplete
+        - rejected
+    Offer:
+      title: Offer
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - revolving_line_of_credit_offer
+            - $ref: '#/components/schemas/LineOfCreditOffer'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - loan_offer
+            - $ref: '#/components/schemas/LoanOffer'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - merchant_advance_offer
+            - $ref: '#/components/schemas/MerchantAdvanceOfferSchema'
+          required:
+            - type
+    Application:
+      title: Application
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/ApplicationId'
+          nullable: true
+        borrower_id:
+          $ref: '#/components/schemas/ConsumerBorrowerId'
+          nullable: true
+          description: The `borrower_id` of the borrower the application belongs to
+        created_on:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp the application object is created on
+        credit_type:
+          $ref: '#/components/schemas/CreditType'
+          nullable: true
+          description: The type of credit product.
+        decisioned_on:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp when the application is either approved or rejected on
+        offers:
+          type: array
+          items:
+            $ref: '#/components/schemas/Offer'
+          nullable: true
+          description: >-
+            If the application is approved, an object containing the credit
+            offer details
+        rejection_reasons:
+          type: array
+          items:
+            $ref: '#/components/schemas/RejectionReason'
+          nullable: true
+          description: >-
+            If the application is rejected, a list containing 1-4 rejection
+            reason(s). The Rejection Reasons endpoint provides a list of valid
+            reasons and descriptors
+        requested_amount:
+          type: integer
+          nullable: true
+          description: >-
+            If the borrower requests an amount in their application, the
+            requested loan or credit line amount in cents (e.g. 500000 for
+            $5,000)
+        status:
+          $ref: '#/components/schemas/ApplicationStatus'
+        third_party_disbursement_destination:
+          type: string
+          nullable: true
+          description: >-
+            For credit applications of type `consumer_bnpl`, the third party
+            (i.e. merchant) receiving the funds is specified here
+        lender_of_record:
+          type: string
+          nullable: true
+          description: The lender of record (default "pier")
+        credit_data:
+          $ref: '#/components/schemas/CreditData'
+          nullable: true
+      required:
+        - status
+    LineOfCreditOffer:
+      title: LineOfCreditOffer
+      type: object
+      properties:
+        amount:
+          type: integer
+          description: >-
+            The amount (in cents) of the credit line offer (e.g. '200000' for
+            $2,000.00)
+        apr:
+          type: integer
+          nullable: true
+          description: The annual percentage rate (in basis points) of the credit line
+        annual_fee:
+          type: integer
+          nullable: true
+          description: The annual fee charged for the credit line (e.g. '5000' for $50.00)
+        billing_cycle:
+          type: integer
+          nullable: true
+          description: >-
+            The time in days between the last statement's closing date and the
+            next statement's closing date. For consumer lines of credit, the
+            minimum is '21'
+        finance_charge:
+          type: integer
+          nullable: true
+          description: >-
+            If your platform charges a monthly finance charge for access to the
+            line, the amount in cents
+        grace_period:
+          $ref: '#/components/schemas/GracePeriod'
+          nullable: true
+        interest_rate:
+          type: integer
+          nullable: true
+          description: >-
+            The interest rate (in basis points) of the loan or credit line offer
+            (e.g. '750' for 7.50%)
+        late_payment_fee:
+          type: integer
+          nullable: true
+          description: >-
+            The fee charged if a borrower misses the payment due date, in cents
+            (e.g. '2500' for $25.00; default to 0)
+        minimum_payment:
+          $ref: '#/components/schemas/MinimumPayment'
+          nullable: true
+          description: The minimum payment due each billing cycle
+        origination_fee:
+          type: integer
+          nullable: true
+          description: >-
+            The origination fee charged to originate the line in basis points
+            (e.g. '150' for 1.50%)
+      required:
+        - amount
+    LoanOffer:
+      title: LoanOffer
+      type: object
+      properties:
+        amount:
+          type: integer
+          description: The amount (in cents) of the loan offer (e.g. 200000 for $2,000.00)
+        grace_period:
+          $ref: '#/components/schemas/GracePeriod'
+          nullable: true
+        interest_rate:
+          type: integer
+          nullable: true
+          description: >-
+            The interest rate (in basis points) charged on the loan principal
+            (e.g. 750 for 7.50%)
+        origination_fee:
+          type: integer
+          nullable: true
+          description: >-
+            The origination fee charged to originate the loan in basis points
+            (e.g. 150 for 1.50%)
+        payment_period:
+          $ref: '#/components/schemas/RepaymentFrequency'
+          nullable: true
+          description: >-
+            The repayment frequency for the loan. Accepted values weekly,
+            biweekly, monthly, semi_monthly_first_15th, semi_monthly_last_15th,
+            semi_monthly
+        first_payment_date:
+          type: string
+          nullable: true
+          description: The date of the first payment, in ISO 8601 format (e.g. 2022-12-31)
+        late_payment_fee:
+          type: integer
+          nullable: true
+          description: >-
+            The fee charged if a borrower misses the payment due date, in cents
+            (e.g. 2500 for $25.00)
+        term:
+          $ref: '#/components/schemas/Term'
+          description: The type of term. Accepted values are months, days, payments
+        security_amount:
+          type: integer
+          nullable: true
+          description: >-
+            The amount (in cents) of the value of the loan collateral (e.g.
+            200000 for $2,000.00). Required for secured loan application types.
+      required:
+        - amount
+        - term
+    MerchantAdvanceOfferSchema:
+      title: MerchantAdvanceOfferSchema
+      type: object
+      properties:
+        amount:
+          type: integer
+          description: The amount (in cents) of the loan offer (e.g. 200000 for $2,000.00)
+        factor_rate:
+          type: integer
+          description: >-
+            The cost of the merchant advance (in basis points) and will be
+            multiplied by the loan amount (e.g. 150 for 1.50%)
+        payment_period:
+          $ref: '#/components/schemas/RepaymentFrequency'
+          nullable: true
+          description: >-
+            The repayment frequency for the loan. Accepted values weekly,
+            biweekly, monthly, semi_monthly_first_15th, semi_monthly_last_15th,
+            semi_monthly
+        origination_fee:
+          type: integer
+          nullable: true
+          description: >-
+            The origination fee charged to originate the line in basis points
+            (e.g. '150' for 1.50%)
+        late_payment_fee:
+          type: integer
+          nullable: true
+          description: >-
+            The fee charged if a borrower misses the payment due date, in cents
+            (e.g. 2500 for $25.00)
+        receivables_portion:
+          type: integer
+          nullable: true
+          description: The portion collected from each sale until the advance is repayed
+        minimum_payment:
+          type: integer
+          nullable: true
+          description: The minimum payment due each billing cycle
+        maximum_payment:
+          type: integer
+          nullable: true
+          description: The minimum payment due each billing cycle
+      required:
+        - amount
+        - factor_rate
+    GracePeriod:
+      title: GracePeriod
+      type: object
+      properties:
+        term:
+          type: integer
+          nullable: true
+          description: >-
+            The time in days between the end of a billing cycle and the bill's
+            due date. For consumer lines of credit, the minimum is '21'
+        interest_rate:
+          type: integer
+          nullable: true
+          description: >-
+            The interest rate (in basis points) charged during the grace period.
+            Must be '0' for consumer lines of credit. Defaults to 0 if omitted
+    Term:
+      title: Term
+      type: object
+      properties:
+        term_type:
+          $ref: '#/components/schemas/TermType'
+        term:
+          type: integer
+          description: >-
+            The term of the loan according to the term type. A minimum of 3 is
+            required for monthly payment_period, 6 for semi-monthly, 7 for
+            biweekly and 13 for weekly.
+      required:
+        - term_type
+        - term
+    RepaymentFrequency:
+      title: RepaymentFrequency
+      type: string
+      enum:
+        - weekly
+        - biweekly
+        - monthly
+        - semi_monthly_first_15th
+        - semi_monthly_last_15th
+        - semi_monthly
+    MinimumPayment:
+      title: MinimumPayment
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/MinimumPaymentType'
+          description: >-
+            The type of minimum payment structure. Accepted values are
+            interest_plus_percentage_of_principal
+        value:
+          type: integer
+          description: >-
+            The minimum payment percentage due each billing cycle (e.g. 500 for
+            5.00%)
+      required:
+        - type
+        - value
+    MinimumPaymentType:
+      title: MinimumPaymentType
+      type: string
+      enum:
+        - interest_plus_percentage_of_principal
+    RejectionReason:
+      title: RejectionReason
+      type: string
+      enum:
+        - income_too_low
+        - bank_balance_too_low
+        - income_unpredictable
+        - user_account_duplicate
+        - sdb_check_failed
+        - bank_account_linking_error
+        - mla_failed
+        - iddoc_failed
+        - no_checking_or_savings_data
+        - insufficient_bank_history
+        - loan_location_no_license
+        - address_invalid
+        - income_verification_failed
+        - stacking_behavior
+        - ssn_verification_failed
+        - too_many_nsfs
+        - fraud_risk_too_high
+        - has_bankruptcy_history
+        - unable_to_verify_credit_information
+        - credit_file_frozen
+        - processor_suspended
+        - cash_flow_verification_failed
+        - credit_score_too_low
+    GetApplicationRequest:
+      title: GetApplicationRequest
+      type: object
+      properties:
+        application_id:
+          type: string
+          description: The id of the borrower you're requesting to retrieve
+      required:
+        - application_id
+    TermType:
+      title: TermType
+      type: string
+      enum:
+        - months
+        - days
+        - payments
+    CreditData:
+      title: CreditData
+      type: object
+      properties:
+        fico:
+          type: integer
+          nullable: true
+          description: A FICO score (e.g. 750)
+        has_bankruptcy_history:
+          type: boolean
+          nullable: true
+          description: Whether or not there is bankruptcy history
+    AuthRequest:
+      title: AuthRequest
+      type: object
+      properties:
+        client_id:
+          type: string
+          description: Your Pier API client ID
+          example: '1234567890'
+        secret:
+          type: string
+          description: Your Pier API client secret
+          example: '1234567890'
+      required:
+        - client_id
+        - secret
+    AuthResponse:
+      title: AuthResponse
+      type: object
+      properties:
+        token:
+          type: string
+          description: A JWT token to use with the Pier API (24h expiration)
+          example: >-
+            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+      required:
+        - token
+    BusinessBorrowerId:
+      title: BusinessBorrowerId
+      type: string
+    BeneficialOwnerId:
+      title: BeneficialOwnerId
+      type: string
+    ConsumerBorrowerId:
+      title: ConsumerBorrowerId
+      type: string
+    Borrower:
+      title: Borrower
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - business
+            - $ref: '#/components/schemas/BusinessBorrower'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - consumer
+            - $ref: '#/components/schemas/ConsumerBorrower'
+          required:
+            - type
+    BusinessBorrowerRequest:
+      title: BusinessBorrowerRequest
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/Address'
+          description: The address of the business.
+        beneficial_owners:
+          type: array
+          items:
+            $ref: '#/components/schemas/BeneficialOwners'
+          description: >-
+            An array of objects representing owners of the business and those
+            who control the funds of the business.
+
+            If no one owns more than 25% of the business, just the individual
+            who has ultimate control of the funds must be included.
+
+            A maximum of 5 objects can be added.
+        business_contact:
+          $ref: '#/components/schemas/BusinessContact'
+          description: The person executing the loan agreement.
+        business_name:
+          type: string
+          description: Legal name of the business.
+          example: Apple Landscaping
+        business_type:
+          $ref: '#/components/schemas/BusinessType'
+          description: The type of business entity.
+        dba_name:
+          type: string
+          description: Doing-business-as name of the business
+          example: Apple Landscaping
+        ein:
+          type: string
+          description: >-
+            9-digit IRS employee identification number of the business (e.g.
+            345543221)
+          example: '130256721'
+        incorporation_date:
+          type: string
+          description: Incorporation date of the business (YYYY-MM-DD)
+          example: '2000-12-12'
+        kyb_completion_date:
+          type: string
+          description: Date kyb completed on the business (YYYY-MM-DD)
+          example: '2022-11-15'
+        state_of_incorporation:
+          type: string
+          description: Required 2-digit US state code (e.g. CA, IL, FL, …)
+          example: DE
+        phone:
+          type: string
+          description: The phone number of the business
+          example: '4152556465'
+      required:
+        - address
+        - beneficial_owners
+        - business_contact
+        - business_name
+        - business_type
+        - dba_name
+        - ein
+        - incorporation_date
+        - kyb_completion_date
+        - state_of_incorporation
+        - phone
+    UpdateBusinessBorrowerRequest:
+      title: UpdateBusinessBorrowerRequest
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/Address'
+          description: The address of the business.
+        beneficial_owners:
+          type: array
+          items:
+            $ref: '#/components/schemas/BeneficialOwners'
+          description: >-
+            An array of objects representing owners of the business and those
+            who control the funds of the business.
+
+            If no one owns more than 25% of the business, just the individual
+            who has ultimate control of the funds must be included.
+
+            A maximum of 5 objects can be added.
+        business_contact:
+          $ref: '#/components/schemas/BusinessContact'
+          description: The person executing the loan agreement.
+        business_name:
+          type: string
+          description: Legal name of the business.
+          example: Apple Landscaping
+        business_type:
+          $ref: '#/components/schemas/BusinessType'
+          description: The type of business entity.
+        dba_name:
+          type: string
+          description: Doing-business-as name of the business
+          example: Apple Landscaping
+        incorporation_date:
+          type: string
+          description: Incorporation date of the business (YYYY-MM-DD)
+          example: '2000-12-12'
+        kyb_completion_date:
+          type: string
+          description: Date kyb completed on the business (YYYY-MM-DD)
+          example: '2022-11-15'
+        state_of_incorporation:
+          type: string
+          description: Required 2-digit US state code (e.g. CA, IL, FL, …)
+          example: DE
+        phone:
+          type: string
+          description: The phone number of the business
+          example: '4152556465'
+      required:
+        - address
+        - beneficial_owners
+        - business_contact
+        - business_name
+        - business_type
+        - dba_name
+        - incorporation_date
+        - kyb_completion_date
+        - state_of_incorporation
+        - phone
+    BusinessBorrower:
+      title: BusinessBorrower
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/BusinessBorrowerId'
+        address:
+          $ref: '#/components/schemas/Address'
+        beneficial_owners:
+          type: array
+          items:
+            $ref: '#/components/schemas/BeneficialOwners'
+          description: >-
+            An array of objects representing owners of the business and those
+            who control the funds of the business.
+
+            If no one owns more than 25% of the business, just the individual
+            who has ultimate control of the funds must be included.
+
+            A maximum of 5 objects can be added.
+        business_contact:
+          $ref: '#/components/schemas/BusinessContact'
+          description: The person executing the loan agreement.
+        business_name:
+          type: string
+          description: Legal name of the business
+          example: Apple Landscaping
+        business_type:
+          $ref: '#/components/schemas/BusinessType'
+          description: The type of business entity.
+        created_on:
+          type: string
+          description: Time stamp of borrower's creation date
+          example: '2022-12-30T07:23:36.665Z'
+        dba_name:
+          type: string
+          description: Doing-business-as name of the business
+          example: Apple Landscaping
+        ein:
+          type: string
+          description: >-
+            9-digit IRS employee identification number of the business (e.g.
+            345543221)
+          example: '130256721'
+        incorporation_date:
+          type: string
+          description: Incorporation date of the business (YYYY-MM-DD)
+          example: '2000-12-12'
+        kyb_completion_date:
+          type: string
+          description: Date kyb completed on the business (YYYY-MM-DD)
+          example: '2022-11-15'
+        phone:
+          type: string
+          description: The phone number of the business
+          example: '4152556465'
+        state_of_incorporation:
+          type: string
+          description: Required 2-digit US state code (e.g. CA, IL, FL, …)
+          example: DE
+      required:
+        - id
+        - address
+        - beneficial_owners
+        - business_contact
+        - business_name
+        - business_type
+        - created_on
+        - dba_name
+        - ein
+        - incorporation_date
+        - kyb_completion_date
+        - phone
+        - state_of_incorporation
+    BeneficialOwners:
+      title: BeneficialOwners
+      type: object
+      description: >-
+        A person who owns owns 25% or more of the business as well as those who
+        control the funds.
+      properties:
+        id:
+          $ref: '#/components/schemas/BeneficialOwnerId'
+        address:
+          $ref: '#/components/schemas/Address'
+          description: The person's address.
+        date_of_birth:
+          type: string
+          description: The person's date of birth (YYYY-MM-DD)
+        email:
+          type: string
+          description: The person's valid email address
+        first_name:
+          type: string
+          description: The person's first name
+        last_name:
+          type: string
+          description: The person's last name
+        phone:
+          type: string
+          description: The person's 10-digit US phone number (e.g. 4152251000)
+        percent_ownership:
+          type: integer
+          description: >-
+            The percent ownership the person has in the business in basis points
+            (e.g. 2500 for 25%)
+        ssn:
+          type: string
+          description: The person's 9-digit US social security number (e.g. 123456789)
+      required:
+        - id
+        - address
+        - date_of_birth
+        - email
+        - first_name
+        - last_name
+        - phone
+        - percent_ownership
+        - ssn
+    BusinessContact:
+      title: BusinessContact
+      type: object
+      properties:
+        first_name:
+          type: string
+          description: The person's first name
+        last_name:
+          type: string
+          description: The person's last name
+        phone:
+          type: string
+          description: The person's 10-digit US phone number (e.g. 4152251000)
+        email:
+          type: string
+          description: The person's valid email address
+        title:
+          type: string
+          description: The person's title in the company (e.g. COO)
+      required:
+        - first_name
+        - last_name
+        - phone
+        - email
+        - title
+    BusinessType:
+      title: BusinessType
+      type: string
+      enum:
+        - corporation
+        - llc
+        - partnership
+        - sole_proprietorship
+    ConsumerBorrowerRequest:
+      title: ConsumerBorrowerRequest
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/Address'
+          description: The address of the borrower
+        date_of_birth:
+          type: string
+          description: The borrower's date of birth (YYYY-MM-DD)
+          example: '1991-12-18'
+        email:
+          type: string
+          description: The borrower's valid email address
+          example: jdough@acme.co
+        first_name:
+          type: string
+          description: The borrower's first name
+          example: Jane
+        last_name:
+          type: string
+          description: The borrower's last name
+          example: Dough
+        kyc_completion_date:
+          type: string
+          nullable: true
+          description: Date kyc completed on the borrower (YYYY-MM-DD)
+        kyc_status:
+          $ref: '#/components/schemas/KycStatus'
+          nullable: true
+          description: Kyc status of a consumer (_sandbox only_)
+        ssn:
+          type: string
+          description: 9-digit social security number of the borrower (e.g. 345543221)
+          example: '999888777'
+      required:
+        - address
+        - date_of_birth
+        - email
+        - first_name
+        - last_name
+        - ssn
+    UpdateConsumerBorrowerRequest:
+      title: UpdateConsumerBorrowerRequest
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/Address'
+          description: The address of the borrower
+        date_of_birth:
+          type: string
+          description: The borrower's date of birth (YYYY-MM-DD)
+          example: '1991-12-18'
+        email:
+          type: string
+          description: The borrower's valid email address
+          example: jdough@acme.co
+        kyc_completion_date:
+          type: string
+          nullable: true
+          description: Date kyc completed on the borrower (YYYY-MM-DD)
+        kyc_status:
+          $ref: '#/components/schemas/KycStatus'
+          nullable: true
+          description: Kyc status of a consumer (_sandbox only_)
+      required:
+        - address
+        - date_of_birth
+        - email
+    ConsumerBorrowerResponse:
+      title: ConsumerBorrowerResponse
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/Address'
+          description: The address of the borrower
+        date_of_birth:
+          type: string
+          description: The borrower's date of birth (YYYY-MM-DD)
+          example: '1991-12-18'
+        id:
+          $ref: '#/components/schemas/ConsumerBorrowerId'
+          description: The ID of the borrower
+        email:
+          type: string
+          description: The borrower's valid email address
+          example: jdough@acme.co
+        first_name:
+          type: string
+          description: The borrower's first name
+          example: Jane
+        last_name:
+          type: string
+          description: The borrower's last name
+          example: Dough
+        kyc_completion_date:
+          type: string
+          description: Date kyc completed on the borrower (YYYY-MM-DD)
+          example: '2022-11-15'
+        created_on:
+          type: string
+          format: date-time
+          description: The date the borrower was created
+          example: '2022-12-31T00:58:47.828Z'
+      required:
+        - address
+        - date_of_birth
+        - id
+        - email
+        - first_name
+        - last_name
+        - kyc_completion_date
+        - created_on
+    ConsumerBorrower:
+      title: ConsumerBorrower
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/Address'
+          description: The address of the borrower
+        date_of_birth:
+          type: string
+          description: The borrower's date of birth (YYYY-MM-DD)
+          example: '1991-12-18'
+        id:
+          $ref: '#/components/schemas/ConsumerBorrowerId'
+          description: The ID of the borrower
+        email:
+          type: string
+          description: The borrower's valid email address
+          example: jdough@acme.co
+        first_name:
+          type: string
+          description: The borrower's first name
+          example: Jane
+        last_name:
+          type: string
+          description: The borrower's last name
+          example: Dough
+        kyc_completion_date:
+          type: string
+          description: Date kyc completed on the borrower (YYYY-MM-DD)
+          example: '2022-11-15'
+        ssn:
+          type: string
+          description: 9-digit social security number of the borrower (e.g. 345543221)
+          example: '999888777'
+        created_on:
+          type: string
+          format: date-time
+          description: The date the borrower was created
+          example: '2022-12-31T00:58:47.828Z'
+      required:
+        - address
+        - date_of_birth
+        - id
+        - email
+        - first_name
+        - last_name
+        - kyc_completion_date
+        - ssn
+        - created_on
+    KycStatus:
+      title: KycStatus
+      type: string
+      enum:
+        - approved
+        - declined
+        - pending
+        - needs_review
+    Address:
+      title: Address
+      type: object
+      properties:
+        line_1:
+          type: string
+          description: A string of 1-256 characters
+        line_2:
+          type: string
+          nullable: true
+          description: A string of 1-256 characters
+        city:
+          type: string
+          description: A string of 1-30 characters
+        state:
+          type: string
+          description: 2-digit US state code (e.g. CA, IL, FL)
+        zip:
+          type: string
+          description: 5-digit US zip code
+      required:
+        - line_1
+        - city
+        - state
+        - zip
+    Autopay:
+      title: Autopay
+      type: object
+      properties:
+        authorized:
+          type: boolean
+          description: a bollean indicating whether autopay is authorized
+        authorization_timestamp:
+          type: string
+          format: date-time
+          description: the timestamp when autopay was authorized
+        bank_account:
+          $ref: '#/components/schemas/BankAccount'
+          nullable: true
+        amount_type:
+          $ref: '#/components/schemas/AutopayAmountType'
+          description: >-
+            the type of autopay amount, either minimum_payment or
+            statement_balance
+        additional_amount:
+          type: integer
+          nullable: true
+          description: >-
+            the additional amount to be paid on top of the minimum payment, in
+            cents
+      required:
+        - authorized
+        - authorization_timestamp
+        - amount_type
+    BankAccount:
+      title: BankAccount
+      type: object
+      properties:
+        bank_account_number:
+          type: string
+          description: The bank account number to use for scheduled payments
+          example: '98989898'
+        bank_routing_number:
+          type: string
+          description: The bank routing number to use for scheduled payments
+          example: '021000021'
+        type:
+          $ref: '#/components/schemas/BankAccountType'
+          description: The type of bank account, either checking or savings
+      required:
+        - bank_account_number
+        - bank_routing_number
+        - type
+    AutopayAmountType:
+      title: AutopayAmountType
+      type: string
+      enum:
+        - minimum_payment
+        - statement_balance
+    BankAccountType:
+      title: BankAccountType
+      type: string
+      enum:
+        - checking
+        - savings
+    TransferType:
+      title: TransferType
+      type: string
+      enum:
+        - standard
+        - next_day
+        - same_day
+        - none
+    TransferStatus:
+      title: TransferStatus
+      type: string
+      enum:
+        - pending
+        - processing
+        - settled
+        - failed
+        - cancelled
+    CreditType:
+      title: CreditType
+      type: string
+      enum:
+        - consumer_installment_loan
+        - consumer_bnpl
+        - consumer_revolving_line_of_credit
+        - consumer_closed_line_of_credit
+        - consumer_secured_installment_loan
+        - consumer_secured_revolving_line_of_credit
+        - commercial_installment_loan
+        - commercial_revolving_line_of_credit
+        - commercial_closed_line_of_credit
+        - commercial_bnpl
+        - commercial_merchant_advance
+    ErrorBody:
+      title: ErrorBody
+      type: object
+      properties:
+        error_type:
+          type: string
+        error_code:
+          type: string
+        error_message:
+          type: string
+        error_detail:
+          type: array
+          items:
+            $ref: '#/components/schemas/ErrorDetail'
+          nullable: true
+      required:
+        - error_type
+        - error_code
+        - error_message
+    ErrorDetail:
+      title: ErrorDetail
+      type: object
+      properties:
+        value:
+          type: string
+        msg:
+          type: string
+        param:
+          type: string
+        location:
+          type: string
+      required:
+        - value
+        - msg
+        - param
+        - location
+    VerificationResponse:
+      title: VerificationResponse
+      type: object
+      properties:
+        public_key:
+          type: string
+          description: The `public_key` to use to verify Pier webhook signatures
+          example: |-
+            -----BEGIN PUBLIC KEY-----
+            MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ
+            jkdfhdfjskfhsd==
+            -----END PUBLIC KEY-----
+      required:
+        - public_key
+    LendingDetails:
+      title: LendingDetails
+      type: object
+      properties:
+        address:
+          $ref: '#/components/schemas/Address'
+          description: Your address as lender of record
+        cs_phone:
+          type: string
+          description: Your customer service phone number
+          example: 415-555-5555
+        cs_email:
+          type: string
+          description: Your customer service email
+          example: support@example.com
+      required:
+        - address
+        - cs_phone
+        - cs_email
+    CommercialCoverage:
+      title: CommercialCoverage
+      type: object
+      properties:
+        max_apr:
+          type: integer
+          nullable: true
+        business_types:
+          type: array
+          items:
+            $ref: '#/components/schemas/BussinessType'
+          nullable: true
+        limit_1:
+          $ref: '#/components/schemas/CoverageLimit'
+      required:
+        - limit_1
+    ConsumerCoverage:
+      title: ConsumerCoverage
+      type: object
+      properties:
+        max_apr:
+          type: integer
+          nullable: true
+        limit_1:
+          $ref: '#/components/schemas/CoverageLimit'
+      required:
+        - limit_1
+    BussinessType:
+      title: BussinessType
+      type: string
+      enum:
+        - corporation
+        - partnership
+        - llc
+        - sole_proprietorship
+    CoverageLimit:
+      title: CoverageLimit
+      type: object
+      properties:
+        amount:
+          $ref: '#/components/schemas/CoverageAmount'
+      required:
+        - amount
+    CoverageAmount:
+      title: CoverageAmount
+      type: object
+      properties:
+        min:
+          type: integer
+        max:
+          type: integer
+      required:
+        - min
+        - max
+    RetrieveRejectionReasonsResponse:
+      title: RetrieveRejectionReasonsResponse
+      type: object
+      additionalProperties:
+        type: string
+    FacilityId:
+      title: FacilityId
+      type: string
+    DisbursementId:
+      title: DisbursementId
+      type: string
+    Statement:
+      title: Statement
+      type: object
+      properties:
+        id:
+          type: string
+          description: The id of the statement
+          example: stmt_deb6aba913d84feb987934f50c32bf03
+        statement_date:
+          type: string
+          description: The date of the statement (YYYY-MM-DD)
+          example: '2023-03-17'
+        facility_id:
+          $ref: '#/components/schemas/FacilityId'
+        url:
+          type: string
+          description: The url of the statement pdf
+          example: >-
+            https://app.docspring.com/submissions/sub_gjX2LS7c6FjqZt12hQ/download
+        created_on:
+          type: string
+          format: date-time
+          description: Timestamp the statement object is created on
+          example: '2023-02-27T00:00:00Z'
+      required:
+        - id
+        - statement_date
+        - facility_id
+        - url
+        - created_on
+    Disbursement:
+      title: Disbursement
+      type: object
+      properties:
+        id:
+          type: string
+          description: The id of the disbursement
+          example: dsb_234259b117854d0194bc5864a6c45b42
+        facility_id:
+          $ref: '#/components/schemas/FacilityId'
+        amount:
+          type: integer
+          description: The amount of the disbursement, in cents (e.g. 1000 = $10.00)
+          example: 100000
+        status:
+          $ref: '#/components/schemas/TransferStatus'
+          description: The status of the disbursement
+        failure_reason:
+          type: string
+          nullable: true
+          description: A reason for the failure if any exists
+        date:
+          type: string
+          nullable: true
+          description: The date of the disbursement (YYYY-MM-DD)
+        created_on:
+          type: string
+          format: date-time
+          description: Timestamp the disbursement object is created on
+          example: '2023-02-27T00:00:00Z'
+        transfer_type:
+          $ref: '#/components/schemas/TransferType'
+          description: The type of transfer to use for the disbursement
+      required:
+        - id
+        - facility_id
+        - amount
+        - status
+        - created_on
+        - transfer_type
+    DisbursementRequest:
+      title: DisbursementRequest
+      type: object
+      properties:
+        amount:
+          type: integer
+          description: The amount of the disbursement, in cents (e.g. 1000 = $10.00)
+          example: 100000
+        disbursement_bank_account:
+          $ref: '#/components/schemas/BankAccount'
+          description: The bank account to disburse to
+        transfer_type:
+          $ref: '#/components/schemas/TransferType'
+          description: The type of transfer to use for the disbursement
+      required:
+        - amount
+        - disbursement_bank_account
+        - transfer_type
+    Facility:
+      title: Facility
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/FacilityId'
+        application_id:
+          $ref: '#/components/schemas/ApplicationId'
+          description: >-
+            The `application_id` of the corresponding loan application for the
+            facility
+        borrower_id:
+          $ref: '#/components/schemas/ConsumerBorrowerId'
+          description: The `borrower_id` of the corresponding borrower the facility is for
+        loan_agreement_id:
+          type: string
+          description: >-
+            The `loan_agreement_id` of the corresponding loan agreement the
+            facility is for
+          example: doc_234259b117854d0194bc5864a6c45b42
+        credit_type:
+          $ref: '#/components/schemas/CreditType'
+          description: The type of credit production.
+        created_on:
+          type: string
+          format: date-time
+          description: Timestamp the loan agreement object is created on
+          example: '2023-05-12T19:46:09.293Z'
+        status:
+          $ref: '#/components/schemas/CreditStatus'
+          description: The status of the facility.
+        account_number:
+          type: string
+          description: The account number of the credit facility
+          example: '401542198'
+        amortization_schedule:
+          $ref: '#/components/schemas/AmmortizationSchedules'
+          nullable: true
+          description: The amortization schedule of the loan
+        repayment_bank_details:
+          $ref: '#/components/schemas/BankAccount'
+          nullable: true
+          description: The bank account information used to repay the loan
+        transactions:
+          type: array
+          items:
+            type: string
+          description: An array of transactions made (empty if no payments are due)
+          example: []
+        statements:
+          type: array
+          items:
+            $ref: '#/components/schemas/Statement'
+          description: An array of statements for the loan (empty if no statements exist)
+        balance:
+          type: integer
+          nullable: true
+          description: The remaining balance of the loan, in cents
+        payoff_balance:
+          type: integer
+          nullable: true
+          description: The current payoff balance of the loan, in cents
+        origination_date:
+          type: string
+          nullable: true
+          description: The date the loan was originated (YYYY-MM-DD)
+        disbursement_date:
+          type: string
+          nullable: true
+          description: The date the loan was disbursed (YYYY-MM-DD)
+        remaining_term:
+          type: integer
+          nullable: true
+          description: The remaining term of the loan, in months
+        payments_due:
+          type: array
+          items:
+            type: string
+          description: An array of payments due (empty if no payments are due)
+          example: []
+        next_payment_amount:
+          type: integer
+          nullable: true
+          description: The amount of the next payment, in cents
+        next_payment_due_date:
+          type: string
+          nullable: true
+          description: The date the next payment is due (YYYY-MM-DD)
+        current_payment_due_date:
+          type: string
+          nullable: true
+          description: The date the current payment is due (YYYY-MM-DD)
+        last_payment_date:
+          type: string
+          nullable: true
+          description: The date the last payment was made (YYYY-MM-DD)
+        principal_paid_thru:
+          type: string
+          nullable: true
+          description: The date the principal is paid through (YYYY-MM-DD)
+        next_billing_date:
+          type: string
+          nullable: true
+          description: The next billing date of the loan (YYYY-MM-DD)
+        interest_accrued_thru:
+          type: string
+          nullable: true
+          description: The date the interest is accrued through (YYYY-MM-DD)
+        next_accrual_cutoff_date:
+          type: string
+          nullable: true
+          description: The next accrual cutoff date of the loan (YYYY-MM-DD)
+        scheduled_payoff_date:
+          type: string
+          nullable: true
+          description: The scheduled payoff date of the loan (YYYY-MM-DD)
+        terms:
+          $ref: '#/components/schemas/Offer'
+          description: An object containing a summary of the terms of the facility.
+        autopay:
+          $ref: '#/components/schemas/Autopay'
+          nullable: true
+          description: Whether or not autopay is enabled for the facility.
+      required:
+        - id
+        - application_id
+        - borrower_id
+        - loan_agreement_id
+        - credit_type
+        - created_on
+        - status
+        - account_number
+        - transactions
+        - statements
+        - payments_due
+        - terms
+    CreditStatus:
+      title: CreditStatus
+      type: string
+      enum:
+        - active
+        - closed
+    PayoffAmount:
+      title: PayoffAmount
+      type: object
+      properties:
+        amount:
+          type: integer
+          description: The amount of the payoff, in cents (e.g. 1000 = $10.00)
+          example: 100000
+        date:
+          type: string
+          description: The date the payoff is due (YYYY-MM-DD)
+          example: '2023-05-12'
+      required:
+        - amount
+        - date
+    PayoffAmounts:
+      title: PayoffAmounts
+      type: array
+      items:
+        $ref: '#/components/schemas/PayoffAmount'
+    AmmortizationSchedules:
+      title: AmmortizationSchedules
+      type: array
+      items:
+        $ref: '#/components/schemas/AmortizationSchedule'
+    AmortizationSchedule:
+      title: AmortizationSchedule
+      type: object
+      properties:
+        payment_date:
+          type: string
+          description: The date of this payment in the schedule
+          example: '2023-11-02'
+        interest_payment_amount:
+          type: integer
+          description: >-
+            The amount in cents of the payment going towards interest (e.g. 0 is
+            $0.00)
+          example: 0
+        principal_payment_amount:
+          type: integer
+          description: >-
+            The amount in cents of the payment going towards principal (e.g.
+            8333 is $83.33)
+          example: 8333
+        other_payment_amount:
+          type: integer
+          description: Any other payments in cents to be made (e.g. 0 is $0.00)
+          example: 0
+        total_payment_amount:
+          type: integer
+          description: >-
+            The total payment in cents to be made comprised of all of the other
+            payment amount fields (e.g. 8333 is $83.33)
+          example: 8333
+        balance_amount:
+          type: integer
+          description: >-
+            The balance in cents that is left after making the
+            `total_payment_amount` (e.g. 91667 is $916.67)
+          example: 91667
+        item_index:
+          type: integer
+          description: >-
+            The number representing the order of the item in the list (one
+            based)
+          example: 1
+      required:
+        - payment_date
+        - interest_payment_amount
+        - principal_payment_amount
+        - other_payment_amount
+        - total_payment_amount
+        - balance_amount
+        - item_index
+    LoanAgreementId:
+      title: LoanAgreementId
+      type: string
+    LoanAgreement:
+      title: LoanAgreement
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/LoanAgreementId'
+        application_id:
+          type: string
+          description: >-
+            The `application_id` of the corresponding loan application the
+            agreement is for
+          example: app_a9d2f388030d4f4296f80fc327e08d0d
+        created_on:
+          type: string
+          format: date-time
+          description: Timestamp the loan agreement object is created on
+          example: '2022-12-31T20:47:38.152Z'
+        document_url:
+          type: string
+          description: Url where the loan agreement document is hosted
+          example: https://example.com/document-endpoint-unique-hash
+        signature_timestamp:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp of when e-signature is completed
+        status:
+          $ref: '#/components/schemas/LoanAgreementStatus'
+          description: The status of the document
+      required:
+        - id
+        - application_id
+        - created_on
+        - document_url
+        - status
+    LoanAgreementStatus:
+      title: LoanAgreementStatus
+      type: string
+      enum:
+        - pending_signature
+        - signed
+        - expired
+    SignLoanAgreementResponse:
+      title: SignLoanAgreementResponse
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/LoanAgreementStatus'
+        id:
+          $ref: '#/components/schemas/LoanAgreementId'
+        application_id:
+          $ref: '#/components/schemas/ApplicationId'
+        signature_timestamp:
+          type: string
+          format: date-time
+          nullable: true
+        document_url:
+          type: string
+          example: https://example.com/document-endpoint-unique-hash
+        created_on:
+          type: string
+          format: date-time
+          example: '2022-12-31T21:07:16.642Z'
+      required:
+        - status
+        - id
+        - application_id
+        - document_url
+        - created_on
+    PaymentId:
+      title: PaymentId
+      type: string
+    PaymentRequest:
+      title: PaymentRequest
+      type: object
+      properties:
+        facility_id:
+          type: string
+          description: The facility_id of the credit facility to make a payment for
+          example: fac_18e5a3726b3943cda2635f40e1041ba4
+        amount:
+          type: integer
+          description: The amount of the payment, in cents
+          example: 100000
+        transfer_type:
+          $ref: '#/components/schemas/TransferType'
+          description: The type of ACH transfer
+      required:
+        - facility_id
+        - amount
+        - transfer_type
+    Payment:
+      title: Payment
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/PaymentId'
+        amount:
+          type: integer
+          description: The amount of the payment, in cents
+          example: 100000
+        facility_id:
+          type: string
+          description: The facility_id of the credit facility to make a payment for
+          example: fac_18e5a3726b3943cda2635f40e1041ba4
+        status:
+          $ref: '#/components/schemas/TransferStatus'
+          description: The status of the payment
+        transfer_type:
+          $ref: '#/components/schemas/TransferType'
+          description: The type of ACH transfer
+        created_on:
+          type: string
+          format: date-time
+          description: Timestamp the payment is created on
+          example: '2023-02-27T00:00:00Z'
+        failure_reason:
+          type: string
+          nullable: true
+          description: A reason for the failure if one exists
+        is_autopay:
+          type: boolean
+          nullable: true
+          description: If the payment was a result of an autopay
+      required:
+        - id
+        - amount
+        - facility_id
+        - status
+        - transfer_type
+        - created_on
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+servers:
+  - url: https://production.pier-finance.com/api
+    description: Production
+  - url: https://sandbox.pier-finance.com/api
+    description: Sandbox
