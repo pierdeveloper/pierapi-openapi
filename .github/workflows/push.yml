@@ -1,0 +1,10 @@
+name: push
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  tag:
+    secrets: inherit
+    uses: ./.github/workflows/tag.yml
