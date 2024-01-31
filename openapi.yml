@@ -24,7 +24,7 @@ paths:
                     credit_type: consumer_installment_loan
                     rejection_reasons: []
                     status: pending
-                    lender_of_record: pier
+                    lender_of_record: lender
                     created_on: '2022-12-31T01:36:52.606Z'
         '400':
           description: ''
@@ -131,7 +131,7 @@ paths:
                           minimum_payment:
                             type: interest_plus_percentage_of_principal
                             value: 500
-                      lender_of_record: pier
+                      lender_of_record: lender
                       created_on: '2022-12-31T01:36:52.606Z'
                       decisioned_on: '2023-01-17T05:31:52.955Z'
                     - id: app_f0467657bba948e6a87292e182132848
@@ -139,7 +139,7 @@ paths:
                       credit_type: consumer_installment_loan
                       rejection_reasons: []
                       status: pending
-                      lender_of_record: pier
+                      lender_of_record: lender
                       created_on: '2022-12-31T01:36:52.606Z'
         '401':
           description: ''
@@ -202,7 +202,7 @@ paths:
                         minimum_payment:
                           type: interest_plus_percentage_of_principal
                           value: 500
-                    lender_of_record: pier
+                    lender_of_record: lender
                     created_on: '2022-12-31T01:36:52.606Z'
                     decisioned_on: '2023-01-17T05:31:52.955Z'
         '400':
@@ -290,7 +290,7 @@ paths:
                     borrower_id: bor_1677bbbaf21a4954bb114bd9c4348d8a
                     credit_type: consumer_installment_loan
                     status: rejected
-                    lender_of_record: pier
+                    lender_of_record: lender
                     created_on: '2022-12-31T02:20:35.934Z'
                     decisioned_on: '2022-12-31T02:21:01.842Z'
         '400':
@@ -385,7 +385,7 @@ paths:
                         minimum_payment:
                           type: interest_plus_percentage_of_principal
                           value: 500
-                    lender_of_record: pier
+                    lender_of_record: lender
                     created_on: '2022-12-31T01:36:52.606Z'
                     decisioned_on: '2023-01-17T05:31:52.955Z'
         '400':
@@ -1161,7 +1161,7 @@ paths:
       security: *ref_0
   /configuration/lending_details:
     post:
-      description: Only valid in Pilot Mode
+      description: Only valid in Starter Mode
       operationId: configuration_set_lending_details
       tags:
         - Configuration
@@ -1263,7 +1263,12 @@ paths:
       security: *ref_0
   /coverage/commercial:
     get:
-      description: Retrieve state-by-state commercial coverage
+      description: >-
+        Retrieve state-by-state consumer coverage list. The state-by-state
+        consumer coverage list reflects your state coverage and compliant loan
+        thresholds based on your use case. We configure this based on your
+        licensing and compliance setup, upon our review to ensure you're
+        compliant with state and federal requirements.
       operationId: coverage_retrieveCommercialCoverage
       tags:
         - Coverage
@@ -1309,7 +1314,12 @@ paths:
       security: *ref_0
   /coverage/consumer:
     get:
-      description: Retrieve state-by-state consumer coverage list
+      description: >-
+        Retrieve state-by-state consumer coverage list. The state-by-state
+        consumer coverage list reflects your state coverage and compliant loan
+        thresholds based on your use case. We configure this based on your
+        licensing and compliance setup, upon our review to ensure you're
+        compliant with state and federal requirements.
       operationId: coverage_retrieveConsumerCoverage
       tags:
         - Coverage
@@ -3144,7 +3154,7 @@ components:
         lender_of_record:
           type: string
           nullable: true
-          description: The lender of record (default "pier")
+          description: The lender of record
         credit_data:
           $ref: '#/components/schemas/CreditData'
           nullable: true
