@@ -53,7 +53,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Create an application
-      security: &ref_0
+      security:
         - BearerAuth: []
       requestBody:
         required: true
@@ -156,7 +156,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: List all applications
-      security: *ref_0
+      security:
+        - BearerAuth: []
   /applications/{application_id}/approve:
     post:
       operationId: applications_approve
@@ -232,7 +233,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Approve an application
-      security: *ref_0
+      security:
+        - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -320,7 +322,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Reject an application
-      security: *ref_0
+      security:
+        - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -415,7 +418,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Get an application by ID
-      security: *ref_0
+      security:
+        - BearerAuth: []
   /token:
     post:
       description: >-
@@ -538,7 +542,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Create a business borrower
-      security: *ref_0
+      security:
+        - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -676,7 +681,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Update a business borrower
-      security: *ref_0
+      security:
+        - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -773,7 +779,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Create a consumer borrower
-      security: *ref_0
+      security:
+        - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -865,7 +872,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Update a consumer borrower
-      security: *ref_0
+      security:
+        - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -944,7 +952,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Retrieve a borrower by id
-      security: *ref_0
+      security:
+        - BearerAuth: []
   /borrowers:
     get:
       description: Retrieve all borrowers associated with your account
@@ -1032,7 +1041,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: List all borrowers
-      security: *ref_0
+      security:
+        - BearerAuth: []
   /configuration/webhook:
     post:
       description: Set a url to receive webhook events from Pier.
@@ -1071,7 +1081,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Set webhook URL
-      security: *ref_0
+      security:
+        - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -1120,7 +1131,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Remove a webhook
-      security: *ref_0
+      security:
+        - BearerAuth: []
   /configuration/webhook-verification:
     get:
       description: The Pier public key to use to verify webhook signatures.
@@ -1158,7 +1170,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Verify a webhook with Pier public key
-      security: *ref_0
+      security:
+        - BearerAuth: []
   /configuration/lending_details:
     post:
       description: Only valid in Starter Mode
@@ -1205,7 +1218,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Set lending details
-      security: *ref_0
+      security:
+        - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -1260,7 +1274,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Remove lending details
-      security: *ref_0
+      security:
+        - BearerAuth: []
   /coverage/commercial:
     get:
       description: >-
@@ -1311,7 +1326,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Retrieve commercial lending coverage
-      security: *ref_0
+      security:
+        - BearerAuth: []
   /coverage/consumer:
     get:
       description: >-
@@ -1357,7 +1373,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Retrieve consumer lending coverage
-      security: *ref_0
+      security:
+        - BearerAuth: []
   /rejection_reasons:
     get:
       description: >-
@@ -1457,7 +1474,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Retrieve rejection reasons
-      security: *ref_0
+      security:
+        - BearerAuth: []
   /facilities:
     post:
       description: >-
@@ -1568,7 +1586,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Create a facility
-      security: *ref_0
+      security:
+        - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -1678,7 +1697,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: List all facilities
-      security: *ref_0
+      security:
+        - BearerAuth: []
   /facilities/{facility_id}/disbursements:
     post:
       description: Create a disbursement for a facility
@@ -1739,7 +1759,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Create a disbursement for a facility
-      security: *ref_0
+      security:
+        - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -1805,7 +1826,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: List disbursements for a facility
-      security: *ref_0
+      security:
+        - BearerAuth: []
   /facilities/{facility_id}/close:
     post:
       description: Closes an active facility by setting its status to `closed`
@@ -1902,7 +1924,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Close a facility
-      security: *ref_0
+      security:
+        - BearerAuth: []
   /facilities/{facility_id}/enable_autopay:
     post:
       description: Enables autopay for a facility
@@ -2019,7 +2042,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Enable autopay for a facility
-      security: *ref_0
+      security:
+        - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -2163,7 +2187,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Disable autopay for a facility
-      security: *ref_0
+      security:
+        - BearerAuth: []
   /facilities/{facility_id}/repayment_bank_details:
     post:
       description: Add repayment bank details for a facility
@@ -2274,7 +2299,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Add repayment bank details for a facility
-      security: *ref_0
+      security:
+        - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -2398,7 +2424,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Retrieve a facility
-      security: *ref_0
+      security:
+        - BearerAuth: []
   /facilities/disbursements:
     get:
       description: List disbursements for your account
@@ -2441,7 +2468,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: List all disbursements for your account
-      security: *ref_0
+      security:
+        - BearerAuth: []
   /facilities/{facility_id}/statements:
     get:
       description: List statements for a facility
@@ -2503,7 +2531,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: List statements for a facility
-      security: *ref_0
+      security:
+        - BearerAuth: []
   /facilities/{facility_id}/disbursements/{disbursement_id}:
     get:
       description: Retrieve a disbursement by its id
@@ -2574,7 +2603,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Retrieve a disbursement by its id
-      security: *ref_0
+      security:
+        - BearerAuth: []
   /facilities/{facility_id}/payoff_amounts:
     get:
       description: >-
@@ -2646,7 +2676,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Retrieve payoff amounts for a facility
-      security: *ref_0
+      security:
+        - BearerAuth: []
   /loan_agreements:
     post:
       description: >-
@@ -2699,7 +2730,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Create a loan agreement
-      security: *ref_0
+      security:
+        - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -2757,7 +2789,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: List all loan agreements
-      security: *ref_0
+      security:
+        - BearerAuth: []
   /loan_agreements/{loan_agreement_id}/sign:
     post:
       description: >-
@@ -2818,7 +2851,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Sign a loan agreement
-      security: *ref_0
+      security:
+        - BearerAuth: []
   /loan_agreements/{loan_agreement_id}:
     get:
       description: Retrieve a loan agreement by its id
@@ -2871,7 +2905,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Get a loan agreement by id
-      security: *ref_0
+      security:
+        - BearerAuth: []
   /payments:
     post:
       description: Instructs Pier to initiate an ACH payment for a loan
@@ -2923,7 +2958,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Submit a loan payment
-      security: *ref_0
+      security:
+        - BearerAuth: []
       requestBody:
         required: true
         content:
@@ -2982,7 +3018,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: List all payments
-      security: *ref_0
+      security:
+        - BearerAuth: []
   /payments/{payment_id}:
     get:
       description: Get a payment by its id
@@ -3042,7 +3079,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Get a payment by ID
-      security: *ref_0
+      security:
+        - BearerAuth: []
 components:
   schemas:
     ApplicationId:
@@ -3940,7 +3978,6 @@ components:
         - approved
         - declined
         - pending
-        - needs_review
     Address:
       title: Address
       type: object
