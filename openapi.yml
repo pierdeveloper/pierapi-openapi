@@ -1476,6 +1476,96 @@ paths:
       summary: Retrieve rejection reasons
       security:
         - BearerAuth: []
+  /check_offers:
+    post:
+      description: >-
+        Check a set of offers against our limits for a given state. Customers
+        can pass us a list of offers, which we will run through our compliance
+        limits. We will return a boolean for each offer indicating whether the
+        offer passes our limits or not.
+      operationId: coverage_checkOffers
+      tags:
+        - Coverage
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CheckOffersResponse'
+              examples:
+                Example1:
+                  value:
+                    '25':
+                      is_compliant: false
+                      apr: null
+                    abc:
+                      is_compliant: true
+                      apr: 817
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Check offers
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                state:
+                  type: string
+                  description: The state the borrower is in (2 chars)
+                  example: AK
+                offers:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/CheckOffer'
+                  description: >-
+                    A list of CheckOffer objects, each uniquely identified by an
+                    id.
+              required:
+                - state
+                - offers
+            examples:
+              Example1:
+                value:
+                  state: AK
+                  offers:
+                    - id: '25'
+                      amount: 300000
+                      interest_rate: 750
+                      term: 24
+                      origination_fee: 150
+                      first_payment_date: '2023-10-15'
+                      repayment_frequency: monthly
+                    - id: abc
+                      amount: 300000
+                      interest_rate: 750
+                      term: 24
+                      origination_fee: 150
+                      first_payment_date: '2024-10-15'
+                      repayment_frequency: monthly
   /facilities:
     post:
       description: >-
@@ -4223,6 +4313,69 @@ components:
       type: object
       additionalProperties:
         type: string
+    CheckOffer:
+      title: CheckOffer
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique identifier for the offer used in the check_offers endpoint.
+        amount:
+          type: integer
+          description: The amount (in cents) of the offer (e.g., 300000 for $3,000.00).
+        interest_rate:
+          type: integer
+          description: >-
+            The interest rate (in basis points) charged on the offer (e.g., 750
+            for 7.50%).
+        term:
+          type: integer
+          description: The term of the offer in months (e.g., 24 for a 24-month term).
+        origination_fee:
+          type: integer
+          description: >-
+            The origination fee charged to originate the offer in basis points
+            (e.g., 150 for 1.50%).
+        first_payment_date:
+          type: string
+          description: >-
+            The date of the first payment, in ISO 8601 format (e.g.,
+            "2023-10-15"). This date must be in the future, and is used to
+            calculate the APR.
+        repayment_frequency:
+          $ref: '#/components/schemas/RepaymentFrequency'
+          description: >-
+            The repayment frequency for the offer. Accepted values weekly,
+            biweekly, monthly, semi_monthly_first_15th, semi_monthly_last_15th,
+            semi_monthly.
+      required:
+        - id
+        - amount
+        - interest_rate
+        - term
+        - origination_fee
+        - first_payment_date
+        - repayment_frequency
+    CheckResponse:
+      title: CheckResponse
+      type: object
+      properties:
+        is_compliant:
+          type: boolean
+          description: Boolean indicating whether the offer passes our limits.
+        apr:
+          type: integer
+          nullable: true
+          description: >-
+            The annual percentage rate for the offer. Null if not compliant or
+            not applicable.
+      required:
+        - is_compliant
+    CheckOffersResponse:
+      title: CheckOffersResponse
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/CheckResponse'
     FacilityId:
       title: FacilityId
       type: string
