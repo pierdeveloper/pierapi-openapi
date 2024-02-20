@@ -265,7 +265,7 @@ paths:
                       payment_period: monthly
                       late_payment_fee: 0
                       first_payment_date: '2022-12-31'
-                      term:
+                      loan_term:
                         term_type: months
                         term: 36
   /applications/{application_id}/reject:
@@ -1607,7 +1607,7 @@ paths:
                       payment_period: monthly
                       late_payment_fee: 0
                       first_payment_date: '2022-12-31'
-                      term:
+                      loan_term:
                         term_type: months
                         term: 36
                     id: fac_7264c6575a894548a386939434b0adf3
@@ -1708,7 +1708,7 @@ paths:
             examples:
               Example1:
                 value:
-                  loan_agreement_id: dsb_18e5a3726b3943cda2635f40e1041ba4
+                  loan_agreement_id: doc_43da3b3f95c745e1985a71e9a00d6c27
     get:
       description: List all facilities on your account
       operationId: facilities_listAll
@@ -1739,7 +1739,7 @@ paths:
                         payment_period: monthly
                         late_payment_fee: 0
                         first_payment_date: '2022-12-31'
-                        term:
+                        loan_term:
                           term_type: months
                           term: 36
                       id: fac_7264c6575a894548a386939434b0adf3
@@ -1971,7 +1971,7 @@ paths:
                       payment_period: monthly
                       late_payment_fee: 0
                       first_payment_date: '2022-12-31'
-                      term:
+                      loan_term:
                         term_type: months
                         term: 36
                     id: fac_7264c6575a894548a386939434b0adf3
@@ -2072,7 +2072,7 @@ paths:
                       payment_period: monthly
                       late_payment_fee: 0
                       first_payment_date: '2022-12-31'
-                      term:
+                      loan_term:
                         term_type: months
                         term: 36
                     id: fac_7264c6575a894548a386939434b0adf3
@@ -2224,7 +2224,7 @@ paths:
                       payment_period: monthly
                       late_payment_fee: 0
                       first_payment_date: '2022-12-31'
-                      term:
+                      loan_term:
                         term_type: months
                         term: 36
                     id: fac_7264c6575a894548a386939434b0adf3
@@ -2339,7 +2339,7 @@ paths:
                       payment_period: monthly
                       late_payment_fee: 0
                       first_payment_date: '2022-12-31'
-                      term:
+                      loan_term:
                         term_type: months
                         term: 36
                     id: fac_7264c6575a894548a386939434b0adf3
@@ -2467,7 +2467,7 @@ paths:
                       payment_period: monthly
                       late_payment_fee: 0
                       first_payment_date: '2022-12-31'
-                      term:
+                      loan_term:
                         term_type: months
                         term: 36
                     id: fac_7264c6575a894548a386939434b0adf3
@@ -3428,7 +3428,7 @@ components:
           description: >-
             The fee charged if a borrower misses the payment due date, in cents
             (e.g. 2500 for $25.00)
-        term:
+        loan_term:
           $ref: '#/components/schemas/Term'
           description: The type of term. Accepted values are months, days, payments
         security_amount:
@@ -3440,7 +3440,7 @@ components:
       required:
         - id
         - amount
-        - term
+        - loan_term
     MerchantAdvanceOfferSchema:
       title: MerchantAdvanceOfferSchema
       type: object
