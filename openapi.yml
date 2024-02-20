@@ -82,7 +82,7 @@ paths:
                   nullable: true
                   description: >-
                     For credit applications of type `consumer_bnpl`, the third
-                    party (i.e. merchant) receiving the funds is
+                    party (i.e. merchant) is the person receiving the funds
               required:
                 - borrower_id
                 - credit_type
@@ -117,6 +117,7 @@ paths:
                       status: approved
                       offers:
                         - type: revolving_line_of_credit_offer
+                          id: off_86c05092a4384d89b03ef514ea4fee31
                           amount: 1000000
                           apr: 0
                           annual_fee: 0
@@ -189,6 +190,7 @@ paths:
                     status: approved
                     offers:
                       - type: revolving_line_of_credit_offer
+                        id: off_86c05092a4384d89b03ef514ea4fee31
                         amount: 1000000
                         apr: 0
                         annual_fee: 0
@@ -240,25 +242,32 @@ paths:
         content:
           application/json:
             schema:
-              type: array
-              items:
-                $ref: '#/components/schemas/Offer'
+              type: object
+              properties:
+                offers:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Offer'
+              required:
+                - offers
             examples:
               Example1:
                 value:
-                  - type: loan_offer
-                    amount: 1000000
-                    grace_period:
-                      term: 0
+                  offers:
+                    - type: loan_offer
+                      id: off_86c05092a4384d89b03ef514ea4fee31
+                      amount: 1000000
+                      grace_period:
+                        term: 0
+                        interest_rate: 0
                       interest_rate: 0
-                    interest_rate: 0
-                    origination_fee: 0
-                    payment_period: monthly
-                    late_payment_fee: 0
-                    first_payment_date: '2022-12-31'
-                    term:
-                      term_type: months
-                      term: 36
+                      origination_fee: 0
+                      payment_period: monthly
+                      late_payment_fee: 0
+                      first_payment_date: '2022-12-31'
+                      term:
+                        term_type: months
+                        term: 36
   /applications/{application_id}/reject:
     post:
       description: >-
@@ -374,6 +383,7 @@ paths:
                     status: approved
                     offers:
                       - type: revolving_line_of_credit_offer
+                        id: off_86c05092a4384d89b03ef514ea4fee31
                         amount: 1000000
                         apr: 0
                         annual_fee: 0
@@ -1587,6 +1597,7 @@ paths:
                   value:
                     terms:
                       type: loan_offer
+                      id: off_86c05092a4384d89b03ef514ea4fee31
                       amount: 1000000
                       grace_period:
                         term: 0
@@ -1643,6 +1654,8 @@ paths:
                     interest_accrued_thru: '2023-05-11'
                     next_accrual_cutoff_date: '2023-06-11'
                     scheduled_payoff_date: '2027-05-12'
+                    autopay:
+                      authorized: false
         '400':
           description: ''
           content:
@@ -1716,6 +1729,7 @@ paths:
                   value:
                     - terms:
                         type: loan_offer
+                        id: off_86c05092a4384d89b03ef514ea4fee31
                         amount: 1000000
                         grace_period:
                           term: 0
@@ -1772,6 +1786,8 @@ paths:
                       interest_accrued_thru: '2023-05-11'
                       next_accrual_cutoff_date: '2023-06-11'
                       scheduled_payoff_date: '2027-05-12'
+                      autopay:
+                        authorized: false
         '401':
           description: ''
           content:
@@ -1945,6 +1961,7 @@ paths:
                   value:
                     terms:
                       type: loan_offer
+                      id: off_86c05092a4384d89b03ef514ea4fee31
                       amount: 1000000
                       grace_period:
                         term: 0
@@ -1987,6 +2004,8 @@ paths:
                     interest_accrued_thru: '2023-05-11'
                     next_accrual_cutoff_date: '2023-06-11'
                     scheduled_payoff_date: '2027-05-12'
+                    autopay:
+                      authorized: false
         '400':
           description: ''
           content:
@@ -2043,6 +2062,7 @@ paths:
                   value:
                     terms:
                       type: loan_offer
+                      id: off_86c05092a4384d89b03ef514ea4fee31
                       amount: 1000000
                       grace_period:
                         term: 0
@@ -2098,13 +2118,13 @@ paths:
                     scheduled_payoff_date: '2027-05-12'
                     autopay:
                       authorized: true
+                      authorization_timestamp: '2021-01-01T00:00:00Z'
                       bank_account:
                         bank_account_number: '98989898'
                         bank_routing_number: '021000021'
                         type: checking
-                      authorization_timestamp: '2023-05-12T19:46:09.293Z'
-                      additional_amount: 0
-                      amount_type: statement_balance
+                      amount_type: minimum_payment
+                      additional_amount: 1000
         '400':
           description: ''
           content:
@@ -2194,6 +2214,7 @@ paths:
                   value:
                     terms:
                       type: loan_offer
+                      id: off_86c05092a4384d89b03ef514ea4fee31
                       amount: 1000000
                       grace_period:
                         term: 0
@@ -2250,6 +2271,8 @@ paths:
                     interest_accrued_thru: '2023-05-11'
                     next_accrual_cutoff_date: '2023-06-11'
                     scheduled_payoff_date: '2027-05-12'
+                    autopay:
+                      authorized: false
         '400':
           description: ''
           content:
@@ -2306,6 +2329,7 @@ paths:
                   value:
                     terms:
                       type: loan_offer
+                      id: off_86c05092a4384d89b03ef514ea4fee31
                       amount: 1000000
                       grace_period:
                         term: 0
@@ -2362,6 +2386,8 @@ paths:
                     interest_accrued_thru: '2023-05-11'
                     next_accrual_cutoff_date: '2023-06-11'
                     scheduled_payoff_date: '2027-05-12'
+                    autopay:
+                      authorized: false
         '400':
           description: ''
           content:
@@ -2431,6 +2457,7 @@ paths:
                   value:
                     terms:
                       type: loan_offer
+                      id: off_86c05092a4384d89b03ef514ea4fee31
                       amount: 1000000
                       grace_period:
                         term: 0
@@ -2487,6 +2514,8 @@ paths:
                     interest_accrued_thru: '2023-05-11'
                     next_accrual_cutoff_date: '2023-06-11'
                     scheduled_payoff_date: '2027-05-12'
+                    autopay:
+                      authorized: false
         '400':
           description: ''
           content:
@@ -2834,12 +2863,19 @@ paths:
                   description: >-
                     The `application_id` of the application to create the loan
                     agreement for
+                accepted_offer_id:
+                  $ref: '#/components/schemas/OfferId'
+                  description: >-
+                    The `accepted_offer_id` of the application's offer to create
+                    the loan agreement for
               required:
                 - application_id
+                - accepted_offer_id
             examples:
               Example1:
                 value:
                   application_id: app_f0467657bba948e6a87292e182132848
+                  accepted_offer_id: off_86c05092a4384d89b03ef514ea4fee31
     get:
       description: List all loan agreements on your account
       operationId: loanAgreements_getAll
@@ -3176,6 +3212,9 @@ components:
     ApplicationId:
       title: ApplicationId
       type: string
+    OfferId:
+      title: OfferId
+      type: string
     ApplicationStatus:
       title: ApplicationStatus
       type: string
@@ -3292,6 +3331,8 @@ components:
       title: LineOfCreditOffer
       type: object
       properties:
+        id:
+          $ref: '#/components/schemas/OfferId'
         amount:
           type: integer
           description: >-
@@ -3344,11 +3385,14 @@ components:
             The origination fee charged to originate the line in basis points
             (e.g. '150' for 1.50%)
       required:
+        - id
         - amount
     LoanOffer:
       title: LoanOffer
       type: object
       properties:
+        id:
+          $ref: '#/components/schemas/OfferId'
         amount:
           type: integer
           description: The amount (in cents) of the loan offer (e.g. 200000 for $2,000.00)
@@ -3394,12 +3438,15 @@ components:
             The amount (in cents) of the value of the loan collateral (e.g.
             200000 for $2,000.00). Required for secured loan application types.
       required:
+        - id
         - amount
         - term
     MerchantAdvanceOfferSchema:
       title: MerchantAdvanceOfferSchema
       type: object
       properties:
+        id:
+          $ref: '#/components/schemas/OfferId'
         amount:
           type: integer
           description: The amount (in cents) of the loan offer (e.g. 200000 for $2,000.00)
@@ -3440,6 +3487,7 @@ components:
           nullable: true
           description: The minimum payment due each billing cycle
       required:
+        - id
         - amount
         - factor_rate
     GracePeriod:
@@ -3925,7 +3973,9 @@ components:
         kyc_completion_date:
           type: string
           nullable: true
-          description: Date kyc completed on the borrower (YYYY-MM-DD)
+          description: >-
+            Date kyc completed on the borrower, only required if Pier is not
+            performing KYC (YYYY-MM-DD)
         kyc_status:
           $ref: '#/components/schemas/KycStatus'
           nullable: true
@@ -4100,15 +4150,18 @@ components:
         authorized:
           type: boolean
           description: a bollean indicating whether autopay is authorized
+          example: true
         authorization_timestamp:
           type: string
           format: date-time
+          nullable: true
           description: the timestamp when autopay was authorized
         bank_account:
           $ref: '#/components/schemas/BankAccount'
           nullable: true
         amount_type:
           $ref: '#/components/schemas/AutopayAmountType'
+          nullable: true
           description: >-
             the type of autopay amount, either minimum_payment or
             statement_balance
@@ -4120,8 +4173,6 @@ components:
             cents
       required:
         - authorized
-        - authorization_timestamp
-        - amount_type
     BankAccount:
       title: BankAccount
       type: object
