@@ -1363,11 +1363,14 @@ paths:
                 Example1:
                   value:
                     AL:
-                      limit_1:
-                        amount:
-                          min: 150000
-                          max: 5000000
-                      max_apr: 0
+                      amount_threshold:
+                        min: 5000
+                        max: 5000000
+                      apr_threshold:
+                        type: tiered
+                        max: []
+                      origination_fee_threshold:
+                        max: 500
         '401':
           description: ''
           content:
@@ -4325,13 +4328,16 @@ components:
       title: ConsumerCoverage
       type: object
       properties:
-        max_apr:
-          type: integer
-          nullable: true
-        limit_1:
-          $ref: '#/components/schemas/CoverageLimit'
+        amount_threshold:
+          $ref: '#/components/schemas/AmountThreshold'
+        apr_threshold:
+          $ref: '#/components/schemas/AprThreshold'
+        origination_fee_threshold:
+          $ref: '#/components/schemas/OriginationFeeThreshold'
       required:
-        - limit_1
+        - amount_threshold
+        - apr_threshold
+        - origination_fee_threshold
     BussinessType:
       title: BussinessType
       type: string
@@ -4348,6 +4354,53 @@ components:
           $ref: '#/components/schemas/CoverageAmount'
       required:
         - amount
+    AmountThreshold:
+      title: AmountThreshold
+      type: object
+      properties:
+        min:
+          type: integer
+        max:
+          type: integer
+      required:
+        - min
+        - max
+    AprThreshold:
+      title: AprThreshold
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/AprThresholdType'
+        max:
+          $ref: '#/components/schemas/AprCaps'
+      required:
+        - type
+        - max
+    AprCaps:
+      title: AprCaps
+      type: array
+      items:
+        $ref: '#/components/schemas/AprCap'
+    AprCap:
+      title: AprCap
+      type: object
+      properties:
+        range:
+          $ref: '#/components/schemas/AprRange'
+        rate:
+          type: integer
+          example: 1000
+      required:
+        - range
+        - rate
+    OriginationFeeThreshold:
+      title: OriginationFeeThreshold
+      type: object
+      properties:
+        max:
+          type: integer
+      required:
+        - max
     CoverageAmount:
       title: CoverageAmount
       type: object
@@ -4359,6 +4412,35 @@ components:
       required:
         - min
         - max
+    AprMax:
+      title: AprMax
+      type: object
+      properties:
+        range:
+          $ref: '#/components/schemas/AprRange'
+        rate:
+          type: integer
+      required:
+        - range
+        - rate
+    AprRange:
+      title: AprRange
+      type: object
+      properties:
+        min:
+          type: integer
+        max:
+          type: integer
+      required:
+        - min
+        - max
+    AprThresholdType:
+      title: AprThresholdType
+      type: string
+      enum:
+        - simple
+        - tiered
+        - cumulative
     RetrieveRejectionReasonsResponse:
       title: RetrieveRejectionReasonsResponse
       type: object
