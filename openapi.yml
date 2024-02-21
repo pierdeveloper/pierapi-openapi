@@ -1938,6 +1938,156 @@ paths:
       summary: List disbursements for a facility
       security:
         - BearerAuth: []
+  /facilities/{facility_id}/disbursements/{disbursement_id}/test/initiate:
+    patch:
+      description: Move disbursement to initiated state (_sandbox only_)
+      operationId: facilities_disbursementTestInitiate
+      tags:
+        - Facilities
+      parameters:
+        - name: facility_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/FacilityId'
+          examples:
+            Example1:
+              value: fac_234259b117854d0194bc5864a6c45b42
+        - name: disbursement_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/DisbursementId'
+          examples:
+            Example1:
+              value: dsb_234259b117854d0194bc5864a6c45b42
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+              examples:
+                Example1:
+                  value: Ok.
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Move disbursement to initiated state
+      security:
+        - BearerAuth: []
+  /facilities/{facility_id}/disbursements/{disbursement_id}/test/success:
+    patch:
+      description: Move disbursement to successful state (_sandbox only_)
+      operationId: facilities_disbursementTestSuccess
+      tags:
+        - Facilities
+      parameters:
+        - name: facility_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/FacilityId'
+          examples:
+            Example1:
+              value: fac_234259b117854d0194bc5864a6c45b42
+        - name: disbursement_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/DisbursementId'
+          examples:
+            Example1:
+              value: dsb_234259b117854d0194bc5864a6c45b42
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+              examples:
+                Example1:
+                  value: Ok.
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Move disbursement to successful state
+      security:
+        - BearerAuth: []
+  /facilities/{facility_id}/disbursements/{disbursement_id}/test/failed:
+    patch:
+      description: Move disbursement to failed state (_sandbox only_)
+      operationId: facilities_disbursementTestFailed
+      tags:
+        - Facilities
+      parameters:
+        - name: facility_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/FacilityId'
+          examples:
+            Example1:
+              value: fac_234259b117854d0194bc5864a6c45b42
+        - name: disbursement_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/DisbursementId'
+          examples:
+            Example1:
+              value: dsb_234259b117854d0194bc5864a6c45b42
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+              examples:
+                Example1:
+                  value: Ok.
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Move disbursement to failed state
+      security:
+        - BearerAuth: []
   /facilities/{facility_id}/close:
     post:
       description: Closes an active facility by setting its status to `closed`
@@ -3209,6 +3359,132 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Get a payment by ID
+      security:
+        - BearerAuth: []
+  /payments/{payment_id}/test/initiate:
+    patch:
+      description: Move payment to initiated state (_sandbox only_)
+      operationId: payments_paymentTestInitiate
+      tags:
+        - Payments
+      parameters:
+        - name: payment_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/PaymentId'
+          examples:
+            Example1:
+              value: pmt_234259b117854d0194bc5864a6c45b42
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+              examples:
+                Example1:
+                  value: Ok.
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Move payment to initiated state
+      security:
+        - BearerAuth: []
+  /payments/{payment_id}/test/success:
+    patch:
+      description: Move payment to successful state (_sandbox only_)
+      operationId: payments_paymentTestSuccess
+      tags:
+        - Payments
+      parameters:
+        - name: payment_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/PaymentId'
+          examples:
+            Example1:
+              value: pmt_234259b117854d0194bc5864a6c45b42
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+              examples:
+                Example1:
+                  value: Ok.
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Move payment to successful state
+      security:
+        - BearerAuth: []
+  /payments/{payment_id}/test/failed:
+    patch:
+      description: Move payment to failed state (_sandbox only_)
+      operationId: payments_paymentTestFailed
+      tags:
+        - Payments
+      parameters:
+        - name: payment_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/PaymentId'
+          examples:
+            Example1:
+              value: pmt_234259b117854d0194bc5864a6c45b42
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: string
+              examples:
+                Example1:
+                  value: Ok.
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Move payment to failed state
       security:
         - BearerAuth: []
 components:
