@@ -81,8 +81,9 @@ paths:
                   type: string
                   nullable: true
                   description: >-
-                    For credit applications of type `consumer_bnpl`, the third
-                    party (i.e. merchant) is the person receiving the funds
+                    For credit applications of type `consumer/commercial_bnpl`,
+                    the third party (i.e. merchant - "Acme Co.") is the person
+                    receiving the funds
               required:
                 - borrower_id
                 - credit_type
