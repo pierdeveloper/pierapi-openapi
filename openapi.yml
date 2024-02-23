@@ -3657,7 +3657,10 @@ components:
         minimum_payment:
           $ref: '#/components/schemas/MinimumPayment'
           nullable: true
-          description: The minimum payment due each billing cycle
+          description: >-
+            The minimum payment due each billing cycle. There is also a flat
+            minimum payment of $15, which is used if the calculated minimum
+            payment is less than $15.
         origination_fee:
           type: integer
           nullable: true
