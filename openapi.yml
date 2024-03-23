@@ -1490,7 +1490,7 @@ paths:
       summary: Retrieve rejection reasons
       security:
         - BearerAuth: []
-  /check_offers:
+  /coverage/check_offers:
     post:
       description: >-
         Check a set of offers against our limits for a given state. Customers
@@ -3733,18 +3733,12 @@ components:
         amount:
           type: integer
           description: The amount (in cents) of the loan offer (e.g. 200000 for $2,000.00)
-        factor_rate:
+        interest_rate:
           type: integer
-          description: >-
-            The cost of the merchant advance (in basis points) and will be
-            multiplied by the loan amount (e.g. 150 for 1.50%)
-        payment_period:
-          $ref: '#/components/schemas/RepaymentFrequency'
-          nullable: true
-          description: >-
-            The repayment frequency for the loan. Accepted values weekly,
-            biweekly, monthly, semi_monthly_first_15th, semi_monthly_last_15th,
-            semi_monthly
+          description: The interest rate charged on the advance
+        loan_term:
+          $ref: '#/components/schemas/Term'
+          description: The term of the advance
         origination_fee:
           type: integer
           nullable: true
@@ -3757,22 +3751,11 @@ components:
           description: >-
             The fee charged if a borrower misses the payment due date, in cents
             (e.g. 2500 for $25.00)
-        receivables_portion:
-          type: integer
-          nullable: true
-          description: The portion collected from each sale until the advance is repayed
-        minimum_payment:
-          type: integer
-          nullable: true
-          description: The minimum payment due each billing cycle
-        maximum_payment:
-          type: integer
-          nullable: true
-          description: The minimum payment due each billing cycle
       required:
         - id
         - amount
-        - factor_rate
+        - interest_rate
+        - loan_term
     GracePeriod:
       title: GracePeriod
       type: object
