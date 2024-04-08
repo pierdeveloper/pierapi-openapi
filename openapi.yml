@@ -1511,12 +1511,12 @@ paths:
               examples:
                 Example1:
                   value:
-                    '25':
-                      is_compliant: false
-                      apr: null
-                    abc:
+                    '26':
                       is_compliant: true
-                      apr: 817
+                      apr: 955
+                    '27':
+                      is_compliant: true
+                      apr: 200
         '400':
           description: ''
           content:
@@ -1566,20 +1566,19 @@ paths:
                 value:
                   state: AK
                   offers:
-                    - id: '25'
+                    - id: '26'
+                      type: loan_offer
                       amount: 300000
                       interest_rate: 750
                       term: 24
                       origination_fee: 150
-                      first_payment_date: '2023-10-15'
-                      repayment_frequency: monthly
-                    - id: abc
-                      amount: 300000
-                      interest_rate: 750
-                      term: 24
-                      origination_fee: 150
-                      first_payment_date: '2024-10-15'
-                      repayment_frequency: monthly
+                      first_payment_date: '2024-04-15'
+                      payment_period: monthly
+                    - id: '27'
+                      type: revolving_line_of_credit_offer
+                      amount: 100000
+                      interest_rate: 200
+                      origination_fee: 0
   /facilities:
     post:
       description: >-
@@ -1614,10 +1613,10 @@ paths:
                       loan_term:
                         term_type: months
                         term: 36
-                    id: fac_7264c6575a894548a386939434b0adf3
-                    application_id: app_ad1564ffb1d745f9ad482bb5182708e2
-                    borrower_id: bor_d965bea9f47a4b108562642dbb1dae9f
-                    loan_agreement_id: doc_234259b117854d0194bc5864a6c45b42
+                    id: fac_18e5a3726b3943cda2635f40e1041ba4
+                    application_id: app_f0467657bba948e6a87292e182132848
+                    borrower_id: bor_a1d0c30d77104f35b4c842b99132624e
+                    loan_agreement_id: doc_43da3b3f95c745e1985a71e9a00d6c27
                     credit_type: consumer_installment_loan
                     status: active
                     created_on: '2023-05-12T19:46:09.293Z'
@@ -1746,10 +1745,10 @@ paths:
                         loan_term:
                           term_type: months
                           term: 36
-                      id: fac_7264c6575a894548a386939434b0adf3
-                      application_id: app_ad1564ffb1d745f9ad482bb5182708e2
-                      borrower_id: bor_d965bea9f47a4b108562642dbb1dae9f
-                      loan_agreement_id: doc_234259b117854d0194bc5864a6c45b42
+                      id: fac_18e5a3726b3943cda2635f40e1041ba4
+                      application_id: app_f0467657bba948e6a87292e182132848
+                      borrower_id: bor_a1d0c30d77104f35b4c842b99132624e
+                      loan_agreement_id: doc_43da3b3f95c745e1985a71e9a00d6c27
                       credit_type: consumer_installment_loan
                       status: active
                       created_on: '2023-05-12T19:46:09.293Z'
@@ -1811,7 +1810,9 @@ paths:
         - BearerAuth: []
   /facilities/{facility_id}/disbursements:
     post:
-      description: Create a disbursement for a facility
+      description: >-
+        Create a disbursement for a facility. If disbursements_ach_enabled is
+        false, use none for transfer_type.
       operationId: facilities_disburse
       tags:
         - Facilities
@@ -1823,7 +1824,9 @@ paths:
             $ref: '#/components/schemas/FacilityId'
           examples:
             Example1:
-              value: fac_234259b117854d0194bc5864a6c45b42
+              value: fac_18e5a3726b3943cda2635f40e1041ba4
+            Example2:
+              value: fac_18e5a3726b3943cda2635f40e1041ba4
       responses:
         '200':
           description: ''
@@ -1834,14 +1837,24 @@ paths:
               examples:
                 Example1:
                   value:
-                    id: dsb_234259b117854d0194bc5864a6c45b42
-                    facility_id: fac_234259b117854d0194bc5864a6c45b42
+                    id: dsb_18e5a3726b3943cda2635f40e1041ba4
+                    facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
                     amount: 100000
                     status: pending
                     failure_reason: null
                     date: '2023-02-27'
                     created_on: '2023-02-27T00:00:00Z'
                     transfer_type: standard
+                Example2:
+                  value:
+                    id: dsb_18e5a3726b3943cda2635f40e1041ba4
+                    facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                    amount: 100000
+                    status: pending
+                    failure_reason: null
+                    date: '2023-02-27'
+                    created_on: '2023-02-27T00:00:00Z'
+                    transfer_type: none
         '400':
           description: ''
           content:
@@ -1886,6 +1899,10 @@ paths:
                     bank_routing_number: '021000021'
                     type: checking
                   transfer_type: standard
+              Example2:
+                value:
+                  amount: 100000
+                  transfer_type: none
     get:
       description: List disbursements for a facility
       operationId: facilities_listDisbursementsForFacility
@@ -1913,8 +1930,8 @@ paths:
               examples:
                 Example1:
                   value:
-                    - id: dsb_234259b117854d0194bc5864a6c45b42
-                      facility_id: fac_234259b117854d0194bc5864a6c45b42
+                    - id: dsb_18e5a3726b3943cda2635f40e1041ba4
+                      facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
                       amount: 100000
                       status: pending
                       failure_reason: null
@@ -1952,7 +1969,7 @@ paths:
             $ref: '#/components/schemas/FacilityId'
           examples:
             Example1:
-              value: fac_234259b117854d0194bc5864a6c45b42
+              value: fac_18e5a3726b3943cda2635f40e1041ba4
         - name: disbursement_id
           in: path
           required: true
@@ -1960,7 +1977,7 @@ paths:
             $ref: '#/components/schemas/DisbursementId'
           examples:
             Example1:
-              value: dsb_234259b117854d0194bc5864a6c45b42
+              value: dsb_18e5a3726b3943cda2635f40e1041ba4
       responses:
         '200':
           description: ''
@@ -2002,7 +2019,7 @@ paths:
             $ref: '#/components/schemas/FacilityId'
           examples:
             Example1:
-              value: fac_234259b117854d0194bc5864a6c45b42
+              value: fac_18e5a3726b3943cda2635f40e1041ba4
         - name: disbursement_id
           in: path
           required: true
@@ -2010,7 +2027,7 @@ paths:
             $ref: '#/components/schemas/DisbursementId'
           examples:
             Example1:
-              value: dsb_234259b117854d0194bc5864a6c45b42
+              value: dsb_18e5a3726b3943cda2635f40e1041ba4
       responses:
         '200':
           description: ''
@@ -2052,7 +2069,7 @@ paths:
             $ref: '#/components/schemas/FacilityId'
           examples:
             Example1:
-              value: fac_234259b117854d0194bc5864a6c45b42
+              value: fac_18e5a3726b3943cda2635f40e1041ba4
         - name: disbursement_id
           in: path
           required: true
@@ -2060,7 +2077,7 @@ paths:
             $ref: '#/components/schemas/DisbursementId'
           examples:
             Example1:
-              value: dsb_234259b117854d0194bc5864a6c45b42
+              value: dsb_18e5a3726b3943cda2635f40e1041ba4
       responses:
         '200':
           description: ''
@@ -2128,10 +2145,10 @@ paths:
                       loan_term:
                         term_type: months
                         term: 36
-                    id: fac_7264c6575a894548a386939434b0adf3
-                    application_id: app_ad1564ffb1d745f9ad482bb5182708e2
-                    borrower_id: bor_d965bea9f47a4b108562642dbb1dae9f
-                    loan_agreement_id: doc_234259b117854d0194bc5864a6c45b42
+                    id: fac_18e5a3726b3943cda2635f40e1041ba4
+                    application_id: app_f0467657bba948e6a87292e182132848
+                    borrower_id: bor_a1d0c30d77104f35b4c842b99132624e
+                    loan_agreement_id: doc_43da3b3f95c745e1985a71e9a00d6c27
                     credit_type: consumer_installment_loan
                     created_on: '2023-01-17T04:59:21.773Z'
                     status: closed
@@ -2203,7 +2220,7 @@ paths:
             $ref: '#/components/schemas/FacilityId'
           examples:
             Example1:
-              value: fac_234259b117854d0194bc5864a6c45b42
+              value: fac_18e5a3726b3943cda2635f40e1041ba4
       responses:
         '200':
           description: ''
@@ -2229,10 +2246,10 @@ paths:
                       loan_term:
                         term_type: months
                         term: 36
-                    id: fac_7264c6575a894548a386939434b0adf3
-                    application_id: app_ad1564ffb1d745f9ad482bb5182708e2
-                    borrower_id: bor_d965bea9f47a4b108562642dbb1dae9f
-                    loan_agreement_id: doc_234259b117854d0194bc5864a6c45b42
+                    id: fac_18e5a3726b3943cda2635f40e1041ba4
+                    application_id: app_f0467657bba948e6a87292e182132848
+                    borrower_id: bor_a1d0c30d77104f35b4c842b99132624e
+                    loan_agreement_id: doc_43da3b3f95c745e1985a71e9a00d6c27
                     credit_type: consumer_installment_loan
                     status: active
                     created_on: '2023-05-12T19:46:09.293Z'
@@ -2381,10 +2398,10 @@ paths:
                       loan_term:
                         term_type: months
                         term: 36
-                    id: fac_7264c6575a894548a386939434b0adf3
-                    application_id: app_ad1564ffb1d745f9ad482bb5182708e2
-                    borrower_id: bor_d965bea9f47a4b108562642dbb1dae9f
-                    loan_agreement_id: doc_234259b117854d0194bc5864a6c45b42
+                    id: fac_18e5a3726b3943cda2635f40e1041ba4
+                    application_id: app_f0467657bba948e6a87292e182132848
+                    borrower_id: bor_a1d0c30d77104f35b4c842b99132624e
+                    loan_agreement_id: doc_43da3b3f95c745e1985a71e9a00d6c27
                     credit_type: consumer_installment_loan
                     status: active
                     created_on: '2023-05-12T19:46:09.293Z'
@@ -2470,7 +2487,7 @@ paths:
             $ref: '#/components/schemas/FacilityId'
           examples:
             Example1:
-              value: fac_234259b117854d0194bc5864a6c45b42
+              value: fac_18e5a3726b3943cda2635f40e1041ba4
       responses:
         '200':
           description: ''
@@ -2496,10 +2513,10 @@ paths:
                       loan_term:
                         term_type: months
                         term: 36
-                    id: fac_7264c6575a894548a386939434b0adf3
-                    application_id: app_ad1564ffb1d745f9ad482bb5182708e2
-                    borrower_id: bor_d965bea9f47a4b108562642dbb1dae9f
-                    loan_agreement_id: doc_234259b117854d0194bc5864a6c45b42
+                    id: fac_18e5a3726b3943cda2635f40e1041ba4
+                    application_id: app_f0467657bba948e6a87292e182132848
+                    borrower_id: bor_a1d0c30d77104f35b4c842b99132624e
+                    loan_agreement_id: doc_43da3b3f95c745e1985a71e9a00d6c27
                     credit_type: consumer_installment_loan
                     status: active
                     created_on: '2023-05-12T19:46:09.293Z'
@@ -2624,10 +2641,10 @@ paths:
                       loan_term:
                         term_type: months
                         term: 36
-                    id: fac_7264c6575a894548a386939434b0adf3
-                    application_id: app_ad1564ffb1d745f9ad482bb5182708e2
-                    borrower_id: bor_d965bea9f47a4b108562642dbb1dae9f
-                    loan_agreement_id: doc_234259b117854d0194bc5864a6c45b42
+                    id: fac_18e5a3726b3943cda2635f40e1041ba4
+                    application_id: app_f0467657bba948e6a87292e182132848
+                    borrower_id: bor_a1d0c30d77104f35b4c842b99132624e
+                    loan_agreement_id: doc_43da3b3f95c745e1985a71e9a00d6c27
                     credit_type: consumer_installment_loan
                     status: active
                     created_on: '2023-05-12T19:46:09.293Z'
@@ -2718,8 +2735,8 @@ paths:
               examples:
                 Example1:
                   value:
-                    - id: dsb_234259b117854d0194bc5864a6c45b42
-                      facility_id: fac_234259b117854d0194bc5864a6c45b42
+                    - id: dsb_18e5a3726b3943cda2635f40e1041ba4
+                      facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
                       amount: 100000
                       status: pending
                       failure_reason: null
@@ -2773,7 +2790,7 @@ paths:
                   value:
                     - id: stmt_deb6aba913d84feb987934f50c32bf03
                       statement_date: '2023-03-17'
-                      facility_id: fac_234259b117854d0194bc5864a6c45b42
+                      facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
                       url: >-
                         https://app.docspring.com/submissions/sub_gjX2LS7c6FjqZt12hQ/download
                       created_on: '2023-02-27T00:00:00Z'
@@ -2841,8 +2858,8 @@ paths:
               examples:
                 Example1:
                   value:
-                    id: dsb_234259b117854d0194bc5864a6c45b42
-                    facility_id: fac_234259b117854d0194bc5864a6c45b42
+                    id: dsb_18e5a3726b3943cda2635f40e1041ba4
+                    facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
                     amount: 100000
                     status: pending
                     failure_reason: null
@@ -3189,7 +3206,9 @@ paths:
         - BearerAuth: []
   /payments:
     post:
-      description: Instructs Pier to initiate an ACH payment for a loan
+      description: >-
+        Instructs Pier to initiate an ACH payment for a loan. If
+        repayment_ach_enabled is false, use none for transfer_type.
       operationId: payments_submitPayment
       tags:
         - Payments
@@ -3209,6 +3228,15 @@ paths:
                     facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
                     status: pending
                     transfer_type: standard
+                    created_on: '2023-02-27T00:00:00Z'
+                    is_autopay: false
+                Example2:
+                  value:
+                    id: pmt_18e5a3726b3943cda2635f40e1041ba4
+                    amount: 100000
+                    facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                    status: pending
+                    transfer_type: none
                     created_on: '2023-02-27T00:00:00Z'
                     is_autopay: false
         '400':
@@ -3252,6 +3280,11 @@ paths:
                   facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
                   amount: 100000
                   transfer_type: standard
+              Example2:
+                value:
+                  facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                  amount: 100000
+                  transfer_type: none
     get:
       description: List all payments associated with your account
       operationId: payments_getAll
@@ -3695,7 +3728,7 @@ components:
             The origination fee charged to originate the loan in basis points
             (e.g. 150 for 1.50%)
         payment_period:
-          $ref: '#/components/schemas/RepaymentFrequency'
+          $ref: '#/components/schemas/PaymentPeriod'
           nullable: true
           description: >-
             The repayment frequency for the loan. Accepted values weekly,
@@ -3787,8 +3820,8 @@ components:
       required:
         - term_type
         - term
-    RepaymentFrequency:
-      title: RepaymentFrequency
+    PaymentPeriod:
+      title: PaymentPeriod
       type: string
       enum:
         - weekly
@@ -4581,7 +4614,7 @@ components:
         business_types:
           type: array
           items:
-            $ref: '#/components/schemas/BussinessType'
+            $ref: '#/components/schemas/BusinessType'
           nullable: true
         limit_1:
           $ref: '#/components/schemas/CoverageLimit'
@@ -4601,14 +4634,6 @@ components:
         - amount_threshold
         - apr_threshold
         - origination_fee_threshold
-    BussinessType:
-      title: BussinessType
-      type: string
-      enum:
-        - corporation
-        - partnership
-        - llc
-        - sole_proprietorship
     CoverageLimit:
       title: CoverageLimit
       type: object
@@ -4716,6 +4741,8 @@ components:
         id:
           type: string
           description: Unique identifier for the offer used in the check_offers endpoint.
+        type:
+          $ref: '#/components/schemas/CheckOfferType'
         amount:
           type: integer
           description: The amount (in cents) of the offer (e.g., 300000 for $3,000.00).
@@ -4726,6 +4753,7 @@ components:
             for 7.50%).
         term:
           type: integer
+          nullable: true
           description: The term of the offer in months (e.g., 24 for a 24-month term).
         origination_fee:
           type: integer
@@ -4734,24 +4762,30 @@ components:
             (e.g., 150 for 1.50%).
         first_payment_date:
           type: string
+          nullable: true
           description: >-
             The date of the first payment, in ISO 8601 format (e.g.,
             "2023-10-15"). This date must be in the future, and is used to
             calculate the APR.
-        repayment_frequency:
-          $ref: '#/components/schemas/RepaymentFrequency'
+        payment_period:
+          $ref: '#/components/schemas/PaymentPeriod'
+          nullable: true
           description: >-
             The repayment frequency for the offer. Accepted values weekly,
             biweekly, monthly, semi_monthly_first_15th, semi_monthly_last_15th,
             semi_monthly.
       required:
         - id
+        - type
         - amount
         - interest_rate
-        - term
         - origination_fee
-        - first_payment_date
-        - repayment_frequency
+    CheckOfferType:
+      title: CheckOfferType
+      type: string
+      enum:
+        - loan_offer
+        - revolving_line_of_credit_offer
     CheckResponse:
       title: CheckResponse
       type: object
@@ -4815,7 +4849,7 @@ components:
         id:
           type: string
           description: The id of the disbursement
-          example: dsb_234259b117854d0194bc5864a6c45b42
+          example: dsb_18e5a3726b3943cda2635f40e1041ba4
         facility_id:
           $ref: '#/components/schemas/FacilityId'
         amount:
@@ -4858,13 +4892,13 @@ components:
           example: 100000
         disbursement_bank_account:
           $ref: '#/components/schemas/BankAccount'
+          nullable: true
           description: The bank account to disburse to
         transfer_type:
           $ref: '#/components/schemas/TransferType'
           description: The type of transfer to use for the disbursement
       required:
         - amount
-        - disbursement_bank_account
         - transfer_type
     Facility:
       title: Facility
@@ -4885,7 +4919,7 @@ components:
           description: >-
             The `loan_agreement_id` of the corresponding loan agreement the
             facility is for
-          example: doc_234259b117854d0194bc5864a6c45b42
+          example: doc_43da3b3f95c745e1985a71e9a00d6c27
         credit_type:
           $ref: '#/components/schemas/CreditType'
           description: The type of credit production.
