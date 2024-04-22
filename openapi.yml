@@ -2108,6 +2108,69 @@ paths:
       summary: Move disbursement to failed state
       security:
         - BearerAuth: []
+  /facilities/{facility_id}/reverse_transaction:
+    post:
+      description: >-
+        Reverses a specified disbursement or payment. This endpoint is intended
+        for correcting erroneous transactions. Only customers with ACH disabled
+        can reverse transactions.
+      operationId: facilities_reverseTransaction
+      tags:
+        - Facilities
+      parameters:
+        - name: facility_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/FacilityId'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionReversalResponse'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Reverse a transaction
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                transaction_id:
+                  $ref: '#/components/schemas/TransactionId'
+                  description: The id of the transaction to reverse
+              required:
+                - transaction_id
   /facilities/{facility_id}/close:
     post:
       description: Closes an active facility by setting its status to `closed`
@@ -4816,6 +4879,19 @@ components:
       type: object
       additionalProperties:
         $ref: '#/components/schemas/CheckResponse'
+    TransactionReversalResponse:
+      title: TransactionReversalResponse
+      type: object
+      properties:
+        original:
+          $ref: '#/components/schemas/Transaction'
+          description: The unique identifier of the transaction that was reversed
+        reversed:
+          $ref: '#/components/schemas/ReversedTransaction'
+          description: The unique identifier of the transaction that was reversed
+      required:
+        - original
+        - reversed
     FacilityId:
       title: FacilityId
       type: string
@@ -5077,6 +5153,104 @@ components:
       type: array
       items:
         $ref: '#/components/schemas/AmortizationSchedule'
+    TransactionId:
+      title: TransactionId
+      oneOf:
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - disbursementId
+            value:
+              $ref: '#/components/schemas/DisbursementId'
+          required:
+            - type
+        - type: object
+          properties:
+            type:
+              type: string
+              enum:
+                - paymentId
+            value:
+              $ref: '#/components/schemas/PaymentId'
+          required:
+            - type
+    ReversalMetadata:
+      title: ReversalMetadata
+      type: object
+      properties:
+        reversed_transaction_id:
+          $ref: '#/components/schemas/TransactionId'
+          description: The id of the transaction that was reversed
+        reversed_transaction_creation_time:
+          type: string
+          format: date-time
+          description: The time the transaction that was reversed was created
+      required:
+        - reversed_transaction_id
+        - reversed_transaction_creation_time
+    Transaction:
+      title: Transaction
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - disbursement
+            - $ref: '#/components/schemas/Disbursement'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - payment
+            - $ref: '#/components/schemas/Payment'
+          required:
+            - type
+    ReversedDisbursement:
+      title: ReversedDisbursement
+      type: object
+      properties:
+        reversal_metadata:
+          $ref: '#/components/schemas/ReversalMetadata'
+          description: Metadata about the reversal of the transaction
+      required:
+        - reversal_metadata
+      allOf:
+        - $ref: '#/components/schemas/Disbursement'
+    ReversedTransaction:
+      title: ReversedTransaction
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - disbursement
+            - $ref: '#/components/schemas/ReversedDisbursement'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - payment
+            - $ref: '#/components/schemas/ReversedPayment'
+          required:
+            - type
     AmortizationSchedule:
       title: AmortizationSchedule
       type: object
@@ -5261,6 +5435,17 @@ components:
         - status
         - transfer_type
         - created_on
+    ReversedPayment:
+      title: ReversedPayment
+      type: object
+      properties:
+        reversal_metadata:
+          $ref: '#/components/schemas/ReversalMetadata'
+          description: Metadata about the reversal of the transaction
+      required:
+        - reversal_metadata
+      allOf:
+        - $ref: '#/components/schemas/Payment'
   securitySchemes:
     BearerAuth:
       type: http
