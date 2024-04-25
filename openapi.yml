@@ -1662,6 +1662,31 @@ paths:
                     scheduled_payoff_date: '2027-05-12'
                     autopay:
                       authorized: false
+                    documents:
+                      unsigned_credit_agreement:
+                        document_url: >-
+                          https://storage.googleapis.com/example/unsigned_credit_agreement.pdf
+                        document_id: doc_1234567890abcdef
+                      signed_credit_agreement:
+                        document_url: >-
+                          https://storage.googleapis.com/example/signed_credit_agreement.pdf
+                        document_id: doc_abcdef1234567890
+                      unsigned_ach_authorization:
+                        document_url: >-
+                          https://storage.googleapis.com/example/unsigned_ach_authorization.pdf
+                        document_id: doc_fedcba9876543210
+                      unsigned_autopay_ach_authorization:
+                        document_url: >-
+                          https://storage.googleapis.com/example/unsigned_autopay_ach_authorization.pdf
+                        document_id: doc_0123456789abcdef
+                      signed_ach_authorization:
+                        document_url: >-
+                          https://storage.googleapis.com/example/signed_ach_authorization.pdf
+                        document_id: doc_fedcba0987654321
+                      signed_autopay_ach_authorization:
+                        document_url: >-
+                          https://storage.googleapis.com/example/signed_autopay_ach_authorization.pdf
+                        document_id: doc_0123456789abcdef
         '400':
           description: ''
           content:
@@ -1794,6 +1819,31 @@ paths:
                       scheduled_payoff_date: '2027-05-12'
                       autopay:
                         authorized: false
+                      documents:
+                        unsigned_credit_agreement:
+                          document_url: >-
+                            https://storage.googleapis.com/example/unsigned_credit_agreement.pdf
+                          document_id: doc_1234567890abcdef
+                        signed_credit_agreement:
+                          document_url: >-
+                            https://storage.googleapis.com/example/signed_credit_agreement.pdf
+                          document_id: doc_abcdef1234567890
+                        unsigned_ach_authorization:
+                          document_url: >-
+                            https://storage.googleapis.com/example/unsigned_ach_authorization.pdf
+                          document_id: doc_fedcba9876543210
+                        unsigned_autopay_ach_authorization:
+                          document_url: >-
+                            https://storage.googleapis.com/example/unsigned_autopay_ach_authorization.pdf
+                          document_id: doc_0123456789abcdef
+                        signed_ach_authorization:
+                          document_url: >-
+                            https://storage.googleapis.com/example/signed_ach_authorization.pdf
+                          document_id: doc_fedcba0987654321
+                        signed_autopay_ach_authorization:
+                          document_url: >-
+                            https://storage.googleapis.com/example/signed_autopay_ach_authorization.pdf
+                          document_id: doc_0123456789abcdef
         '401':
           description: ''
           content:
@@ -2272,6 +2322,93 @@ paths:
       summary: Close a facility
       security:
         - BearerAuth: []
+  /facilities/api/facilities/:facility_id/create_autopay_authorization:
+    post:
+      description: >-
+        Creates an unsigned Autopay ACH authorization document for a specified
+        facility. This is a required step before enabling autopay. The user must
+        agree to automatic ACH withdrawals before Pier can initiate payments.
+        This document is automatically signed by the user when you call POST
+        /enable_autopay.
+      operationId: facilities_createAutopayAuthorization
+      tags:
+        - Facilities
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Facility'
+              examples:
+                Example1:
+                  value:
+                    terms:
+                      grace_period:
+                        term: 0
+                        interest_rate: 0
+                      amount: 100000
+                      apr: 200
+                      annual_fee: 0
+                      type: revolving_line_of_credit_offer
+                      interest_rate: 200
+                      late_payment_fee: 0
+                      origination_fee: 0
+                      id: off_2e60b8c4fb7e4a10835e5a7e0641a5d8
+                      minimum_payment:
+                        type: interest_plus_percentage_of_principal
+                        value: 250
+                        floor: 1500
+                    id: FacilityId.Example0
+                    application_id: app_25fbcb8b8bd2417fab99b184678d2437
+                    borrower_id: bor_39addd1e5d7241cfa758e12388cd2fd4
+                    loan_agreement_id: doc_aac8a211dd9f49229dae022c5ecddccd
+                    account_number: '652633487'
+                    credit_type: consumer_revolving_line_of_credit
+                    status: active
+                    autopay:
+                      authorized: false
+                    balance: 0
+                    origination_date: '2024-04-19'
+                    documents:
+                      unsigned_autopay_ach_authorization:
+                        document_url: >-
+                          https://storage.googleapis.com/download/storage/v1/b/pier_loan_docs/o/test%2Fdoc_db4efb43d1c0435ba5d730927d156fa6_unsigned.pdf?generation=1714045339730396&alt=media
+                        document_id: doc_db4efb43d1c0435ba5d730927d156fa6
+                    created_on: '2024-04-25T11:38:54.520Z'
+                    transactions: []
+                    statements: []
+                    payments_due: []
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Create Autopay ACH Authorization
+      security:
+        - BearerAuth: []
   /facilities/{facility_id}/enable_autopay:
     post:
       description: Enables autopay for a facility
@@ -2510,6 +2647,31 @@ paths:
                     scheduled_payoff_date: '2027-05-12'
                     autopay:
                       authorized: false
+                    documents:
+                      unsigned_credit_agreement:
+                        document_url: >-
+                          https://storage.googleapis.com/example/unsigned_credit_agreement.pdf
+                        document_id: doc_1234567890abcdef
+                      signed_credit_agreement:
+                        document_url: >-
+                          https://storage.googleapis.com/example/signed_credit_agreement.pdf
+                        document_id: doc_abcdef1234567890
+                      unsigned_ach_authorization:
+                        document_url: >-
+                          https://storage.googleapis.com/example/unsigned_ach_authorization.pdf
+                        document_id: doc_fedcba9876543210
+                      unsigned_autopay_ach_authorization:
+                        document_url: >-
+                          https://storage.googleapis.com/example/unsigned_autopay_ach_authorization.pdf
+                        document_id: doc_0123456789abcdef
+                      signed_ach_authorization:
+                        document_url: >-
+                          https://storage.googleapis.com/example/signed_ach_authorization.pdf
+                        document_id: doc_fedcba0987654321
+                      signed_autopay_ach_authorization:
+                        document_url: >-
+                          https://storage.googleapis.com/example/signed_autopay_ach_authorization.pdf
+                        document_id: doc_0123456789abcdef
         '400':
           description: ''
           content:
@@ -2625,6 +2787,31 @@ paths:
                     scheduled_payoff_date: '2027-05-12'
                     autopay:
                       authorized: false
+                    documents:
+                      unsigned_credit_agreement:
+                        document_url: >-
+                          https://storage.googleapis.com/example/unsigned_credit_agreement.pdf
+                        document_id: doc_1234567890abcdef
+                      signed_credit_agreement:
+                        document_url: >-
+                          https://storage.googleapis.com/example/signed_credit_agreement.pdf
+                        document_id: doc_abcdef1234567890
+                      unsigned_ach_authorization:
+                        document_url: >-
+                          https://storage.googleapis.com/example/unsigned_ach_authorization.pdf
+                        document_id: doc_fedcba9876543210
+                      unsigned_autopay_ach_authorization:
+                        document_url: >-
+                          https://storage.googleapis.com/example/unsigned_autopay_ach_authorization.pdf
+                        document_id: doc_0123456789abcdef
+                      signed_ach_authorization:
+                        document_url: >-
+                          https://storage.googleapis.com/example/signed_ach_authorization.pdf
+                        document_id: doc_fedcba0987654321
+                      signed_autopay_ach_authorization:
+                        document_url: >-
+                          https://storage.googleapis.com/example/signed_autopay_ach_authorization.pdf
+                        document_id: doc_0123456789abcdef
         '400':
           description: ''
           content:
@@ -2753,6 +2940,31 @@ paths:
                     scheduled_payoff_date: '2027-05-12'
                     autopay:
                       authorized: false
+                    documents:
+                      unsigned_credit_agreement:
+                        document_url: >-
+                          https://storage.googleapis.com/example/unsigned_credit_agreement.pdf
+                        document_id: doc_1234567890abcdef
+                      signed_credit_agreement:
+                        document_url: >-
+                          https://storage.googleapis.com/example/signed_credit_agreement.pdf
+                        document_id: doc_abcdef1234567890
+                      unsigned_ach_authorization:
+                        document_url: >-
+                          https://storage.googleapis.com/example/unsigned_ach_authorization.pdf
+                        document_id: doc_fedcba9876543210
+                      unsigned_autopay_ach_authorization:
+                        document_url: >-
+                          https://storage.googleapis.com/example/unsigned_autopay_ach_authorization.pdf
+                        document_id: doc_0123456789abcdef
+                      signed_ach_authorization:
+                        document_url: >-
+                          https://storage.googleapis.com/example/signed_ach_authorization.pdf
+                        document_id: doc_fedcba0987654321
+                      signed_autopay_ach_authorization:
+                        document_url: >-
+                          https://storage.googleapis.com/example/signed_autopay_ach_authorization.pdf
+                        document_id: doc_0123456789abcdef
         '400':
           description: ''
           content:
@@ -3268,6 +3480,93 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Get a loan agreement by id
+      security:
+        - BearerAuth: []
+  /payments/api/facilities/:facility_id/create_ach_authorization:
+    post:
+      description: >-
+        Creates an unsigned ACH authorization document for a specified facility.
+        This is a required step before submitting a payment if repayment ACH is
+        enabled. The user must agree to ACH withdrawals before Pier can initiate
+        payments. This document is automatically signed by the user when you
+        call POST /payments.
+      operationId: payments_createACHAuthorization
+      tags:
+        - Payments
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Facility'
+              examples:
+                Example1:
+                  value:
+                    terms:
+                      grace_period:
+                        term: 0
+                        interest_rate: 0
+                      amount: 100000
+                      apr: 200
+                      annual_fee: 0
+                      type: revolving_line_of_credit_offer
+                      interest_rate: 200
+                      late_payment_fee: 0
+                      origination_fee: 0
+                      id: off_2e60b8c4fb7e4a10835e5a7e0641a5d8
+                      minimum_payment:
+                        type: interest_plus_percentage_of_principal
+                        value: 250
+                        floor: 1500
+                    id: fac_18e5a3726b3943cda2635f40e1041ba4
+                    application_id: app_25fbcb8b8bd2417fab99b184678d2437
+                    borrower_id: bor_39addd1e5d7241cfa758e12388cd2fd4
+                    loan_agreement_id: doc_aac8a211dd9f49229dae022c5ecddccd
+                    account_number: '652633487'
+                    credit_type: consumer_revolving_line_of_credit
+                    status: active
+                    autopay:
+                      authorized: false
+                    balance: 0
+                    origination_date: '2024-04-19'
+                    documents:
+                      unsigned_ach_authorization:
+                        document_url: >-
+                          https://storage.googleapis.com/download/storage/v1/b/pier_loan_docs/o/test%2Fdoc_db4efb43d1c0435ba5d730927d156fa6_unsigned.pdf?generation=1714045339730396&alt=media
+                        document_id: doc_db4efb43d1c0435ba5d730927d156fa6
+                    created_on: '2024-04-25T11:38:54.520Z'
+                    transactions: []
+                    statements: []
+                    payments_due: []
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Create ACH Authorization
       security:
         - BearerAuth: []
   /payments:
@@ -4986,6 +5285,49 @@ components:
       required:
         - amount
         - transfer_type
+    Document:
+      title: Document
+      type: object
+      properties:
+        document_url:
+          type: string
+          description: The URL where the document can be accessed.
+          example: https://example.com/document.pdf
+        document_id:
+          type: string
+          description: The unique identifier for the document.
+          example: doc_1234567890abcdef
+      required:
+        - document_url
+        - document_id
+    Documents:
+      title: Documents
+      type: object
+      properties:
+        unsigned_credit_agreement:
+          $ref: '#/components/schemas/Document'
+          nullable: true
+          description: The URL and ID for the unsigned credit agreement document.
+        signed_credit_agreement:
+          $ref: '#/components/schemas/Document'
+          nullable: true
+          description: The URL and ID for the signed credit agreement document.
+        unsigned_ach_authorization:
+          $ref: '#/components/schemas/Document'
+          nullable: true
+          description: The URL and ID for the unsigned ACH authorization document.
+        unsigned_autopay_ach_authorization:
+          $ref: '#/components/schemas/Document'
+          nullable: true
+          description: The URL and ID for the unsigned autopay ACH authorization document.
+        signed_ach_authorization:
+          $ref: '#/components/schemas/Document'
+          nullable: true
+          description: The URL and ID for the signed ACH authorization document.
+        signed_autopay_ach_authorization:
+          $ref: '#/components/schemas/Document'
+          nullable: true
+          description: The URL and ID for the signed autopay ACH authorization document.
     Facility:
       title: Facility
       type: object
@@ -5109,6 +5451,10 @@ components:
           $ref: '#/components/schemas/Autopay'
           nullable: true
           description: Whether or not autopay is enabled for the facility.
+        documents:
+          $ref: '#/components/schemas/Documents'
+          nullable: true
+          description: The documents associated with the facility
       required:
         - id
         - application_id
