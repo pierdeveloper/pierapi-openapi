@@ -494,7 +494,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BusinessBorrower'
+                $ref: '#/components/schemas/BusinessBorrowerResponse'
               examples:
                 Example1:
                   value:
@@ -523,14 +523,11 @@ paths:
                         last_name: Dough
                         percent_ownership: 2500
                         phone: '4155555555'
-                        government_identifiers:
-                          ssn: '123456789'
                         id: 63ae91f8eae458cb0d79f77e
                     id: bor_18e5a3726b3943cda2635f40e1041ba4
                     business_name: Apple Landscaping
                     business_type: corporation
                     dba_name: Apple Landscaping
-                    ein: '130256721'
                     incorporation_date: '2000-12-12'
                     kyb_completion_date: '2022-11-15'
                     phone: '4152556465'
@@ -629,7 +626,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/BusinessBorrower'
+                $ref: '#/components/schemas/BusinessBorrowerResponse'
               examples:
                 Example1:
                   value:
@@ -658,14 +655,11 @@ paths:
                         last_name: Dough
                         percent_ownership: 2500
                         phone: '4155555555'
-                        government_identifiers:
-                          ssn: '123456789'
                         id: 63ae91f8eae458cb0d79f77e
                     id: bor_18e5a3726b3943cda2635f40e1041ba4
                     business_name: Apple Landscaping
                     business_type: corporation
                     dba_name: Apple Landscaping
-                    ein: '130256721'
                     incorporation_date: '2000-12-12'
                     kyb_completion_date: '2022-11-15'
                     phone: '4152556465'
@@ -2241,6 +2235,61 @@ paths:
                   description: Payment ID associated with the credit action (if applicable)
               required:
                 - amount
+  /facilities/{facility_id}/disbursements/{disbursement_id}/refund:
+    post:
+      description: >-
+        Refunds a specified disbursement in full. This endpoint is intended for
+        correcting erroneous transactions.
+      operationId: facilities_refundDisbursement
+      tags:
+        - Facilities
+      parameters:
+        - name: facility_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/FacilityId'
+        - name: disbursement_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/DisbursementId'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefundedDisbursement'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Refund a disbursement
+      security:
+        - BearerAuth: []
   /facilities/{facility_id}/close:
     post:
       description: Closes an active facility by setting its status to `closed`
@@ -2345,7 +2394,7 @@ paths:
   /facilities/api/facilities/:facility_id/create_autopay_authorization:
     post:
       description: >-
-        Creates an unsigned Autopay ACH authorization document for a specified
+        Creates an unsigned autopay ACH authorization document for a specified
         facility. This is a required step before enabling autopay. The user must
         agree to automatic ACH withdrawals before Pier can initiate payments.
         This document is automatically signed by the user when you call POST
@@ -2426,7 +2475,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
-      summary: Create Autopay ACH Authorization
+      summary: Create autopay ACH authorization
       security:
         - BearerAuth: []
   /facilities/{facility_id}/enable_autopay:
@@ -3779,6 +3828,57 @@ paths:
       summary: Get a payment by ID
       security:
         - BearerAuth: []
+  /payments/{payment_id}/refund:
+    post:
+      description: >-
+        Refunds a specified disbursement in full. This endpoint is intended for
+        correcting erroneous transactions. Only customers with ACH disabled can
+        refund payments.
+      operationId: payments_refundPayment
+      tags:
+        - Payments
+      parameters:
+        - name: payment_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/PaymentId'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RefundedPayment'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Refund a payment
+      security:
+        - BearerAuth: []
   /payments/{payment_id}/test/initiate:
     patch:
       description: Move payment to initiated state (_sandbox only_)
@@ -4438,6 +4538,73 @@ components:
         - kyb_completion_date
         - state_of_incorporation
         - phone
+    BusinessBorrowerResponse:
+      title: BusinessBorrowerResponse
+      type: object
+      properties:
+        id:
+          $ref: '#/components/schemas/BusinessBorrowerId'
+        address:
+          $ref: '#/components/schemas/Address'
+        beneficial_owners:
+          type: array
+          items:
+            $ref: '#/components/schemas/BeneficialOwnersResponse'
+          description: >-
+            An array of objects representing owners of the business and those
+            who control the funds of the business.
+
+            If no one owns more than 25% of the business, just the individual
+            who has ultimate control of the funds must be included.
+
+            A maximum of 5 objects can be added.
+        business_contact:
+          $ref: '#/components/schemas/BusinessContact'
+          description: The person executing the loan agreement.
+        business_name:
+          type: string
+          description: Legal name of the business
+          example: Apple Landscaping
+        business_type:
+          $ref: '#/components/schemas/BusinessType'
+          description: The type of business entity.
+        created_on:
+          type: string
+          description: Time stamp of borrower's creation date
+          example: '2022-12-30T07:23:36.665Z'
+        dba_name:
+          type: string
+          description: Doing-business-as name of the business
+          example: Apple Landscaping
+        incorporation_date:
+          type: string
+          description: Incorporation date of the business (YYYY-MM-DD)
+          example: '2000-12-12'
+        kyb_completion_date:
+          type: string
+          description: Date kyb completed on the business (YYYY-MM-DD)
+          example: '2022-11-15'
+        phone:
+          type: string
+          description: The phone number of the business
+          example: '4152556465'
+        state_of_incorporation:
+          type: string
+          description: Required 2-digit US state code (e.g. CA, IL, FL, …)
+          example: DE
+      required:
+        - id
+        - address
+        - beneficial_owners
+        - business_contact
+        - business_name
+        - business_type
+        - created_on
+        - dba_name
+        - incorporation_date
+        - kyb_completion_date
+        - phone
+        - state_of_incorporation
     UpdateBusinessBorrowerRequest:
       title: UpdateBusinessBorrowerRequest
       type: object
@@ -4572,12 +4739,9 @@ components:
         - kyb_completion_date
         - phone
         - state_of_incorporation
-    BeneficialOwners:
-      title: BeneficialOwners
+    BeneficialOwnersResponse:
+      title: BeneficialOwnersResponse
       type: object
-      description: >-
-        A person who owns owns 25% or more of the business as well as those who
-        control the funds.
       properties:
         id:
           $ref: '#/components/schemas/BeneficialOwnerId'
@@ -4604,11 +4768,6 @@ components:
           description: >-
             The percent ownership the person has in the business in basis points
             (e.g. 2500 for 25%)
-        government_identifiers:
-          $ref: '#/components/schemas/GovernmentIdentifiers'
-          description: >-
-            The person's government identifiers, required fields dependent on
-            customer configuration
       required:
         - id
         - address
@@ -4618,7 +4777,22 @@ components:
         - last_name
         - phone
         - percent_ownership
+    BeneficialOwners:
+      title: BeneficialOwners
+      type: object
+      description: >-
+        A person who owns owns 25% or more of the business as well as those who
+        control the funds.
+      properties:
+        government_identifiers:
+          $ref: '#/components/schemas/GovernmentIdentifiers'
+          description: >-
+            The person's government identifiers, required fields dependent on
+            customer configuration
+      required:
         - government_identifiers
+      allOf:
+        - $ref: '#/components/schemas/BeneficialOwnersResponse'
     BusinessContact:
       title: BusinessContact
       type: object
@@ -5214,6 +5388,19 @@ components:
       type: object
       additionalProperties:
         $ref: '#/components/schemas/CheckResponse'
+    TransactionReversalResponse:
+      title: TransactionReversalResponse
+      type: object
+      properties:
+        original:
+          $ref: '#/components/schemas/Transaction'
+          description: The unique identifier of the transaction that was refunded
+        refunded:
+          $ref: '#/components/schemas/ReversedTransaction'
+          description: The unique identifier of the transaction that was refunded
+      required:
+        - original
+        - refunded
     FacilityId:
       title: FacilityId
       type: string
@@ -5592,7 +5779,7 @@ components:
       properties:
         reversal_metadata:
           $ref: '#/components/schemas/ReversalMetadata'
-          description: Metadata about the reversal of the transaction
+          description: Metadata about the original transaction being refunded
       required:
         - reversal_metadata
       allOf:
@@ -5603,11 +5790,36 @@ components:
       properties:
         reversal_metadata:
           $ref: '#/components/schemas/ReversalMetadata'
-          description: Metadata about the reversal of the transaction
+          description: Metadata about the original transaction being refunded
       required:
         - reversal_metadata
       allOf:
         - $ref: '#/components/schemas/Payment'
+    ReversedTransaction:
+      title: ReversedTransaction
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - disbursement
+            - $ref: '#/components/schemas/RefundedDisbursement'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - payment
+            - $ref: '#/components/schemas/RefundedPayment'
+          required:
+            - type
     AmortizationSchedule:
       title: AmortizationSchedule
       type: object
