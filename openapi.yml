@@ -523,7 +523,8 @@ paths:
                         last_name: Dough
                         percent_ownership: 2500
                         phone: '4155555555'
-                        ssn: '123456789'
+                        government_identifiers:
+                          ssn: '123456789'
                         id: 63ae91f8eae458cb0d79f77e
                     id: bor_18e5a3726b3943cda2635f40e1041ba4
                     business_name: Apple Landscaping
@@ -592,7 +593,8 @@ paths:
                       last_name: Dough
                       percent_ownership: 2500
                       phone: '4155555555'
-                      ssn: '123456789'
+                      government_identifiers:
+                        ssn: '123456789'
                       id: 63ae91f8eae458cb0d79f77e
                   business_name: Apple Landscaping
                   business_type: corporation
@@ -656,7 +658,8 @@ paths:
                         last_name: Dough
                         percent_ownership: 2500
                         phone: '4155555555'
-                        ssn: '123456789'
+                        government_identifiers:
+                          ssn: '123456789'
                         id: 63ae91f8eae458cb0d79f77e
                     id: bor_18e5a3726b3943cda2635f40e1041ba4
                     business_name: Apple Landscaping
@@ -731,7 +734,8 @@ paths:
                       last_name: Dough
                       percent_ownership: 2500
                       phone: '4155555555'
-                      ssn: '123456789'
+                      government_identifiers:
+                        ssn: '123456789'
                       id: 63ae91f8eae458cb0d79f77e
                   business_name: Apple Landscaping
                   business_type: corporation
@@ -814,7 +818,8 @@ paths:
                   email: jdough@acme.co
                   first_name: Jane
                   last_name: Dough
-                  ssn: '999888777'
+                  government_identifiers:
+                    ssn: '999888777'
                   kyc_completion_date: '2022-11-15'
                   kyc_status: approved
   /borrowers/consumer/{borrower_id}:
@@ -1013,7 +1018,8 @@ paths:
                           last_name: Dough
                           percent_ownership: 2500
                           phone: '4155555555'
-                          ssn: '123456789'
+                          government_identifiers:
+                            ssn: '123456789'
                           id: 63ae91f8eae458cb0d79f77e
                       id: bor_18e5a3726b3943cda2635f40e1041ba4
                       business_name: Apple Landscaping
@@ -1036,7 +1042,8 @@ paths:
                       email: jdough@acme.co
                       first_name: Jane
                       last_name: Dough
-                      ssn: '999888777'
+                      government_identifiers:
+                        ssn: '999888777'
                       kyc_completion_date: '2022-11-15'
                       id: bor_a1d0c30d77104f35b4c842b99132624e
                       created_on: '2022-12-30T07:23:36.665Z'
@@ -2158,13 +2165,10 @@ paths:
       summary: Move disbursement to failed state
       security:
         - BearerAuth: []
-  /facilities/{facility_id}/reverse_transaction:
+  /facilities/{facility_id}/credit:
     post:
-      description: >-
-        Reverses a specified disbursement or payment. This endpoint is intended
-        for correcting erroneous transactions. Only customers with ACH disabled
-        can reverse transactions.
-      operationId: facilities_reverseTransaction
+      description: Credit a facility
+      operationId: facilities_credit
       tags:
         - Facilities
       parameters:
@@ -2179,7 +2183,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TransactionReversalResponse'
+                $ref: '#/components/schemas/RefundedPayment'
         '400':
           description: ''
           content:
@@ -2206,7 +2210,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
-      summary: Reverse a transaction
+      summary: Credit a facility
       security:
         - BearerAuth: []
       requestBody:
@@ -2216,11 +2220,27 @@ paths:
             schema:
               type: object
               properties:
-                transaction_id:
-                  $ref: '#/components/schemas/TransactionId'
-                  description: The id of the transaction to reverse
+                amount:
+                  type: integer
+                  description: >-
+                    The amount to credit the facility, in cents (e.g. 1000 =
+                    $10.00)
+                memo:
+                  type: string
+                  nullable: true
+                  description: A memo to attach to the credit
+                original_disbursement_id:
+                  $ref: '#/components/schemas/DisbursementId'
+                  nullable: true
+                  description: >-
+                    Disbursement ID associated with the credit action (if
+                    applicable)
+                original_payment_id:
+                  $ref: '#/components/schemas/PaymentId'
+                  nullable: true
+                  description: Payment ID associated with the credit action (if applicable)
               required:
-                - transaction_id
+                - amount
   /facilities/{facility_id}/close:
     post:
       description: Closes an active facility by setting its status to `closed`
@@ -4311,6 +4331,18 @@ components:
     BeneficialOwnerId:
       title: BeneficialOwnerId
       type: string
+    GovernmentIdentifiers:
+      title: GovernmentIdentifiers
+      type: object
+      properties:
+        ssn:
+          type: string
+          nullable: true
+          description: The borrower's 9-digit social security number (e.g. 345543221)
+        ssn_last_4:
+          type: string
+          nullable: true
+          description: The last 4 digits of the borrower's social security number
     ConsumerBorrowerId:
       title: ConsumerBorrowerId
       type: string
@@ -4572,9 +4604,11 @@ components:
           description: >-
             The percent ownership the person has in the business in basis points
             (e.g. 2500 for 25%)
-        ssn:
-          type: string
-          description: The person's 9-digit US social security number (e.g. 123456789)
+        government_identifiers:
+          $ref: '#/components/schemas/GovernmentIdentifiers'
+          description: >-
+            The person's government identifiers, required fields dependent on
+            customer configuration
       required:
         - id
         - address
@@ -4584,7 +4618,7 @@ components:
         - last_name
         - phone
         - percent_ownership
-        - ssn
+        - government_identifiers
     BusinessContact:
       title: BusinessContact
       type: object
@@ -4651,17 +4685,18 @@ components:
           $ref: '#/components/schemas/KycStatus'
           nullable: true
           description: Kyc status of a consumer (_sandbox only_)
-        ssn:
-          type: string
-          description: 9-digit social security number of the borrower (e.g. 345543221)
-          example: '999888777'
+        government_identifiers:
+          $ref: '#/components/schemas/GovernmentIdentifiers'
+          nullable: true
+          description: >-
+            The borrower's government identifiers, required fields dependent on
+            customer configuration
       required:
         - address
         - date_of_birth
         - email
         - first_name
         - last_name
-        - ssn
     UpdateConsumerBorrowerRequest:
       title: UpdateConsumerBorrowerRequest
       type: object
@@ -4763,10 +4798,11 @@ components:
           type: string
           description: Date kyc completed on the borrower (YYYY-MM-DD)
           example: '2022-11-15'
-        ssn:
-          type: string
-          description: 9-digit social security number of the borrower (e.g. 345543221)
-          example: '999888777'
+        government_identifiers:
+          $ref: '#/components/schemas/GovernmentIdentifiers'
+          description: >-
+            The borrower's government identifiers, required fields dependent on
+            customer configuration
         created_on:
           type: string
           format: date-time
@@ -4780,7 +4816,7 @@ components:
         - first_name
         - last_name
         - kyc_completion_date
-        - ssn
+        - government_identifiers
         - created_on
     KycStatus:
       title: KycStatus
@@ -5178,19 +5214,6 @@ components:
       type: object
       additionalProperties:
         $ref: '#/components/schemas/CheckResponse'
-    TransactionReversalResponse:
-      title: TransactionReversalResponse
-      type: object
-      properties:
-        original:
-          $ref: '#/components/schemas/Transaction'
-          description: The unique identifier of the transaction that was reversed
-        reversed:
-          $ref: '#/components/schemas/ReversedTransaction'
-          description: The unique identifier of the transaction that was reversed
-      required:
-        - original
-        - reversed
     FacilityId:
       title: FacilityId
       type: string
@@ -5526,16 +5549,18 @@ components:
       title: ReversalMetadata
       type: object
       properties:
-        reversed_transaction_id:
-          $ref: '#/components/schemas/TransactionId'
-          description: The id of the transaction that was reversed
-        reversed_transaction_creation_time:
+        original_payment_id:
+          $ref: '#/components/schemas/PaymentId'
+          nullable: true
+          description: The id of the original payment that was refunded
+        original_disbursement_id:
+          $ref: '#/components/schemas/DisbursementId'
+          nullable: true
+          description: The id of the original disbursement that was refunded
+        memo:
           type: string
-          format: date-time
-          description: The time the transaction that was reversed was created
-      required:
-        - reversed_transaction_id
-        - reversed_transaction_creation_time
+          nullable: true
+          description: A memo about the reversal
     Transaction:
       title: Transaction
       oneOf:
@@ -5561,8 +5586,8 @@ components:
             - $ref: '#/components/schemas/Payment'
           required:
             - type
-    ReversedDisbursement:
-      title: ReversedDisbursement
+    RefundedDisbursement:
+      title: RefundedDisbursement
       type: object
       properties:
         reversal_metadata:
@@ -5572,31 +5597,17 @@ components:
         - reversal_metadata
       allOf:
         - $ref: '#/components/schemas/Disbursement'
-    ReversedTransaction:
-      title: ReversedTransaction
-      oneOf:
-        - type: object
-          allOf:
-            - type: object
-              properties:
-                type:
-                  type: string
-                  enum:
-                    - disbursement
-            - $ref: '#/components/schemas/ReversedDisbursement'
-          required:
-            - type
-        - type: object
-          allOf:
-            - type: object
-              properties:
-                type:
-                  type: string
-                  enum:
-                    - payment
-            - $ref: '#/components/schemas/ReversedPayment'
-          required:
-            - type
+    RefundedPayment:
+      title: RefundedPayment
+      type: object
+      properties:
+        reversal_metadata:
+          $ref: '#/components/schemas/ReversalMetadata'
+          description: Metadata about the reversal of the transaction
+      required:
+        - reversal_metadata
+      allOf:
+        - $ref: '#/components/schemas/Payment'
     AmortizationSchedule:
       title: AmortizationSchedule
       type: object
@@ -5781,17 +5792,6 @@ components:
         - status
         - transfer_type
         - created_on
-    ReversedPayment:
-      title: ReversedPayment
-      type: object
-      properties:
-        reversal_metadata:
-          $ref: '#/components/schemas/ReversalMetadata'
-          description: Metadata about the reversal of the transaction
-      required:
-        - reversal_metadata
-      allOf:
-        - $ref: '#/components/schemas/Payment'
   securitySchemes:
     BearerAuth:
       type: http
