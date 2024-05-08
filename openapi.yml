@@ -5388,15 +5388,15 @@ components:
       type: object
       additionalProperties:
         $ref: '#/components/schemas/CheckResponse'
-    TransactionReversalResponse:
-      title: TransactionReversalResponse
+    TransactionRefundResponse:
+      title: TransactionRefundResponse
       type: object
       properties:
         original:
           $ref: '#/components/schemas/Transaction'
           description: The unique identifier of the transaction that was refunded
         refunded:
-          $ref: '#/components/schemas/ReversedTransaction'
+          $ref: '#/components/schemas/RefundedTransaction'
           description: The unique identifier of the transaction that was refunded
       required:
         - original
@@ -5732,8 +5732,8 @@ components:
               $ref: '#/components/schemas/PaymentId'
           required:
             - type
-    ReversalMetadata:
-      title: ReversalMetadata
+    RefundMetadata:
+      title: RefundMetadata
       type: object
       properties:
         original_payment_id:
@@ -5747,7 +5747,7 @@ components:
         memo:
           type: string
           nullable: true
-          description: A memo about the reversal
+          description: A memo about the refund
     Transaction:
       title: Transaction
       oneOf:
@@ -5777,26 +5777,26 @@ components:
       title: RefundedDisbursement
       type: object
       properties:
-        reversal_metadata:
-          $ref: '#/components/schemas/ReversalMetadata'
+        refund_metadata:
+          $ref: '#/components/schemas/RefundMetadata'
           description: Metadata about the original transaction being refunded
       required:
-        - reversal_metadata
+        - refund_metadata
       allOf:
         - $ref: '#/components/schemas/Disbursement'
     RefundedPayment:
       title: RefundedPayment
       type: object
       properties:
-        reversal_metadata:
-          $ref: '#/components/schemas/ReversalMetadata'
+        refund_metadata:
+          $ref: '#/components/schemas/RefundMetadata'
           description: Metadata about the original transaction being refunded
       required:
-        - reversal_metadata
+        - refund_metadata
       allOf:
         - $ref: '#/components/schemas/Payment'
-    ReversedTransaction:
-      title: ReversedTransaction
+    RefundedTransaction:
+      title: RefundedTransaction
       oneOf:
         - type: object
           allOf:
