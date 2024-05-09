@@ -3835,7 +3835,7 @@ paths:
   /payments/{payment_id}/refund:
     post:
       description: >-
-        Refunds a specified disbursement in full. This endpoint is intended for
+        Refunds a specified payment in full. This endpoint is intended for
         correcting erroneous transactions. Only customers with ACH disabled can
         refund payments.
       operationId: payments_refundPayment
