@@ -3340,6 +3340,7 @@ paths:
                     document_url: https://example.com/document-endpoint-unique-hash
                     created_on: '2022-12-31T20:47:38.152Z'
                     signature_timestamp: null
+                    type: credit_agreement
         '400':
           description: ''
           content:
@@ -3418,6 +3419,7 @@ paths:
                       document_url: https://example.com/document-endpoint-unique-hash
                       created_on: '2022-12-31T20:47:38.152Z'
                       signature_timestamp: null
+                      type: credit_agreement
         '401':
           description: ''
           content:
@@ -3468,6 +3470,7 @@ paths:
                     signature_timestamp: '2022-12-31T21:10:47.610Z'
                     document_url: https://example.com/document-endpoint-unique-hash
                     created_on: '2022-12-31T21:07:16.642Z'
+                    type: credit_agreement
         '400':
           description: ''
           content:
@@ -3528,6 +3531,7 @@ paths:
                     document_url: https://example.com/document-endpoint-unique-hash
                     created_on: '2022-12-31T20:47:38.152Z'
                     signature_timestamp: null
+                    type: credit_agreement
         '401':
           description: ''
           content:
@@ -5902,12 +5906,16 @@ components:
         status:
           $ref: '#/components/schemas/LoanAgreementStatus'
           description: The status of the document
+        type:
+          $ref: '#/components/schemas/DocumentType'
+          description: The type of document
       required:
         - id
         - application_id
         - created_on
         - document_url
         - status
+        - type
     LoanAgreementStatus:
       title: LoanAgreementStatus
       type: string
@@ -5915,6 +5923,14 @@ components:
         - pending_signature
         - signed
         - expired
+    DocumentType:
+      title: DocumentType
+      type: string
+      enum:
+        - credit_agreement
+        - ach_authorization
+        - autopay_ach_authorization
+        - credit_disclosure
     SignLoanAgreementResponse:
       title: SignLoanAgreementResponse
       type: object
@@ -5936,12 +5952,15 @@ components:
           type: string
           format: date-time
           example: '2022-12-31T21:07:16.642Z'
+        type:
+          $ref: '#/components/schemas/DocumentType'
       required:
         - status
         - id
         - application_id
         - document_url
         - created_on
+        - type
     PaymentId:
       title: PaymentId
       type: string
