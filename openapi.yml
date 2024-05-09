@@ -2159,6 +2159,63 @@ paths:
       summary: Move disbursement to failed state
       security:
         - BearerAuth: []
+  /facilities/{facility_id}/payments:
+    get:
+      description: List payments for a facility
+      operationId: facilities_listPayments
+      tags:
+        - Facilities
+      parameters:
+        - name: facility_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/FacilityId'
+          examples:
+            Example1:
+              value: facility_id
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Payment'
+              examples:
+                Example1:
+                  value:
+                    - id: pmt_18e5a3726b3943cda2635f40e1041ba4
+                      amount: 100000
+                      facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                      status: pending
+                      transfer_type: standard
+                      created_on: '2023-02-27T00:00:00Z'
+                      is_autopay: false
+                    - id: pmt_18e5a3726b3943cda2635f40e1041ba4
+                      amount: 100000
+                      facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                      status: processing
+                      transfer_type: standard
+                      created_on: '2023-02-27T00:00:00Z'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: List all payments for a facility
+      security:
+        - BearerAuth: []
   /facilities/{facility_id}/credit:
     post:
       description: Credit a facility
