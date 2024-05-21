@@ -3621,7 +3621,8 @@ paths:
         This is a required step before submitting a payment if repayment ACH is
         enabled. The user must agree to ACH withdrawals before Pier can initiate
         payments. This document is automatically signed by the user when you
-        call POST /payments.
+        call POST /payments. You must create a new ACH authorization document
+        for each payment.
       operationId: payments_createACHAuthorization
       tags:
         - Payments
@@ -3632,46 +3633,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Facility'
-              examples:
-                Example1:
-                  value:
-                    terms:
-                      grace_period:
-                        term: 0
-                        interest_rate: 0
-                      amount: 100000
-                      apr: 200
-                      annual_fee: 0
-                      type: revolving_line_of_credit_offer
-                      interest_rate: 200
-                      late_payment_fee: 0
-                      origination_fee: 0
-                      id: off_2e60b8c4fb7e4a10835e5a7e0641a5d8
-                      minimum_payment:
-                        type: interest_plus_percentage_of_principal
-                        value: 250
-                        floor: 1500
-                    id: fac_18e5a3726b3943cda2635f40e1041ba4
-                    application_id: app_25fbcb8b8bd2417fab99b184678d2437
-                    borrower_id: bor_39addd1e5d7241cfa758e12388cd2fd4
-                    loan_agreement_id: doc_aac8a211dd9f49229dae022c5ecddccd
-                    account_number: '652633487'
-                    credit_type: consumer_revolving_line_of_credit
-                    status: active
-                    autopay:
-                      authorized: false
-                    balance: 0
-                    origination_date: '2024-04-19'
-                    documents:
-                      unsigned_ach_authorization:
-                        document_url: >-
-                          https://storage.googleapis.com/download/storage/v1/b/pier_loan_docs/o/test%2Fdoc_db4efb43d1c0435ba5d730927d156fa6_unsigned.pdf?generation=1714045339730396&alt=media
-                        document_id: doc_db4efb43d1c0435ba5d730927d156fa6
-                    created_on: '2024-04-25T11:38:54.520Z'
-                    transactions: []
-                    statements: []
-                    payments_due: []
+                $ref: '#/components/schemas/Document'
         '400':
           description: ''
           content:
@@ -3777,11 +3739,13 @@ paths:
                   facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
                   amount: 100000
                   transfer_type: standard
+                  ach_authorization_id: doc_43da3b3f95c745e1985a71e9a00d6c27
               Example2:
                 value:
                   facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
                   amount: 100000
                   transfer_type: none
+                  ach_authorization_id: doc_43da3b3f95c745e1985a71e9a00d6c27
     get:
       description: List all payments associated with your account
       operationId: payments_getAll
@@ -6088,10 +6052,15 @@ components:
         transfer_type:
           $ref: '#/components/schemas/TransferType'
           description: The type of ACH transfer
+        ach_authorization_id:
+          type: string
+          description: The Document ID of an unused ACH authorization document
+          example: doc_43da3b3f95c745e1985a71e9a00d6c27
       required:
         - facility_id
         - amount
         - transfer_type
+        - ach_authorization_id
     Payment:
       title: Payment
       type: object
