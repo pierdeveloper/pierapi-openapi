@@ -5580,6 +5580,21 @@ components:
           type: string
           description: The URL where the document can be accessed.
           example: https://example.com/document.pdf
+        id:
+          type: string
+          description: The unique identifier for the document.
+          example: doc_1234567890abcdef
+      required:
+        - document_url
+        - id
+    FacilityDocument:
+      title: FacilityDocument
+      type: object
+      properties:
+        document_url:
+          type: string
+          description: The URL where the document can be accessed.
+          example: https://example.com/document.pdf
         document_id:
           type: string
           description: The unique identifier for the document.
@@ -5592,27 +5607,27 @@ components:
       type: object
       properties:
         unsigned_credit_agreement:
-          $ref: '#/components/schemas/Document'
+          $ref: '#/components/schemas/FacilityDocument'
           nullable: true
           description: The URL and ID for the unsigned credit agreement document.
         signed_credit_agreement:
-          $ref: '#/components/schemas/Document'
+          $ref: '#/components/schemas/FacilityDocument'
           nullable: true
           description: The URL and ID for the signed credit agreement document.
         unsigned_ach_authorization:
-          $ref: '#/components/schemas/Document'
+          $ref: '#/components/schemas/FacilityDocument'
           nullable: true
           description: The URL and ID for the unsigned ACH authorization document.
         unsigned_autopay_ach_authorization:
-          $ref: '#/components/schemas/Document'
+          $ref: '#/components/schemas/FacilityDocument'
           nullable: true
           description: The URL and ID for the unsigned autopay ACH authorization document.
         signed_ach_authorization:
-          $ref: '#/components/schemas/Document'
+          $ref: '#/components/schemas/FacilityDocument'
           nullable: true
           description: The URL and ID for the signed ACH authorization document.
         signed_autopay_ach_authorization:
-          $ref: '#/components/schemas/Document'
+          $ref: '#/components/schemas/FacilityDocument'
           nullable: true
           description: The URL and ID for the signed autopay ACH authorization document.
     Facility:
