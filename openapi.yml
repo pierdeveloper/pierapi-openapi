@@ -2450,7 +2450,61 @@ paths:
       summary: Close a facility
       security:
         - BearerAuth: []
-  /facilities/api/facilities/:facility_id/create_autopay_authorization:
+  /facilities/{facility_id}/create_ach_authorization:
+    post:
+      description: >-
+        Creates an unsigned ACH authorization document for a specified facility.
+        This is a required step before submitting a payment if repayment ACH is
+        enabled. The user must agree to ACH withdrawals before Pier can initiate
+        payments. This document is automatically signed by the user when you
+        call POST /payments. You must create a new ACH authorization document
+        for each payment.
+      operationId: facilities_createACHAuthorization
+      tags:
+        - Facilities
+      parameters:
+        - name: facility_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/FacilityId'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Create ACH Authorization
+      security:
+        - BearerAuth: []
+  /facilities/{facility_id}/create_autopay_authorization:
     post:
       description: >-
         Creates an unsigned autopay ACH authorization document for a specified
@@ -2461,7 +2515,15 @@ paths:
       operationId: facilities_createAutopayAuthorization
       tags:
         - Facilities
-      parameters: []
+      parameters:
+        - name: facility_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/FacilityId'
+          examples:
+            Example1:
+              value: fac_18e5a3726b3943cda2635f40e1041ba4
       responses:
         '200':
           description: ''
@@ -3612,55 +3674,6 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Get a loan agreement by id
-      security:
-        - BearerAuth: []
-  /payments/api/facilities/:facility_id/create_ach_authorization:
-    post:
-      description: >-
-        Creates an unsigned ACH authorization document for a specified facility.
-        This is a required step before submitting a payment if repayment ACH is
-        enabled. The user must agree to ACH withdrawals before Pier can initiate
-        payments. This document is automatically signed by the user when you
-        call POST /payments. You must create a new ACH authorization document
-        for each payment.
-      operationId: payments_createACHAuthorization
-      tags:
-        - Payments
-      parameters: []
-      responses:
-        '200':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Document'
-        '400':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '401':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '404':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorBody'
-        '429':
-          description: ''
-        '500':
-          description: ''
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ErrorBody'
-      summary: Create ACH Authorization
       security:
         - BearerAuth: []
   /payments:
