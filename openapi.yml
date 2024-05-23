@@ -2468,6 +2468,9 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/FacilityId'
+          examples:
+            Example1:
+              value: fac_18e5a3726b3943cda2635f40e1041ba4
       responses:
         '200':
           description: ''
@@ -2475,6 +2478,11 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Document'
+              examples:
+                Example1:
+                  value:
+                    document_url: https://example.com/document.pdf
+                    id: doc_1234567890abcdef
         '400':
           description: ''
           content:
@@ -2550,7 +2558,7 @@ paths:
                         type: interest_plus_percentage_of_principal
                         value: 250
                         floor: 1500
-                    id: FacilityId.Example0
+                    id: fac_18e5a3726b3943cda2635f40e1041ba4
                     application_id: app_25fbcb8b8bd2417fab99b184678d2437
                     borrower_id: bor_39addd1e5d7241cfa758e12388cd2fd4
                     loan_agreement_id: doc_aac8a211dd9f49229dae022c5ecddccd
