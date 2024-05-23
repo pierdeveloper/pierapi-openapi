@@ -1690,6 +1690,7 @@ paths:
                         document_url: >-
                           https://storage.googleapis.com/example/signed_autopay_ach_authorization.pdf
                         document_id: doc_0123456789abcdef
+                    remaining_statement_balance: 7500
         '400':
           description: ''
           content:
@@ -1847,6 +1848,7 @@ paths:
                           document_url: >-
                             https://storage.googleapis.com/example/signed_autopay_ach_authorization.pdf
                           document_id: doc_0123456789abcdef
+                      remaining_statement_balance: 7500
         '401':
           description: ''
           content:
@@ -2421,6 +2423,7 @@ paths:
                     scheduled_payoff_date: '2027-05-12'
                     autopay:
                       authorized: false
+                    remaining_statement_balance: 7500
         '400':
           description: ''
           content:
@@ -2569,6 +2572,7 @@ paths:
                       authorized: false
                     balance: 0
                     origination_date: '2024-04-19'
+                    remaining_statement_balance: 7500
                     documents:
                       unsigned_autopay_ach_authorization:
                         document_url: >-
@@ -2697,6 +2701,7 @@ paths:
                         type: checking
                       amount_type: minimum_payment
                       additional_amount: 1000
+                    remaining_statement_balance: 7500
         '400':
           description: ''
           content:
@@ -2870,6 +2875,7 @@ paths:
                         document_url: >-
                           https://storage.googleapis.com/example/signed_autopay_ach_authorization.pdf
                         document_id: doc_0123456789abcdef
+                    remaining_statement_balance: 7500
         '400':
           description: ''
           content:
@@ -3010,6 +3016,7 @@ paths:
                         document_url: >-
                           https://storage.googleapis.com/example/signed_autopay_ach_authorization.pdf
                         document_id: doc_0123456789abcdef
+                    remaining_statement_balance: 7500
         '400':
           description: ''
           content:
@@ -3163,6 +3170,7 @@ paths:
                         document_url: >-
                           https://storage.googleapis.com/example/signed_autopay_ach_authorization.pdf
                         document_id: doc_0123456789abcdef
+                    remaining_statement_balance: 7500
         '400':
           description: ''
           content:
@@ -3270,6 +3278,13 @@ paths:
                       url: >-
                         https://app.docspring.com/submissions/sub_gjX2LS7c6FjqZt12hQ/download
                       created_on: '2023-02-27T00:00:00Z'
+                      statement_start_date: '2023-02-17'
+                      balance: 500000
+                      principal_balance: 500000
+                      interest_balance: 0
+                      minimum_payment: 12445
+                      due_date: '2023-03-17'
+                      transactions: []
         '400':
           description: ''
           content:
@@ -5486,6 +5501,31 @@ components:
       type: object
       additionalProperties:
         $ref: '#/components/schemas/CheckResponse'
+    Transaction:
+      title: Transaction
+      oneOf:
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - disbursement
+            - $ref: '#/components/schemas/Disbursement'
+          required:
+            - type
+        - type: object
+          allOf:
+            - type: object
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - payment
+            - $ref: '#/components/schemas/Payment'
+          required:
+            - type
     TransactionRefundResponse:
       title: TransactionRefundResponse
       type: object
@@ -5515,8 +5555,37 @@ components:
           example: stmt_deb6aba913d84feb987934f50c32bf03
         statement_date:
           type: string
-          description: The date of the statement (YYYY-MM-DD)
+          description: The end date of the statement (YYYY-MM-DD)
           example: '2023-03-17'
+        statement_start_date:
+          type: string
+          description: The start date of the statement (YYYY-MM-DD)
+          example: '2023-02-17'
+        balance:
+          type: integer
+          description: The balance of the statement, in cents
+          example: 500000
+        principal_balance:
+          type: integer
+          description: The principal balance of the statement, in cents
+          example: 500000
+        interest_balance:
+          type: integer
+          description: The interest balance of the statement, in cents
+          example: 0
+        minimum_payment:
+          type: integer
+          description: The minimum payment due, in cents
+          example: 12445
+        due_date:
+          type: string
+          description: The due date of the statement (YYYY-MM-DD)
+          example: '2023-03-17'
+        transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Transaction'
+          description: An array of transactions made (empty if no payments are due)
         facility_id:
           $ref: '#/components/schemas/FacilityId'
         url:
@@ -5532,6 +5601,13 @@ components:
       required:
         - id
         - statement_date
+        - statement_start_date
+        - balance
+        - principal_balance
+        - interest_balance
+        - minimum_payment
+        - due_date
+        - transactions
         - facility_id
         - url
         - created_on
@@ -5778,6 +5854,13 @@ components:
           $ref: '#/components/schemas/Documents'
           nullable: true
           description: The documents associated with the facility
+        remaining_statement_balance:
+          type: integer
+          description: >-
+            The amount, in cents, of the last statement balance, less any
+            payments made after the statement was created. Will be set to null
+            until first statement is created.
+          example: 7500
       required:
         - id
         - application_id
@@ -5791,6 +5874,7 @@ components:
         - statements
         - payments_due
         - terms
+        - remaining_statement_balance
     CreditStatus:
       title: CreditStatus
       type: string
@@ -5861,31 +5945,6 @@ components:
           type: string
           nullable: true
           description: A memo about the refund
-    Transaction:
-      title: Transaction
-      oneOf:
-        - type: object
-          allOf:
-            - type: object
-              properties:
-                type:
-                  type: string
-                  enum:
-                    - disbursement
-            - $ref: '#/components/schemas/Disbursement'
-          required:
-            - type
-        - type: object
-          allOf:
-            - type: object
-              properties:
-                type:
-                  type: string
-                  enum:
-                    - payment
-            - $ref: '#/components/schemas/Payment'
-          required:
-            - type
     RefundedDisbursement:
       title: RefundedDisbursement
       type: object
