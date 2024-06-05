@@ -1632,7 +1632,10 @@ paths:
                     origination_date: '2023-05-12'
                     disbursement_date: '2023-05-12'
                     remaining_term: 48
-                    payments_due: []
+                    payments_due:
+                      - payment_amount: 123456
+                        payment_amount_remaining: 123456
+                        payment_due_date: '2023-06-12'
                     amortization_schedule:
                       - payment_date: '2023-11-02'
                         interest_payment_amount: 0
@@ -1652,8 +1655,55 @@ paths:
                       bank_account_number: '98989898'
                       bank_routing_number: '021000021'
                       type: checking
-                    transactions: []
-                    statements: []
+                    transactions:
+                      - amount: 100000
+                        transaction_date: '2023-05-12'
+                        effective_date: '2023-05-12'
+                        description: Disbursement
+                      - amount: 500000
+                        transaction_date: '2024-06-02'
+                        effective_date: '2024-06-02'
+                        description: Principal Reduction
+                    statements:
+                      - id: stmt_deb6aba913d84feb987934f50c32bf03
+                        statement_date: '2023-03-17'
+                        facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                        url: >-
+                          https://app.docspring.com/submissions/sub_gjX2LS7c6FjqZt12hQ/download
+                        created_on: '2023-02-27T00:00:00Z'
+                        statement_start_date: '2024-06-17T00:00:00.000Z'
+                        balance_due: 500000
+                        current_principal_balance: 500000
+                        current_interest_balance: 10000
+                        interest_charged: 0
+                        minimum_payment: 12445
+                        due_date: '2023-03-17'
+                        transactions:
+                          - amount: 100000
+                            transaction_date: '2023-05-12'
+                            effective_date: '2023-05-12'
+                            description: Disbursement
+                          - amount: 500000
+                            transaction_date: '2024-06-02'
+                            effective_date: '2024-06-02'
+                            description: Principal Reduction
+                        payments:
+                          - id: pmt_18e5a3726b3943cda2635f40e1041ba4
+                            amount: 100000
+                            facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                            status: settled
+                            transfer_type: standard
+                            created_on: '2023-02-27T00:00:00Z'
+                            is_autopay: false
+                        disbursements:
+                          - id: dsb_18e5a3726b3943cda2635f40e1041ba4
+                            facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                            amount: 100000
+                            status: pending
+                            failure_reason: null
+                            date: '2023-02-27'
+                            created_on: '2023-02-27T00:00:00Z'
+                            transfer_type: standard
                     next_payment_amount: 124425
                     next_payment_due_date: '2023-06-12'
                     current_payment_due_date: '2023-06-12'
@@ -1691,6 +1741,10 @@ paths:
                           https://storage.googleapis.com/example/signed_autopay_ach_authorization.pdf
                         document_id: doc_0123456789abcdef
                     remaining_statement_balance: 7500
+                    remaining_minimum_balance: 7500
+                    last_statement_info:
+                      last_statement_date: '2024-06-01T00:00:00.000Z'
+                      last_statement_amount: 47000
         '400':
           description: ''
           content:
@@ -1790,7 +1844,10 @@ paths:
                       origination_date: '2023-05-12'
                       disbursement_date: '2023-05-12'
                       remaining_term: 48
-                      payments_due: []
+                      payments_due:
+                        - payment_amount: 123456
+                          payment_amount_remaining: 123456
+                          payment_due_date: '2023-06-12'
                       amortization_schedule:
                         - payment_date: '2023-11-02'
                           interest_payment_amount: 0
@@ -1810,8 +1867,55 @@ paths:
                         bank_account_number: '98989898'
                         bank_routing_number: '021000021'
                         type: checking
-                      transactions: []
-                      statements: []
+                      transactions:
+                        - amount: 100000
+                          transaction_date: '2023-05-12'
+                          effective_date: '2023-05-12'
+                          description: Disbursement
+                        - amount: 500000
+                          transaction_date: '2024-06-02'
+                          effective_date: '2024-06-02'
+                          description: Principal Reduction
+                      statements:
+                        - id: stmt_deb6aba913d84feb987934f50c32bf03
+                          statement_date: '2023-03-17'
+                          facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                          url: >-
+                            https://app.docspring.com/submissions/sub_gjX2LS7c6FjqZt12hQ/download
+                          created_on: '2023-02-27T00:00:00Z'
+                          statement_start_date: '2024-06-17T00:00:00.000Z'
+                          balance_due: 500000
+                          current_principal_balance: 500000
+                          current_interest_balance: 10000
+                          interest_charged: 0
+                          minimum_payment: 12445
+                          due_date: '2023-03-17'
+                          transactions:
+                            - amount: 100000
+                              transaction_date: '2023-05-12'
+                              effective_date: '2023-05-12'
+                              description: Disbursement
+                            - amount: 500000
+                              transaction_date: '2024-06-02'
+                              effective_date: '2024-06-02'
+                              description: Principal Reduction
+                          payments:
+                            - id: pmt_18e5a3726b3943cda2635f40e1041ba4
+                              amount: 100000
+                              facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                              status: settled
+                              transfer_type: standard
+                              created_on: '2023-02-27T00:00:00Z'
+                              is_autopay: false
+                          disbursements:
+                            - id: dsb_18e5a3726b3943cda2635f40e1041ba4
+                              facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                              amount: 100000
+                              status: pending
+                              failure_reason: null
+                              date: '2023-02-27'
+                              created_on: '2023-02-27T00:00:00Z'
+                              transfer_type: standard
                       next_payment_amount: 124425
                       next_payment_due_date: '2023-06-12'
                       current_payment_due_date: '2023-06-12'
@@ -1849,6 +1953,10 @@ paths:
                             https://storage.googleapis.com/example/signed_autopay_ach_authorization.pdf
                           document_id: doc_0123456789abcdef
                       remaining_statement_balance: 7500
+                      remaining_minimum_balance: 7500
+                      last_statement_info:
+                        last_statement_date: '2024-06-01T00:00:00.000Z'
+                        last_statement_amount: 47000
         '401':
           description: ''
           content:
@@ -2424,6 +2532,10 @@ paths:
                     autopay:
                       authorized: false
                     remaining_statement_balance: 7500
+                    remaining_minimum_balance: 7500
+                    last_statement_info:
+                      last_statement_date: '2024-06-01T00:00:00.000Z'
+                      last_statement_amount: 47000
         '400':
           description: ''
           content:
@@ -2579,9 +2691,60 @@ paths:
                           https://storage.googleapis.com/download/storage/v1/b/pier_loan_docs/o/test%2Fdoc_db4efb43d1c0435ba5d730927d156fa6_unsigned.pdf?generation=1714045339730396&alt=media
                         document_id: doc_db4efb43d1c0435ba5d730927d156fa6
                     created_on: '2024-04-25T11:38:54.520Z'
-                    transactions: []
-                    statements: []
-                    payments_due: []
+                    transactions:
+                      - amount: 100000
+                        transaction_date: '2023-05-12'
+                        effective_date: '2023-05-12'
+                        description: Disbursement
+                      - amount: 500000
+                        transaction_date: '2024-06-02'
+                        effective_date: '2024-06-02'
+                        description: Principal Reduction
+                    statements:
+                      - id: stmt_deb6aba913d84feb987934f50c32bf03
+                        statement_date: '2023-03-17'
+                        facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                        url: >-
+                          https://app.docspring.com/submissions/sub_gjX2LS7c6FjqZt12hQ/download
+                        created_on: '2023-02-27T00:00:00Z'
+                        statement_start_date: '2024-06-17T00:00:00.000Z'
+                        balance_due: 500000
+                        current_principal_balance: 500000
+                        current_interest_balance: 10000
+                        interest_charged: 0
+                        minimum_payment: 12445
+                        due_date: '2023-03-17'
+                        transactions:
+                          - amount: 100000
+                            transaction_date: '2023-05-12'
+                            effective_date: '2023-05-12'
+                            description: Disbursement
+                          - amount: 500000
+                            transaction_date: '2024-06-02'
+                            effective_date: '2024-06-02'
+                            description: Principal Reduction
+                        payments:
+                          - id: pmt_18e5a3726b3943cda2635f40e1041ba4
+                            amount: 100000
+                            facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                            status: settled
+                            transfer_type: standard
+                            created_on: '2023-02-27T00:00:00Z'
+                            is_autopay: false
+                        disbursements:
+                          - id: dsb_18e5a3726b3943cda2635f40e1041ba4
+                            facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                            amount: 100000
+                            status: pending
+                            failure_reason: null
+                            date: '2023-02-27'
+                            created_on: '2023-02-27T00:00:00Z'
+                            transfer_type: standard
+                    payments_due:
+                      - payment_amount: 123456
+                        payment_amount_remaining: 123456
+                        payment_due_date: '2023-06-12'
+                    remaining_minimum_balance: 7500
         '400':
           description: ''
           content:
@@ -2664,7 +2827,10 @@ paths:
                     origination_date: '2023-05-12'
                     disbursement_date: '2023-05-12'
                     remaining_term: 48
-                    payments_due: []
+                    payments_due:
+                      - payment_amount: 123456
+                        payment_amount_remaining: 123456
+                        payment_due_date: '2023-06-12'
                     amortization_schedule:
                       - payment_date: '2023-11-02'
                         interest_payment_amount: 0
@@ -2681,8 +2847,55 @@ paths:
                         balance_amount: 83334
                         item_index: 2
                     repayment_bank_details: null
-                    transactions: []
-                    statements: []
+                    transactions:
+                      - amount: 100000
+                        transaction_date: '2023-05-12'
+                        effective_date: '2023-05-12'
+                        description: Disbursement
+                      - amount: 500000
+                        transaction_date: '2024-06-02'
+                        effective_date: '2024-06-02'
+                        description: Principal Reduction
+                    statements:
+                      - id: stmt_deb6aba913d84feb987934f50c32bf03
+                        statement_date: '2023-03-17'
+                        facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                        url: >-
+                          https://app.docspring.com/submissions/sub_gjX2LS7c6FjqZt12hQ/download
+                        created_on: '2023-02-27T00:00:00Z'
+                        statement_start_date: '2024-06-17T00:00:00.000Z'
+                        balance_due: 500000
+                        current_principal_balance: 500000
+                        current_interest_balance: 10000
+                        interest_charged: 0
+                        minimum_payment: 12445
+                        due_date: '2023-03-17'
+                        transactions:
+                          - amount: 100000
+                            transaction_date: '2023-05-12'
+                            effective_date: '2023-05-12'
+                            description: Disbursement
+                          - amount: 500000
+                            transaction_date: '2024-06-02'
+                            effective_date: '2024-06-02'
+                            description: Principal Reduction
+                        payments:
+                          - id: pmt_18e5a3726b3943cda2635f40e1041ba4
+                            amount: 100000
+                            facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                            status: settled
+                            transfer_type: standard
+                            created_on: '2023-02-27T00:00:00Z'
+                            is_autopay: false
+                        disbursements:
+                          - id: dsb_18e5a3726b3943cda2635f40e1041ba4
+                            facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                            amount: 100000
+                            status: pending
+                            failure_reason: null
+                            date: '2023-02-27'
+                            created_on: '2023-02-27T00:00:00Z'
+                            transfer_type: standard
                     next_payment_amount: 124425
                     next_payment_due_date: '2023-06-12'
                     current_payment_due_date: '2023-06-12'
@@ -2702,6 +2915,10 @@ paths:
                       amount_type: minimum_payment
                       additional_amount: 1000
                     remaining_statement_balance: 7500
+                    remaining_minimum_balance: 7500
+                    last_statement_info:
+                      last_statement_date: '2024-06-01T00:00:00.000Z'
+                      last_statement_amount: 47000
         '400':
           description: ''
           content:
@@ -2817,7 +3034,10 @@ paths:
                     origination_date: '2023-05-12'
                     disbursement_date: '2023-05-12'
                     remaining_term: 48
-                    payments_due: []
+                    payments_due:
+                      - payment_amount: 123456
+                        payment_amount_remaining: 123456
+                        payment_due_date: '2023-06-12'
                     amortization_schedule:
                       - payment_date: '2023-11-02'
                         interest_payment_amount: 0
@@ -2837,8 +3057,55 @@ paths:
                       bank_account_number: '98989898'
                       bank_routing_number: '021000021'
                       type: checking
-                    transactions: []
-                    statements: []
+                    transactions:
+                      - amount: 100000
+                        transaction_date: '2023-05-12'
+                        effective_date: '2023-05-12'
+                        description: Disbursement
+                      - amount: 500000
+                        transaction_date: '2024-06-02'
+                        effective_date: '2024-06-02'
+                        description: Principal Reduction
+                    statements:
+                      - id: stmt_deb6aba913d84feb987934f50c32bf03
+                        statement_date: '2023-03-17'
+                        facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                        url: >-
+                          https://app.docspring.com/submissions/sub_gjX2LS7c6FjqZt12hQ/download
+                        created_on: '2023-02-27T00:00:00Z'
+                        statement_start_date: '2024-06-17T00:00:00.000Z'
+                        balance_due: 500000
+                        current_principal_balance: 500000
+                        current_interest_balance: 10000
+                        interest_charged: 0
+                        minimum_payment: 12445
+                        due_date: '2023-03-17'
+                        transactions:
+                          - amount: 100000
+                            transaction_date: '2023-05-12'
+                            effective_date: '2023-05-12'
+                            description: Disbursement
+                          - amount: 500000
+                            transaction_date: '2024-06-02'
+                            effective_date: '2024-06-02'
+                            description: Principal Reduction
+                        payments:
+                          - id: pmt_18e5a3726b3943cda2635f40e1041ba4
+                            amount: 100000
+                            facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                            status: settled
+                            transfer_type: standard
+                            created_on: '2023-02-27T00:00:00Z'
+                            is_autopay: false
+                        disbursements:
+                          - id: dsb_18e5a3726b3943cda2635f40e1041ba4
+                            facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                            amount: 100000
+                            status: pending
+                            failure_reason: null
+                            date: '2023-02-27'
+                            created_on: '2023-02-27T00:00:00Z'
+                            transfer_type: standard
                     next_payment_amount: 124425
                     next_payment_due_date: '2023-06-12'
                     current_payment_due_date: '2023-06-12'
@@ -2876,6 +3143,10 @@ paths:
                           https://storage.googleapis.com/example/signed_autopay_ach_authorization.pdf
                         document_id: doc_0123456789abcdef
                     remaining_statement_balance: 7500
+                    remaining_minimum_balance: 7500
+                    last_statement_info:
+                      last_statement_date: '2024-06-01T00:00:00.000Z'
+                      last_statement_amount: 47000
         '400':
           description: ''
           content:
@@ -2958,7 +3229,10 @@ paths:
                     origination_date: '2023-05-12'
                     disbursement_date: '2023-05-12'
                     remaining_term: 48
-                    payments_due: []
+                    payments_due:
+                      - payment_amount: 123456
+                        payment_amount_remaining: 123456
+                        payment_due_date: '2023-06-12'
                     amortization_schedule:
                       - payment_date: '2023-11-02'
                         interest_payment_amount: 0
@@ -2978,8 +3252,55 @@ paths:
                       bank_account_number: '98989898'
                       bank_routing_number: '021000021'
                       type: checking
-                    transactions: []
-                    statements: []
+                    transactions:
+                      - amount: 100000
+                        transaction_date: '2023-05-12'
+                        effective_date: '2023-05-12'
+                        description: Disbursement
+                      - amount: 500000
+                        transaction_date: '2024-06-02'
+                        effective_date: '2024-06-02'
+                        description: Principal Reduction
+                    statements:
+                      - id: stmt_deb6aba913d84feb987934f50c32bf03
+                        statement_date: '2023-03-17'
+                        facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                        url: >-
+                          https://app.docspring.com/submissions/sub_gjX2LS7c6FjqZt12hQ/download
+                        created_on: '2023-02-27T00:00:00Z'
+                        statement_start_date: '2024-06-17T00:00:00.000Z'
+                        balance_due: 500000
+                        current_principal_balance: 500000
+                        current_interest_balance: 10000
+                        interest_charged: 0
+                        minimum_payment: 12445
+                        due_date: '2023-03-17'
+                        transactions:
+                          - amount: 100000
+                            transaction_date: '2023-05-12'
+                            effective_date: '2023-05-12'
+                            description: Disbursement
+                          - amount: 500000
+                            transaction_date: '2024-06-02'
+                            effective_date: '2024-06-02'
+                            description: Principal Reduction
+                        payments:
+                          - id: pmt_18e5a3726b3943cda2635f40e1041ba4
+                            amount: 100000
+                            facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                            status: settled
+                            transfer_type: standard
+                            created_on: '2023-02-27T00:00:00Z'
+                            is_autopay: false
+                        disbursements:
+                          - id: dsb_18e5a3726b3943cda2635f40e1041ba4
+                            facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                            amount: 100000
+                            status: pending
+                            failure_reason: null
+                            date: '2023-02-27'
+                            created_on: '2023-02-27T00:00:00Z'
+                            transfer_type: standard
                     next_payment_amount: 124425
                     next_payment_due_date: '2023-06-12'
                     current_payment_due_date: '2023-06-12'
@@ -3017,6 +3338,10 @@ paths:
                           https://storage.googleapis.com/example/signed_autopay_ach_authorization.pdf
                         document_id: doc_0123456789abcdef
                     remaining_statement_balance: 7500
+                    remaining_minimum_balance: 7500
+                    last_statement_info:
+                      last_statement_date: '2024-06-01T00:00:00.000Z'
+                      last_statement_amount: 47000
         '400':
           description: ''
           content:
@@ -3112,7 +3437,10 @@ paths:
                     origination_date: '2023-05-12'
                     disbursement_date: '2023-05-12'
                     remaining_term: 48
-                    payments_due: []
+                    payments_due:
+                      - payment_amount: 123456
+                        payment_amount_remaining: 123456
+                        payment_due_date: '2023-06-12'
                     amortization_schedule:
                       - payment_date: '2023-11-02'
                         interest_payment_amount: 0
@@ -3132,8 +3460,55 @@ paths:
                       bank_account_number: '98989898'
                       bank_routing_number: '021000021'
                       type: checking
-                    transactions: []
-                    statements: []
+                    transactions:
+                      - amount: 100000
+                        transaction_date: '2023-05-12'
+                        effective_date: '2023-05-12'
+                        description: Disbursement
+                      - amount: 500000
+                        transaction_date: '2024-06-02'
+                        effective_date: '2024-06-02'
+                        description: Principal Reduction
+                    statements:
+                      - id: stmt_deb6aba913d84feb987934f50c32bf03
+                        statement_date: '2023-03-17'
+                        facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                        url: >-
+                          https://app.docspring.com/submissions/sub_gjX2LS7c6FjqZt12hQ/download
+                        created_on: '2023-02-27T00:00:00Z'
+                        statement_start_date: '2024-06-17T00:00:00.000Z'
+                        balance_due: 500000
+                        current_principal_balance: 500000
+                        current_interest_balance: 10000
+                        interest_charged: 0
+                        minimum_payment: 12445
+                        due_date: '2023-03-17'
+                        transactions:
+                          - amount: 100000
+                            transaction_date: '2023-05-12'
+                            effective_date: '2023-05-12'
+                            description: Disbursement
+                          - amount: 500000
+                            transaction_date: '2024-06-02'
+                            effective_date: '2024-06-02'
+                            description: Principal Reduction
+                        payments:
+                          - id: pmt_18e5a3726b3943cda2635f40e1041ba4
+                            amount: 100000
+                            facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                            status: settled
+                            transfer_type: standard
+                            created_on: '2023-02-27T00:00:00Z'
+                            is_autopay: false
+                        disbursements:
+                          - id: dsb_18e5a3726b3943cda2635f40e1041ba4
+                            facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                            amount: 100000
+                            status: pending
+                            failure_reason: null
+                            date: '2023-02-27'
+                            created_on: '2023-02-27T00:00:00Z'
+                            transfer_type: standard
                     next_payment_amount: 124425
                     next_payment_due_date: '2023-06-12'
                     current_payment_due_date: '2023-06-12'
@@ -3171,6 +3546,10 @@ paths:
                           https://storage.googleapis.com/example/signed_autopay_ach_authorization.pdf
                         document_id: doc_0123456789abcdef
                     remaining_statement_balance: 7500
+                    remaining_minimum_balance: 7500
+                    last_statement_info:
+                      last_statement_date: '2024-06-01T00:00:00.000Z'
+                      last_statement_amount: 47000
         '400':
           description: ''
           content:
@@ -3278,13 +3657,39 @@ paths:
                       url: >-
                         https://app.docspring.com/submissions/sub_gjX2LS7c6FjqZt12hQ/download
                       created_on: '2023-02-27T00:00:00Z'
-                      statement_start_date: '2023-02-17'
-                      balance: 500000
-                      principal_balance: 500000
-                      interest_balance: 0
+                      statement_start_date: '2024-06-17T00:00:00.000Z'
+                      balance_due: 500000
+                      current_principal_balance: 500000
+                      current_interest_balance: 10000
+                      interest_charged: 0
                       minimum_payment: 12445
                       due_date: '2023-03-17'
-                      transactions: []
+                      transactions:
+                        - amount: 100000
+                          transaction_date: '2023-05-12'
+                          effective_date: '2023-05-12'
+                          description: Disbursement
+                        - amount: 500000
+                          transaction_date: '2024-06-02'
+                          effective_date: '2024-06-02'
+                          description: Principal Reduction
+                      payments:
+                        - id: pmt_18e5a3726b3943cda2635f40e1041ba4
+                          amount: 100000
+                          facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                          status: settled
+                          transfer_type: standard
+                          created_on: '2023-02-27T00:00:00Z'
+                          is_autopay: false
+                      disbursements:
+                        - id: dsb_18e5a3726b3943cda2635f40e1041ba4
+                          facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                          amount: 100000
+                          status: pending
+                          failure_reason: null
+                          date: '2023-02-27'
+                          created_on: '2023-02-27T00:00:00Z'
+                          transfer_type: standard
         '400':
           description: ''
           content:
@@ -5559,17 +5964,22 @@ components:
           example: '2023-03-17'
         statement_start_date:
           type: string
+          format: date-time
           description: The start date of the statement (YYYY-MM-DD)
-          example: '2023-02-17'
-        balance:
+          example: '2024-06-17T00:00:00.000Z'
+        balance_due:
           type: integer
-          description: The balance of the statement, in cents
+          description: The balance due at the time of statement creation, in cents
           example: 500000
-        principal_balance:
+        current_principal_balance:
           type: integer
           description: The principal balance of the statement, in cents
           example: 500000
-        interest_balance:
+        current_interest_balance:
+          type: integer
+          description: The interest balance of the statement, in cents
+          example: 10000
+        interest_charged:
           type: integer
           description: The interest balance of the statement, in cents
           example: 0
@@ -5582,10 +5992,22 @@ components:
           description: The due date of the statement (YYYY-MM-DD)
           example: '2023-03-17'
         transactions:
+          $ref: '#/components/schemas/FacilityTransactionItems'
+          description: >-
+            An array of transactions made (scoped to the period of the
+            statement)
+        payments:
           type: array
           items:
-            $ref: '#/components/schemas/Transaction'
-          description: An array of transactions made (empty if no payments are due)
+            $ref: '#/components/schemas/Payment'
+          description: An array of payments made (scoped to the period of the statement)
+        disbursements:
+          type: array
+          items:
+            $ref: '#/components/schemas/Disbursement'
+          description: >-
+            An array of disbursements made (scoped to the period of the
+            statement)
         facility_id:
           $ref: '#/components/schemas/FacilityId'
         url:
@@ -5602,12 +6024,15 @@ components:
         - id
         - statement_date
         - statement_start_date
-        - balance
-        - principal_balance
-        - interest_balance
+        - balance_due
+        - current_principal_balance
+        - current_interest_balance
+        - interest_charged
         - minimum_payment
         - due_date
         - transactions
+        - payments
+        - disbursements
         - facility_id
         - url
         - created_on
@@ -5771,11 +6196,8 @@ components:
           nullable: true
           description: The bank account information used to repay the loan
         transactions:
-          type: array
-          items:
-            type: string
+          $ref: '#/components/schemas/FacilityTransactionItems'
           description: An array of transactions made (empty if no payments are due)
-          example: []
         statements:
           type: array
           items:
@@ -5802,11 +6224,8 @@ components:
           nullable: true
           description: The remaining term of the loan, in months
         payments_due:
-          type: array
-          items:
-            type: string
+          $ref: '#/components/schemas/PaymentsDue'
           description: An array of payments due (empty if no payments are due)
-          example: []
         next_payment_amount:
           type: integer
           nullable: true
@@ -5861,6 +6280,17 @@ components:
             payments made after the statement was created. Will be set to null
             until first statement is created.
           example: 7500
+        remaining_minimum_balance:
+          type: integer
+          description: >-
+            The minimum due, in cents, of the last statement minimum, less any
+            payments made since the statement was created. Will be set to null
+            until first statement is created.
+          example: 7500
+        last_statement_info:
+          $ref: '#/components/schemas/LastStatementInfo'
+          nullable: true
+          description: The last statement information including date/amount.
       required:
         - id
         - application_id
@@ -5875,12 +6305,76 @@ components:
         - payments_due
         - terms
         - remaining_statement_balance
+        - remaining_minimum_balance
+    LastStatementInfo:
+      title: LastStatementInfo
+      type: object
+      properties:
+        last_statement_date:
+          type: string
+          description: The date of the last statement (2024-06-01T00:00:00.000Z)
+          example: '2024-06-01T00:00:00.000Z'
+        last_statement_amount:
+          type: integer
+          description: The amount of the last statement, in cents
+          example: 47000
+      required:
+        - last_statement_date
+        - last_statement_amount
     CreditStatus:
       title: CreditStatus
       type: string
       enum:
         - active
         - closed
+    FacilityTransactionItem:
+      title: FacilityTransactionItem
+      type: object
+      properties:
+        amount:
+          type: integer
+          description: The amount of the transaction, in cents (e.g. 1000 = $10.00)
+        transaction_date:
+          type: string
+          description: The date of the transaction (YYYY-MM-DD)
+        effective_date:
+          type: string
+          description: The effective date of the transaction (YYYY-MM-DD)
+        description:
+          type: string
+          description: A description of the transaction
+      required:
+        - amount
+        - transaction_date
+        - effective_date
+        - description
+    FacilityTransactionItems:
+      title: FacilityTransactionItems
+      type: array
+      items:
+        $ref: '#/components/schemas/FacilityTransactionItem'
+    PaymentDue:
+      title: PaymentDue
+      type: object
+      properties:
+        payment_amount:
+          type: integer
+          description: The amount of the payment, in cents (e.g. 1000 = $10.00)
+        payment_amount_remaining:
+          type: integer
+          description: The amount of the payment remaining, in cents (e.g. 1000 = $10.00)
+        payment_due_date:
+          type: string
+          description: The date the payment is due (YYYY-MM-DD)
+      required:
+        - payment_amount
+        - payment_amount_remaining
+        - payment_due_date
+    PaymentsDue:
+      title: PaymentsDue
+      type: array
+      items:
+        $ref: '#/components/schemas/PaymentDue'
     PayoffAmount:
       title: PayoffAmount
       type: object
