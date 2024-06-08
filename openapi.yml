@@ -1062,8 +1062,8 @@ paths:
         - BearerAuth: []
   /configuration/webhook:
     post:
-      description: Set a url to receive webhook events from Pier.
-      operationId: configuration_create_webhook
+      description: Set the array of urls to receive webhook events from Pier.
+      operationId: configuration_set_webhook_urls
       tags:
         - Configuration
       parameters: []
@@ -1073,10 +1073,13 @@ paths:
           content:
             application/json:
               schema:
-                type: string
+                $ref: '#/components/schemas/WebhookUrls'
               examples:
                 Example1:
-                  value: Ok.
+                  value:
+                    urls:
+                      - https://example.com/webhook1
+                      - https://example.com/webhook2
         '400':
           description: ''
           content:
@@ -1097,7 +1100,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
-      summary: Set webhook URL
+      summary: Set webhook URLs
       security:
         - BearerAuth: []
       requestBody:
@@ -1107,19 +1110,25 @@ paths:
             schema:
               type: object
               properties:
-                url:
-                  type: string
-                  description: The `url` to send webhooks to
-                  example: https://example.com/webhook
+                urls:
+                  type: array
+                  items:
+                    type: string
+                  description: The array of `urls` to send webhooks to
+                  example:
+                    - https://example.com/webhook1
+                    - https://example.com/webhook2
               required:
-                - url
+                - urls
             examples:
               Example1:
                 value:
-                  url: https://example.com/webhook
+                  urls:
+                    - https://example.com/webhook1
+                    - https://example.com/webhook2
     delete:
-      description: Delete the url that was set to receive webhook events from Pier.
-      operationId: configuration_delete_webhook
+      description: Reset the array of `urls` that receives Pier webhooks.
+      operationId: configuration_delete_webhook_urls
       tags:
         - Configuration
       parameters: []
@@ -1129,10 +1138,11 @@ paths:
           content:
             application/json:
               schema:
-                type: string
+                $ref: '#/components/schemas/DeleteWebhookResponse'
               examples:
                 Example1:
-                  value: Ok.
+                  value:
+                    urls: []
         '401':
           description: ''
           content:
@@ -1147,7 +1157,43 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
-      summary: Remove a webhook
+      summary: Reset webhook URLs
+      security:
+        - BearerAuth: []
+    get:
+      description: Get the array of `urls` that receives Pier webhooks.
+      operationId: configuration_get_webhook_urls
+      tags:
+        - Configuration
+      parameters: []
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WebhookUrls'
+              examples:
+                Example1:
+                  value:
+                    urls:
+                      - https://example.com/webhook1
+                      - https://example.com/webhook2
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get webhook URLs
       security:
         - BearerAuth: []
   /configuration/webhook-verification:
@@ -5671,6 +5717,31 @@ components:
         - msg
         - param
         - location
+    WebhookUrls:
+      title: WebhookUrls
+      type: object
+      properties:
+        urls:
+          type: array
+          items:
+            type: string
+          description: The array of `urls` to send webhooks to
+          example:
+            - https://example.com/webhook1
+            - https://example.com/webhook2
+      required:
+        - urls
+    DeleteWebhookResponse:
+      title: DeleteWebhookResponse
+      type: object
+      properties:
+        urls:
+          type: array
+          items:
+            type: string
+          example: []
+      required:
+        - urls
     VerificationResponse:
       title: VerificationResponse
       type: object
