@@ -6725,13 +6725,14 @@ components:
           description: The type of ACH transfer
         ach_authorization_id:
           type: string
-          description: The Document ID of an unused ACH authorization document
-          example: doc_43da3b3f95c745e1985a71e9a00d6c27
+          nullable: true
+          description: >-
+            The Document ID of an unused ACH authorization document (only
+            required when `transfer_type` is not `none`)
       required:
         - facility_id
         - amount
         - transfer_type
-        - ach_authorization_id
     Payment:
       title: Payment
       type: object
