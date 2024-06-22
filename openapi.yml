@@ -127,6 +127,11 @@ paths:
                           grace_period:
                             term: 21
                             interest_rate: 0
+                          introductory_promo_period:
+                            interest_rate: 0
+                            promo_term:
+                              term: 90
+                              term_type: daily
                           interest_rate: 0
                           late_payment_fee: 0
                           origination_fee: 0
@@ -201,6 +206,11 @@ paths:
                         grace_period:
                           term: 21
                           interest_rate: 0
+                        introductory_promo_period:
+                          interest_rate: 0
+                          promo_term:
+                            term: 90
+                            term_type: daily
                         interest_rate: 0
                         late_payment_fee: 0
                         origination_fee: 0
@@ -266,6 +276,11 @@ paths:
                       grace_period:
                         term: 21
                         interest_rate: 0
+                      introductory_promo_period:
+                        interest_rate: 0
+                        promo_term:
+                          term: 90
+                          term_type: daily
                       interest_rate: 0
                       late_payment_fee: 0
                       origination_fee: 0
@@ -397,6 +412,11 @@ paths:
                         grace_period:
                           term: 21
                           interest_rate: 0
+                        introductory_promo_period:
+                          interest_rate: 0
+                          promo_term:
+                            term: 90
+                            term_type: daily
                         interest_rate: 0
                         late_payment_fee: 0
                         origination_fee: 0
@@ -1657,6 +1677,11 @@ paths:
                       grace_period:
                         term: 0
                         interest_rate: 0
+                      introductory_promo_period:
+                        interest_rate: 0
+                        promo_term:
+                          term: 90
+                          term_type: daily
                       interest_rate: 0
                       origination_fee: 0
                       payment_period: monthly
@@ -1792,6 +1817,8 @@ paths:
                     last_statement_info:
                       last_statement_date: '2024-06-01T00:00:00.000Z'
                       last_statement_amount: 47000
+                    in_grace_period: false
+                    in_introductory_promo_period: false
         '400':
           description: ''
           content:
@@ -1870,6 +1897,11 @@ paths:
                         grace_period:
                           term: 0
                           interest_rate: 0
+                        introductory_promo_period:
+                          interest_rate: 0
+                          promo_term:
+                            term: 90
+                            term_type: daily
                         interest_rate: 0
                         origination_fee: 0
                         payment_period: monthly
@@ -2005,6 +2037,8 @@ paths:
                       last_statement_info:
                         last_statement_date: '2024-06-01T00:00:00.000Z'
                         last_statement_amount: 47000
+                      in_grace_period: false
+                      in_introductory_promo_period: false
         '401':
           description: ''
           content:
@@ -2539,6 +2573,11 @@ paths:
                       grace_period:
                         term: 0
                         interest_rate: 0
+                      introductory_promo_period:
+                        interest_rate: 0
+                        promo_term:
+                          term: 90
+                          term_type: daily
                       interest_rate: 0
                       origination_fee: 0
                       payment_period: monthly
@@ -2585,6 +2624,8 @@ paths:
                     last_statement_info:
                       last_statement_date: '2024-06-01T00:00:00.000Z'
                       last_statement_amount: 47000
+                    in_grace_period: false
+                    in_introductory_promo_period: false
         '400':
           description: ''
           content:
@@ -2710,6 +2751,11 @@ paths:
                       grace_period:
                         term: 0
                         interest_rate: 0
+                      introductory_promo_period:
+                        interest_rate: 0
+                        promo_term:
+                          term: 90
+                          term_type: daily
                       amount: 100000
                       apr: 200
                       annual_fee: 0
@@ -2794,6 +2840,8 @@ paths:
                         payment_amount_remaining: 123456
                         payment_due_date: '2023-06-12'
                     remaining_minimum_balance: 7500
+                    in_grace_period: true
+                    in_introductory_promo_period: true
         '400':
           description: ''
           content:
@@ -2855,6 +2903,11 @@ paths:
                       grace_period:
                         term: 0
                         interest_rate: 0
+                      introductory_promo_period:
+                        interest_rate: 0
+                        promo_term:
+                          term: 90
+                          term_type: daily
                       interest_rate: 0
                       origination_fee: 0
                       payment_period: monthly
@@ -2969,6 +3022,8 @@ paths:
                     last_statement_info:
                       last_statement_date: '2024-06-01T00:00:00.000Z'
                       last_statement_amount: 47000
+                    in_grace_period: false
+                    in_introductory_promo_period: false
         '400':
           description: ''
           content:
@@ -3063,6 +3118,11 @@ paths:
                       grace_period:
                         term: 0
                         interest_rate: 0
+                      introductory_promo_period:
+                        interest_rate: 0
+                        promo_term:
+                          term: 90
+                          term_type: daily
                       interest_rate: 0
                       origination_fee: 0
                       payment_period: monthly
@@ -3198,6 +3258,8 @@ paths:
                     last_statement_info:
                       last_statement_date: '2024-06-01T00:00:00.000Z'
                       last_statement_amount: 47000
+                    in_grace_period: false
+                    in_introductory_promo_period: false
         '400':
           description: ''
           content:
@@ -3259,6 +3321,11 @@ paths:
                       grace_period:
                         term: 0
                         interest_rate: 0
+                      introductory_promo_period:
+                        interest_rate: 0
+                        promo_term:
+                          term: 90
+                          term_type: daily
                       interest_rate: 0
                       origination_fee: 0
                       payment_period: monthly
@@ -3394,6 +3461,8 @@ paths:
                     last_statement_info:
                       last_statement_date: '2024-06-01T00:00:00.000Z'
                       last_statement_amount: 47000
+                    in_grace_period: false
+                    in_introductory_promo_period: false
         '400':
           description: ''
           content:
@@ -3468,6 +3537,11 @@ paths:
                       grace_period:
                         term: 0
                         interest_rate: 0
+                      introductory_promo_period:
+                        interest_rate: 0
+                        promo_term:
+                          term: 90
+                          term_type: daily
                       interest_rate: 0
                       origination_fee: 0
                       payment_period: monthly
@@ -3603,6 +3677,8 @@ paths:
                     last_statement_info:
                       last_statement_date: '2024-06-01T00:00:00.000Z'
                       last_statement_amount: 47000
+                    in_grace_period: false
+                    in_introductory_promo_period: false
         '400':
           description: ''
           content:
@@ -4715,6 +4791,9 @@ components:
         grace_period:
           $ref: '#/components/schemas/GracePeriod'
           nullable: true
+        introductory_promo_period:
+          $ref: '#/components/schemas/IntroductoryPromoPeriod'
+          nullable: true
         interest_rate:
           type: integer
           nullable: true
@@ -4761,6 +4840,9 @@ components:
           description: The amount (in cents) of the loan offer (e.g. 200000 for $2,000.00)
         grace_period:
           $ref: '#/components/schemas/GracePeriod'
+          nullable: true
+        introductory_promo_period:
+          $ref: '#/components/schemas/IntroductoryPromoPeriod'
           nullable: true
         interest_rate:
           type: integer
@@ -4872,6 +4954,42 @@ components:
           description: >-
             The interest rate (in basis points) charged during the grace period.
             Must be '0' for consumer lines of credit. Defaults to 0 if omitted
+    IntroductoryPromoPeriod:
+      title: IntroductoryPromoPeriod
+      type: object
+      properties:
+        interest_rate:
+          type: integer
+          description: >-
+            The interest rate (in basis points) charged during the introductory
+            period
+        promo_term:
+          $ref: '#/components/schemas/PromoTerm'
+          description: The terms of the promotional period
+      required:
+        - interest_rate
+        - promo_term
+    PromoTerm:
+      title: PromoTerm
+      type: object
+      properties:
+        term:
+          type: integer
+          description: >-
+            The term of the promotional period relative to the `term_type` (e.g.
+            if `daily` in days, `period` in period of loan, etc.)
+        term_type:
+          $ref: '#/components/schemas/PromoTermType'
+          description: The term of the promotional period
+      required:
+        - term
+        - term_type
+    PromoTermType:
+      title: PromoTermType
+      type: string
+      enum:
+        - daily
+        - period
     Term:
       title: Term
       type: object
@@ -6373,6 +6491,14 @@ components:
           $ref: '#/components/schemas/LastStatementInfo'
           nullable: true
           description: The last statement information including date/amount.
+        in_grace_period:
+          type: boolean
+          nullable: true
+          description: Whether the facility is in a grace period
+        in_introductory_promo_period:
+          type: boolean
+          nullable: true
+          description: Whether the facility is in an introductory promotional period
       required:
         - id
         - application_id
