@@ -1568,7 +1568,8 @@ paths:
         Check a set of offers against our limits for a given state. Customers
         can pass us a list of offers, which we will run through our compliance
         limits. We will return a boolean for each offer indicating whether the
-        offer passes our limits or not.
+        offer passes our limits or not. If the user does not specify an ID for
+        each offer, we will reindex them from 0.
       operationId: coverage_checkOffers
       tags:
         - Coverage
@@ -1638,17 +1639,22 @@ paths:
                 value:
                   state: AK
                   offers:
-                    - id: '26'
+                    - id: 26
                       type: loan_offer
                       amount: 300000
                       interest_rate: 750
-                      term: 24
+                      loan_term:
+                        term_type: months
+                        term: 12
                       origination_fee: 150
                       first_payment_date: '2024-04-15'
                       payment_period: monthly
-                    - id: '27'
+                    - id: 27
                       type: revolving_line_of_credit_offer
                       amount: 100000
+                      loan_term:
+                        term_type: months
+                        term: 12
                       interest_rate: 200
                       origination_fee: 0
   /facilities:
@@ -1748,7 +1754,6 @@ paths:
                         current_principal_balance: 500000
                         current_interest_balance: 10000
                         interest_charged: 0
-                        minimum_payment: 12445
                         due_date: '2023-03-17'
                         transactions:
                           - amount: 100000
@@ -1968,7 +1973,6 @@ paths:
                           current_principal_balance: 500000
                           current_interest_balance: 10000
                           interest_charged: 0
-                          minimum_payment: 12445
                           due_date: '2023-03-17'
                           transactions:
                             - amount: 100000
@@ -2807,7 +2811,6 @@ paths:
                         current_principal_balance: 500000
                         current_interest_balance: 10000
                         interest_charged: 0
-                        minimum_payment: 12445
                         due_date: '2023-03-17'
                         transactions:
                           - amount: 100000
@@ -2971,7 +2974,6 @@ paths:
                         current_principal_balance: 500000
                         current_interest_balance: 10000
                         interest_charged: 0
-                        minimum_payment: 12445
                         due_date: '2023-03-17'
                         transactions:
                           - amount: 100000
@@ -3189,7 +3191,6 @@ paths:
                         current_principal_balance: 500000
                         current_interest_balance: 10000
                         interest_charged: 0
-                        minimum_payment: 12445
                         due_date: '2023-03-17'
                         transactions:
                           - amount: 100000
@@ -3392,7 +3393,6 @@ paths:
                         current_principal_balance: 500000
                         current_interest_balance: 10000
                         interest_charged: 0
-                        minimum_payment: 12445
                         due_date: '2023-03-17'
                         transactions:
                           - amount: 100000
@@ -3608,7 +3608,6 @@ paths:
                         current_principal_balance: 500000
                         current_interest_balance: 10000
                         interest_charged: 0
-                        minimum_payment: 12445
                         due_date: '2023-03-17'
                         transactions:
                           - amount: 100000
@@ -3791,7 +3790,6 @@ paths:
                       current_principal_balance: 500000
                       current_interest_balance: 10000
                       interest_charged: 0
-                      minimum_payment: 12445
                       due_date: '2023-03-17'
                       transactions:
                         - amount: 100000
@@ -6035,7 +6033,8 @@ components:
       type: object
       properties:
         id:
-          type: string
+          type: integer
+          nullable: true
           description: Unique identifier for the offer used in the check_offers endpoint.
         type:
           $ref: '#/components/schemas/CheckOfferType'
@@ -6050,7 +6049,13 @@ components:
         term:
           type: integer
           nullable: true
-          description: The term of the offer in months (e.g., 24 for a 24-month term).
+          description: >-
+            Legacy - The term of the offer in months (e.g., 24 for a 24-month
+            term). Use loan_term instead, but if this is specified, loan_term
+            can be undefined.
+        loan_term:
+          $ref: '#/components/schemas/Term'
+          description: The term of the offer.
         origination_fee:
           type: integer
           description: >-
@@ -6071,10 +6076,10 @@ components:
             biweekly, monthly, semi_monthly_first_15th, semi_monthly_last_15th,
             semi_monthly.
       required:
-        - id
         - type
         - amount
         - interest_rate
+        - loan_term
         - origination_fee
     CheckOfferType:
       title: CheckOfferType
@@ -6179,10 +6184,6 @@ components:
           type: integer
           description: The interest balance of the statement, in cents
           example: 0
-        minimum_payment:
-          type: integer
-          description: The minimum payment due, in cents
-          example: 12445
         due_date:
           type: string
           description: The due date of the statement (YYYY-MM-DD)
@@ -6224,7 +6225,6 @@ components:
         - current_principal_balance
         - current_interest_balance
         - interest_charged
-        - minimum_payment
         - due_date
         - transactions
         - payments
