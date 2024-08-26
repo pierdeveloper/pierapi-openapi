@@ -2357,6 +2357,305 @@ paths:
       summary: Move disbursement to failed state
       security:
         - BearerAuth: []
+  /facilities/{facility_id}/create_limit_reduction_notice:
+    post:
+      description: >-
+        Create a limit reduction notice, which should be presented to the user
+        when their credit limit is reduced. This endpoint must be called before
+        reducing the credit limit. The document_id returned should be stored and
+        used in the PATCH /facilities/{facility_id}/update_limit endpoint.
+      operationId: facilities_createLimitReductionNotice
+      tags:
+        - Facilities
+      parameters:
+        - name: facility_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/FacilityId'
+          examples:
+            Example1:
+              value: fac_18e5a3726b3943cda2635f40e1041ba4
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+              examples:
+                Example1:
+                  value:
+                    document_url: https://example.com/document.pdf
+                    id: doc_1234567890abcdef
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Create a limit reduction notice
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                new_limit_amount:
+                  type: integer
+                  description: Amount of the new credit limit, in cents
+                  example: 100000
+                reasons:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/LimitReductionReasons'
+                  description: The reasons for the limit reduction
+              required:
+                - new_limit_amount
+                - reasons
+            examples:
+              Example1:
+                value:
+                  new_limit_amount: 100000
+                  reasons:
+                    - fraud_prevention
+  /facilities/{facility_id}/update_limit:
+    patch:
+      description: >-
+        Update credit limit for a line of credit. For reductions, pass in the
+        document_id from the create_limit_reduction_notice endpoint. For
+        increases, pass in the new credit limit amount.
+      operationId: facilities_updateCreditLimit
+      tags:
+        - Facilities
+      parameters:
+        - name: facility_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/FacilityId'
+          examples:
+            Example1:
+              value: fac_18e5a3726b3943cda2635f40e1041ba4
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Facility'
+              examples:
+                Example1:
+                  value:
+                    terms:
+                      type: loan_offer
+                      id: off_86c05092a4384d89b03ef514ea4fee31
+                      amount: 1000000
+                      grace_period:
+                        term: 0
+                        interest_rate: 0
+                      introductory_promo_period:
+                        interest_rate: 0
+                        promo_term:
+                          term: 90
+                          term_type: daily
+                      interest_rate: 0
+                      origination_fee: 0
+                      payment_period: monthly
+                      late_payment_fee: 0
+                      first_payment_date: '2022-12-31'
+                      loan_term:
+                        term_type: months
+                        term: 36
+                    id: fac_18e5a3726b3943cda2635f40e1041ba4
+                    application_id: app_f0467657bba948e6a87292e182132848
+                    borrower_id: bor_a1d0c30d77104f35b4c842b99132624e
+                    loan_agreement_id: doc_43da3b3f95c745e1985a71e9a00d6c27
+                    credit_type: consumer_installment_loan
+                    status: active
+                    created_on: '2023-05-12T19:46:09.293Z'
+                    account_number: '401542198'
+                    balance: 500000
+                    interest_balance: 0
+                    payoff_balance: 500000
+                    origination_date: '2023-05-12'
+                    disbursement_date: '2023-05-12'
+                    remaining_term: 48
+                    payments_due:
+                      - payment_amount: 123456
+                        payment_amount_remaining: 123456
+                        payment_due_date: '2023-06-12'
+                    amortization_schedule:
+                      - payment_date: '2023-11-02'
+                        interest_payment_amount: 0
+                        principal_payment_amount: 8333
+                        other_payment_amount: 0
+                        total_payment_amount: 8333
+                        balance_amount: 91667
+                        item_index: 1
+                      - payment_date: '2023-12-02'
+                        interest_payment_amount: 0
+                        principal_payment_amount: 8333
+                        other_payment_amount: 0
+                        total_payment_amount: 8333
+                        balance_amount: 83334
+                        item_index: 2
+                    repayment_bank_details:
+                      bank_account_number: '98989898'
+                      bank_routing_number: '021000021'
+                      type: checking
+                    transactions:
+                      - amount: 100000
+                        transaction_date: '2023-05-12'
+                        effective_date: '2023-05-12'
+                        description: Disbursement
+                      - amount: 500000
+                        transaction_date: '2024-06-02'
+                        effective_date: '2024-06-02'
+                        description: Principal Reduction
+                    statements:
+                      - id: stmt_deb6aba913d84feb987934f50c32bf03
+                        statement_date: '2023-03-17'
+                        facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                        url: >-
+                          https://app.docspring.com/submissions/sub_gjX2LS7c6FjqZt12hQ/download
+                        created_on: '2023-02-27T00:00:00Z'
+                        statement_start_date: '2024-06-17T00:00:00.000Z'
+                        balance_due: 500000
+                        current_principal_balance: 500000
+                        current_interest_balance: 10000
+                        interest_charged: 0
+                        due_date: '2023-03-17'
+                        transactions:
+                          - amount: 100000
+                            transaction_date: '2023-05-12'
+                            effective_date: '2023-05-12'
+                            description: Disbursement
+                          - amount: 500000
+                            transaction_date: '2024-06-02'
+                            effective_date: '2024-06-02'
+                            description: Principal Reduction
+                        payments:
+                          - id: pmt_18e5a3726b3943cda2635f40e1041ba4
+                            amount: 100000
+                            facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                            status: settled
+                            transfer_type: standard
+                            created_on: '2023-02-27T00:00:00Z'
+                            is_autopay: false
+                        disbursements:
+                          - id: dsb_18e5a3726b3943cda2635f40e1041ba4
+                            facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                            amount: 100000
+                            status: pending
+                            failure_reason: null
+                            date: '2023-02-27'
+                            created_on: '2023-02-27T00:00:00Z'
+                            transfer_type: standard
+                    next_payment_amount: 124425
+                    next_payment_due_date: '2023-06-12'
+                    current_payment_due_date: '2023-06-12'
+                    last_payment_date: null
+                    principal_paid_thru: '2023-05-11'
+                    next_billing_date: '2023-05-28'
+                    interest_accrued_thru: '2023-05-11'
+                    next_accrual_cutoff_date: '2023-06-11'
+                    scheduled_payoff_date: '2027-05-12'
+                    autopay:
+                      authorized: false
+                    documents:
+                      unsigned_credit_agreement:
+                        document_url: >-
+                          https://storage.googleapis.com/example/unsigned_credit_agreement.pdf
+                        document_id: doc_1234567890abcdef
+                      signed_credit_agreement:
+                        document_url: >-
+                          https://storage.googleapis.com/example/signed_credit_agreement.pdf
+                        document_id: doc_abcdef1234567890
+                      unsigned_ach_authorization:
+                        document_url: >-
+                          https://storage.googleapis.com/example/unsigned_ach_authorization.pdf
+                        document_id: doc_fedcba9876543210
+                      unsigned_autopay_ach_authorization:
+                        document_url: >-
+                          https://storage.googleapis.com/example/unsigned_autopay_ach_authorization.pdf
+                        document_id: doc_0123456789abcdef
+                      signed_ach_authorization:
+                        document_url: >-
+                          https://storage.googleapis.com/example/signed_ach_authorization.pdf
+                        document_id: doc_fedcba0987654321
+                      signed_autopay_ach_authorization:
+                        document_url: >-
+                          https://storage.googleapis.com/example/signed_autopay_ach_authorization.pdf
+                        document_id: doc_0123456789abcdef
+                    remaining_statement_balance: 7500
+                    remaining_minimum_balance: 7500
+                    last_statement_info:
+                      last_statement_date: '2024-06-01T00:00:00.000Z'
+                      last_statement_amount: 47000
+                    in_grace_period: false
+                    in_introductory_promo_period: false
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Update credit limit for a line of credit
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                new_limit_amount:
+                  type: integer
+                  nullable: true
+                  description: The new credit limit amount, in cents
+                document_id:
+                  type: string
+                  nullable: true
+                  description: >-
+                    The document_id from the create_limit_reduction_notice
+                    endpoint
+            examples:
+              Example1:
+                value:
+                  new_limit_amount: 100000
   /facilities/{facility_id}/payments:
     get:
       description: List payments for a facility
@@ -6529,6 +6828,20 @@ components:
       required:
         - last_statement_date
         - last_statement_amount
+    LimitReductionReasons:
+      title: LimitReductionReasons
+      type: string
+      enum:
+        - change_in_credit_score
+        - high_credit_utilization
+        - late_payments
+        - inactivity
+        - economic_downturn
+        - negative_changes_in_financial_situation
+        - increased_debt_levels
+        - credit_report_changes
+        - regulatory_or_internal_policy_changes
+        - fraud_prevention
     CreditStatus:
       title: CreditStatus
       type: string
