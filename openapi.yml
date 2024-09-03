@@ -5850,7 +5850,7 @@ components:
           nullable: true
           description: >-
             The borrower's government identifiers, required fields dependent on
-            customer configuration
+            customer configuration. Can be non-unique on sandbox environment.
       required:
         - address
         - date_of_birth
@@ -6085,6 +6085,7 @@ components:
       enum:
         - pending
         - processing
+        - processed
         - settled
         - failed
         - cancelled
