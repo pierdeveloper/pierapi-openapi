@@ -1735,13 +1735,19 @@ paths:
                       type: checking
                     transactions:
                       - amount: 100000
+                        net_amount: 100000
                         transaction_date: '2023-05-12'
                         effective_date: '2023-05-12'
                         description: Disbursement
+                        transaction_type: DEBIT
+                        transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                       - amount: 500000
+                        net_amount: -500000
                         transaction_date: '2024-06-02'
                         effective_date: '2024-06-02'
                         description: Principal Reduction
+                        transaction_type: CREDIT
+                        transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                     statements:
                       - id: stmt_deb6aba913d84feb987934f50c32bf03
                         statement_date: '2023-03-17'
@@ -1757,13 +1763,19 @@ paths:
                         due_date: '2023-03-17'
                         transactions:
                           - amount: 100000
+                            net_amount: 100000
                             transaction_date: '2023-05-12'
                             effective_date: '2023-05-12'
                             description: Disbursement
+                            transaction_type: DEBIT
+                            transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                           - amount: 500000
+                            net_amount: -500000
                             transaction_date: '2024-06-02'
                             effective_date: '2024-06-02'
                             description: Principal Reduction
+                            transaction_type: CREDIT
+                            transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                         payments:
                           - id: pmt_18e5a3726b3943cda2635f40e1041ba4
                             amount: 100000
@@ -1954,13 +1966,19 @@ paths:
                         type: checking
                       transactions:
                         - amount: 100000
+                          net_amount: 100000
                           transaction_date: '2023-05-12'
                           effective_date: '2023-05-12'
                           description: Disbursement
+                          transaction_type: DEBIT
+                          transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                         - amount: 500000
+                          net_amount: -500000
                           transaction_date: '2024-06-02'
                           effective_date: '2024-06-02'
                           description: Principal Reduction
+                          transaction_type: CREDIT
+                          transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                       statements:
                         - id: stmt_deb6aba913d84feb987934f50c32bf03
                           statement_date: '2023-03-17'
@@ -1976,13 +1994,19 @@ paths:
                           due_date: '2023-03-17'
                           transactions:
                             - amount: 100000
+                              net_amount: 100000
                               transaction_date: '2023-05-12'
                               effective_date: '2023-05-12'
                               description: Disbursement
+                              transaction_type: DEBIT
+                              transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                             - amount: 500000
+                              net_amount: -500000
                               transaction_date: '2024-06-02'
                               effective_date: '2024-06-02'
                               description: Principal Reduction
+                              transaction_type: CREDIT
+                              transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                           payments:
                             - id: pmt_18e5a3726b3943cda2635f40e1041ba4
                               amount: 100000
@@ -2529,13 +2553,19 @@ paths:
                       type: checking
                     transactions:
                       - amount: 100000
+                        net_amount: 100000
                         transaction_date: '2023-05-12'
                         effective_date: '2023-05-12'
                         description: Disbursement
+                        transaction_type: DEBIT
+                        transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                       - amount: 500000
+                        net_amount: -500000
                         transaction_date: '2024-06-02'
                         effective_date: '2024-06-02'
                         description: Principal Reduction
+                        transaction_type: CREDIT
+                        transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                     statements:
                       - id: stmt_deb6aba913d84feb987934f50c32bf03
                         statement_date: '2023-03-17'
@@ -2551,13 +2581,19 @@ paths:
                         due_date: '2023-03-17'
                         transactions:
                           - amount: 100000
+                            net_amount: 100000
                             transaction_date: '2023-05-12'
                             effective_date: '2023-05-12'
                             description: Disbursement
+                            transaction_type: DEBIT
+                            transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                           - amount: 500000
+                            net_amount: -500000
                             transaction_date: '2024-06-02'
                             effective_date: '2024-06-02'
                             description: Principal Reduction
+                            transaction_type: CREDIT
+                            transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                         payments:
                           - id: pmt_18e5a3726b3943cda2635f40e1041ba4
                             amount: 100000
@@ -3091,13 +3127,19 @@ paths:
                     created_on: '2024-04-25T11:38:54.520Z'
                     transactions:
                       - amount: 100000
+                        net_amount: 100000
                         transaction_date: '2023-05-12'
                         effective_date: '2023-05-12'
                         description: Disbursement
+                        transaction_type: DEBIT
+                        transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                       - amount: 500000
+                        net_amount: -500000
                         transaction_date: '2024-06-02'
                         effective_date: '2024-06-02'
                         description: Principal Reduction
+                        transaction_type: CREDIT
+                        transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                     statements:
                       - id: stmt_deb6aba913d84feb987934f50c32bf03
                         statement_date: '2023-03-17'
@@ -3113,13 +3155,19 @@ paths:
                         due_date: '2023-03-17'
                         transactions:
                           - amount: 100000
+                            net_amount: 100000
                             transaction_date: '2023-05-12'
                             effective_date: '2023-05-12'
                             description: Disbursement
+                            transaction_type: DEBIT
+                            transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                           - amount: 500000
+                            net_amount: -500000
                             transaction_date: '2024-06-02'
                             effective_date: '2024-06-02'
                             description: Principal Reduction
+                            transaction_type: CREDIT
+                            transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                         payments:
                           - id: pmt_18e5a3726b3943cda2635f40e1041ba4
                             amount: 100000
@@ -3254,13 +3302,19 @@ paths:
                     repayment_bank_details: null
                     transactions:
                       - amount: 100000
+                        net_amount: 100000
                         transaction_date: '2023-05-12'
                         effective_date: '2023-05-12'
                         description: Disbursement
+                        transaction_type: DEBIT
+                        transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                       - amount: 500000
+                        net_amount: -500000
                         transaction_date: '2024-06-02'
                         effective_date: '2024-06-02'
                         description: Principal Reduction
+                        transaction_type: CREDIT
+                        transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                     statements:
                       - id: stmt_deb6aba913d84feb987934f50c32bf03
                         statement_date: '2023-03-17'
@@ -3276,13 +3330,19 @@ paths:
                         due_date: '2023-03-17'
                         transactions:
                           - amount: 100000
+                            net_amount: 100000
                             transaction_date: '2023-05-12'
                             effective_date: '2023-05-12'
                             description: Disbursement
+                            transaction_type: DEBIT
+                            transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                           - amount: 500000
+                            net_amount: -500000
                             transaction_date: '2024-06-02'
                             effective_date: '2024-06-02'
                             description: Principal Reduction
+                            transaction_type: CREDIT
+                            transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                         payments:
                           - id: pmt_18e5a3726b3943cda2635f40e1041ba4
                             amount: 100000
@@ -3471,13 +3531,19 @@ paths:
                       type: checking
                     transactions:
                       - amount: 100000
+                        net_amount: 100000
                         transaction_date: '2023-05-12'
                         effective_date: '2023-05-12'
                         description: Disbursement
+                        transaction_type: DEBIT
+                        transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                       - amount: 500000
+                        net_amount: -500000
                         transaction_date: '2024-06-02'
                         effective_date: '2024-06-02'
                         description: Principal Reduction
+                        transaction_type: CREDIT
+                        transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                     statements:
                       - id: stmt_deb6aba913d84feb987934f50c32bf03
                         statement_date: '2023-03-17'
@@ -3493,13 +3559,19 @@ paths:
                         due_date: '2023-03-17'
                         transactions:
                           - amount: 100000
+                            net_amount: 100000
                             transaction_date: '2023-05-12'
                             effective_date: '2023-05-12'
                             description: Disbursement
+                            transaction_type: DEBIT
+                            transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                           - amount: 500000
+                            net_amount: -500000
                             transaction_date: '2024-06-02'
                             effective_date: '2024-06-02'
                             description: Principal Reduction
+                            transaction_type: CREDIT
+                            transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                         payments:
                           - id: pmt_18e5a3726b3943cda2635f40e1041ba4
                             amount: 100000
@@ -3673,13 +3745,19 @@ paths:
                       type: checking
                     transactions:
                       - amount: 100000
+                        net_amount: 100000
                         transaction_date: '2023-05-12'
                         effective_date: '2023-05-12'
                         description: Disbursement
+                        transaction_type: DEBIT
+                        transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                       - amount: 500000
+                        net_amount: -500000
                         transaction_date: '2024-06-02'
                         effective_date: '2024-06-02'
                         description: Principal Reduction
+                        transaction_type: CREDIT
+                        transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                     statements:
                       - id: stmt_deb6aba913d84feb987934f50c32bf03
                         statement_date: '2023-03-17'
@@ -3695,13 +3773,19 @@ paths:
                         due_date: '2023-03-17'
                         transactions:
                           - amount: 100000
+                            net_amount: 100000
                             transaction_date: '2023-05-12'
                             effective_date: '2023-05-12'
                             description: Disbursement
+                            transaction_type: DEBIT
+                            transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                           - amount: 500000
+                            net_amount: -500000
                             transaction_date: '2024-06-02'
                             effective_date: '2024-06-02'
                             description: Principal Reduction
+                            transaction_type: CREDIT
+                            transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                         payments:
                           - id: pmt_18e5a3726b3943cda2635f40e1041ba4
                             amount: 100000
@@ -3888,13 +3972,19 @@ paths:
                       type: checking
                     transactions:
                       - amount: 100000
+                        net_amount: 100000
                         transaction_date: '2023-05-12'
                         effective_date: '2023-05-12'
                         description: Disbursement
+                        transaction_type: DEBIT
+                        transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                       - amount: 500000
+                        net_amount: -500000
                         transaction_date: '2024-06-02'
                         effective_date: '2024-06-02'
                         description: Principal Reduction
+                        transaction_type: CREDIT
+                        transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                     statements:
                       - id: stmt_deb6aba913d84feb987934f50c32bf03
                         statement_date: '2023-03-17'
@@ -3910,13 +4000,19 @@ paths:
                         due_date: '2023-03-17'
                         transactions:
                           - amount: 100000
+                            net_amount: 100000
                             transaction_date: '2023-05-12'
                             effective_date: '2023-05-12'
                             description: Disbursement
+                            transaction_type: DEBIT
+                            transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                           - amount: 500000
+                            net_amount: -500000
                             transaction_date: '2024-06-02'
                             effective_date: '2024-06-02'
                             description: Principal Reduction
+                            transaction_type: CREDIT
+                            transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                         payments:
                           - id: pmt_18e5a3726b3943cda2635f40e1041ba4
                             amount: 100000
@@ -4092,13 +4188,19 @@ paths:
                       due_date: '2023-03-17'
                       transactions:
                         - amount: 100000
+                          net_amount: 100000
                           transaction_date: '2023-05-12'
                           effective_date: '2023-05-12'
                           description: Disbursement
+                          transaction_type: DEBIT
+                          transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                         - amount: 500000
+                          net_amount: -500000
                           transaction_date: '2024-06-02'
                           effective_date: '2024-06-02'
                           description: Principal Reduction
+                          transaction_type: CREDIT
+                          transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                       payments:
                         - id: pmt_18e5a3726b3943cda2635f40e1041ba4
                           amount: 100000
@@ -6856,6 +6958,11 @@ components:
         amount:
           type: integer
           description: The amount of the transaction, in cents (e.g. 1000 = $10.00)
+        net_amount:
+          type: integer
+          description: >-
+            The net amount of the transaction, meaning positive or negative
+            depending on the effect on the ledger, in cents (e.g. 1000 = $10.00)
         transaction_date:
           type: string
           description: The date of the transaction (YYYY-MM-DD)
@@ -6865,11 +6972,31 @@ components:
         description:
           type: string
           description: A description of the transaction
+        transaction_type:
+          $ref: '#/components/schemas/FacilityTransactionType'
+          description: >-
+            The type of transaction relative to the effect on the balance
+            (CREDIT = balance decrease; DEBIT = balance increase; NONE = no
+            balance change)
+        transaction_iso_timestamp:
+          type: string
+          format: date-time
+          description: The ISO timestamp of the transaction
       required:
         - amount
+        - net_amount
         - transaction_date
         - effective_date
         - description
+        - transaction_type
+        - transaction_iso_timestamp
+    FacilityTransactionType:
+      title: FacilityTransactionType
+      type: string
+      enum:
+        - NONE
+        - CREDIT
+        - DEBIT
     FacilityTransactionItems:
       title: FacilityTransactionItems
       type: array
