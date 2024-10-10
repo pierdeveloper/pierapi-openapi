@@ -1705,6 +1705,11 @@ paths:
                     created_on: '2023-05-12T19:46:09.293Z'
                     account_number: '401542198'
                     balance: 500000
+                    balances:
+                      current_balance: 500000
+                      principal_balance: 500000
+                      interest_balance: 0
+                      payoff_balance: 500000
                     interest_balance: 0
                     payoff_balance: 500000
                     origination_date: '2023-05-12'
@@ -1936,6 +1941,11 @@ paths:
                       created_on: '2023-05-12T19:46:09.293Z'
                       account_number: '401542198'
                       balance: 500000
+                      balances:
+                        current_balance: 500000
+                        principal_balance: 500000
+                        interest_balance: 0
+                        payoff_balance: 500000
                       interest_balance: 0
                       payoff_balance: 500000
                       origination_date: '2023-05-12'
@@ -2523,6 +2533,11 @@ paths:
                     created_on: '2023-05-12T19:46:09.293Z'
                     account_number: '401542198'
                     balance: 500000
+                    balances:
+                      current_balance: 500000
+                      principal_balance: 500000
+                      interest_balance: 0
+                      payoff_balance: 500000
                     interest_balance: 0
                     payoff_balance: 500000
                     origination_date: '2023-05-12'
@@ -2934,6 +2949,11 @@ paths:
                     status: closed
                     account_number: '401542198'
                     balance: 500000
+                    balances:
+                      current_balance: 500000
+                      principal_balance: 500000
+                      interest_balance: 0
+                      payoff_balance: 500000
                     interest_balance: 0
                     payoff_balance: 500000
                     origination_date: '2023-05-12'
@@ -3117,6 +3137,11 @@ paths:
                     autopay:
                       authorized: false
                     balance: 0
+                    balances:
+                      current_balance: 0
+                      principal_balance: 0
+                      interest_balance: 0
+                      payoff_balance: 0
                     origination_date: '2024-04-19'
                     remaining_statement_balance: 7500
                     documents:
@@ -3275,6 +3300,11 @@ paths:
                     created_on: '2023-05-12T19:46:09.293Z'
                     account_number: '401542198'
                     balance: 500000
+                    balances:
+                      current_balance: 500000
+                      principal_balance: 500000
+                      interest_balance: 0
+                      payoff_balance: 500000
                     interest_balance: 0
                     payoff_balance: 500000
                     origination_date: '2023-05-12'
@@ -3501,6 +3531,11 @@ paths:
                     created_on: '2023-05-12T19:46:09.293Z'
                     account_number: '401542198'
                     balance: 500000
+                    balances:
+                      current_balance: 500000
+                      principal_balance: 500000
+                      interest_balance: 0
+                      payoff_balance: 500000
                     interest_balance: 0
                     payoff_balance: 500000
                     origination_date: '2023-05-12'
@@ -3715,6 +3750,11 @@ paths:
                     created_on: '2023-05-12T19:46:09.293Z'
                     account_number: '401542198'
                     balance: 500000
+                    balances:
+                      current_balance: 500000
+                      principal_balance: 500000
+                      interest_balance: 0
+                      payoff_balance: 500000
                     interest_balance: 0
                     payoff_balance: 500000
                     origination_date: '2023-05-12'
@@ -3942,6 +3982,11 @@ paths:
                     created_on: '2023-05-12T19:46:09.293Z'
                     account_number: '401542198'
                     balance: 500000
+                    balances:
+                      current_balance: 500000
+                      principal_balance: 500000
+                      interest_balance: 0
+                      payoff_balance: 500000
                     interest_balance: 0
                     payoff_balance: 500000
                     origination_date: '2023-05-12'
@@ -4999,6 +5044,173 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Move payment to failed state
+      security:
+        - BearerAuth: []
+  /reconciliation/balance-report/{date}:
+    get:
+      description: >-
+        Get the balance report for all facilities for a Pier partner for a
+        specific day. The report contains the balance EOD in Pacific Time.
+      operationId: reconciliationReports_getBalanceReport
+      tags:
+        - ReconciliationReports
+      parameters:
+        - name: date
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/ISODate'
+          examples:
+            Example1:
+              value: '2024-10-01'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BalanceReportResponse'
+              examples:
+                Example1:
+                  value:
+                    facility_balances:
+                      - facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                        borrower_id: bor_a1d0c30d77104f35b4c842b99132624e
+                        report_date: '2024-10-01'
+                        balance: 100000
+                        payoff_balance: 100000
+                        current_balance: 100000
+                        interest_balance: 0
+                        in_grace_period: true
+                        in_introductory_promo_period: false
+                    cadence: daily
+                    type: balance
+                    report_date: '2024-10-01'
+                    last_updated: '2024-10-02T00:00:00Z'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '409':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get balance report
+      security:
+        - BearerAuth: []
+  /reconciliation/transaction-report/{date}:
+    get:
+      description: >-
+        Get the transaction report for all facilities for a Pier partner for a
+        specific day. The report contains all transactions for the day that make
+        up the ledger of the facility as well as payments and disbursements.
+      operationId: reconciliationReports_getTransactionReport
+      tags:
+        - ReconciliationReports
+      parameters:
+        - name: date
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/ISODate'
+          examples:
+            Example1:
+              value: '2024-10-01'
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TransactionReportResponse'
+              examples:
+                Example1:
+                  value:
+                    facility_transactions:
+                      - - facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                          borrower_id: bor_a1d0c30d77104f35b4c842b99132624e
+                          amount: 100000
+                          net_amount: 100000
+                          transaction_date: '2023-05-12'
+                          effective_date: '2023-05-12'
+                          description: Disbursement
+                          transaction_type: DEBIT
+                          transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
+                        - facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                          borrower_id: bor_a1d0c30d77104f35b4c842b99132624e
+                          amount: 500000
+                          net_amount: -500000
+                          transaction_date: '2024-06-02'
+                          effective_date: '2024-06-02'
+                          description: Principal Reduction
+                          transaction_type: CREDIT
+                          transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
+                    payments:
+                      - id: pmt_18e5a3726b3943cda2635f40e1041ba4
+                        amount: 100000
+                        facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                        status: pending
+                        transfer_type: standard
+                        created_on: '2023-02-27T00:00:00Z'
+                        is_autopay: false
+                    disbursements:
+                      - id: dsb_18e5a3726b3943cda2635f40e1041ba4
+                        facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                        amount: 100000
+                        status: pending
+                        failure_reason: null
+                        date: '2023-02-27'
+                        created_on: '2023-02-27T00:00:00Z'
+                        transfer_type: standard
+                    cadence: daily
+                    type: transaction
+                    report_date: '2024-10-01'
+                    last_updated: '2024-10-02T00:00:00Z'
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '409':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Get transaction report
       security:
         - BearerAuth: []
 components:
@@ -6750,6 +6962,36 @@ components:
           $ref: '#/components/schemas/FacilityDocument'
           nullable: true
           description: The URL and ID for the signed autopay ACH authorization document.
+    FacilityBalances:
+      title: FacilityBalances
+      type: object
+      properties:
+        current_balance:
+          type: integer
+          description: >-
+            The current balance of the loan, in cents (includes everything -
+            principal, interest, fees, etc.)
+          example: 500000
+        principal_balance:
+          type: integer
+          description: The principal balance of the loan, in cents
+          example: 500000
+        interest_balance:
+          type: integer
+          description: The interest balance of the loan, in cents
+          example: 0
+        payoff_balance:
+          type: integer
+          description: >-
+            The payoff balance of the loan, in cents (if the facility is in
+            grace then this balance is only principal; otherwise it matches
+            current_balance)
+          example: 500000
+      required:
+        - current_balance
+        - principal_balance
+        - interest_balance
+        - payoff_balance
     Facility:
       title: Facility
       type: object
@@ -6805,14 +7047,21 @@ components:
           type: integer
           nullable: true
           description: The remaining balance of the loan, in cents
+        balances:
+          $ref: '#/components/schemas/FacilityBalances'
+          description: A deeper view of what makes up the facility balance, all in cents
         interest_balance:
           type: integer
           nullable: true
-          description: The current interest balance of the loan, in cents
+          description: >-
+            The current interest balance of the loan, in cents (deprecated - see
+            balances field)
         payoff_balance:
           type: integer
           nullable: true
-          description: The current payoff balance of the loan, in cents
+          description: >-
+            The current payoff balance of the loan, in cents (deprecated - see
+            balances field)
         origination_date:
           type: string
           nullable: true
@@ -6912,6 +7161,7 @@ components:
         - account_number
         - transactions
         - statements
+        - balances
         - payments_due
         - terms
         - remaining_statement_balance
@@ -7340,6 +7590,198 @@ components:
         - status
         - transfer_type
         - created_on
+    ISODate:
+      title: ISODate
+      type: string
+      description: An ISO 8601 date string in the format YYYY-MM-DD
+    ReconciliationReportCadence:
+      title: ReconciliationReportCadence
+      type: string
+      enum:
+        - daily
+    ReconciliationReportType:
+      title: ReconciliationReportType
+      type: string
+      enum:
+        - transaction
+        - balance
+    BalanceReport:
+      title: BalanceReport
+      type: object
+      properties:
+        facility_id:
+          $ref: '#/components/schemas/FacilityId'
+          description: The ID of the facility
+        borrower_id:
+          $ref: '#/components/schemas/ConsumerBorrowerId'
+          description: The ID of the borrower
+        report_date:
+          $ref: '#/components/schemas/ISODate'
+          description: >-
+            The date of the report - this is the same as the date in the path
+            parameter.
+        balance:
+          type: integer
+          description: >-
+            The balance EOD in Pacific Time in cents for the facility. This
+            field matches the facility balance field and handles showing balance
+            based on if the facility is in grace period or not.
+          example: 100000
+        payoff_balance:
+          type: integer
+          description: >-
+            The payoff balance in cents for the facility. During grace period
+            this is the principal balance; out of grace this is the
+            current/total balance.
+          example: 100000
+        current_balance:
+          type: integer
+          description: >-
+            The current balance in cents for the facility. Regardless of grace
+            period this always includes the entire balance (principal, interest,
+            fees).
+          example: 100000
+        interest_balance:
+          type: integer
+          description: >-
+            The interest balance in cents for the facility. This is the interest
+            accrued on the facility.
+          example: 0
+        in_grace_period:
+          type: boolean
+          description: >-
+            A boolean indicating if the facility is in grace period. During
+            grace period the payoff_balance is the facility's balance field and
+            what is due without interest.
+          example: true
+        in_introductory_promo_period:
+          type: boolean
+          description: >-
+            A boolean indicating if the facility is in the introductory promo
+            period. During this period the facility terms can be different than
+            the standard terms once the grace period is over. Typically this
+            would be a 0% interest for a period of X days.
+          example: false
+      required:
+        - facility_id
+        - borrower_id
+        - report_date
+        - balance
+        - payoff_balance
+        - current_balance
+        - interest_balance
+        - in_grace_period
+        - in_introductory_promo_period
+    BalanceReportResponse:
+      title: BalanceReportResponse
+      type: object
+      properties:
+        facility_balances:
+          type: array
+          items:
+            $ref: '#/components/schemas/BalanceReport'
+          description: >-
+            This is a list of balance reports for all the facilities for the
+            given date.
+        cadence:
+          $ref: '#/components/schemas/ReconciliationReportCadence'
+          description: >-
+            The cadence that the report is generated in. For now, "daily"
+            cadence is the only one that exists.
+        type:
+          $ref: '#/components/schemas/ReconciliationReportType'
+          description: >-
+            The type of report that is being generated. For now, "balance" is
+            the only type that exists.
+        report_date:
+          $ref: '#/components/schemas/ISODate'
+          description: >-
+            The date of the report - this is the same as the date in the path
+            parameter.
+        last_updated:
+          type: string
+          format: date-time
+          description: The timestamp when the report was last updated.
+          example: '2024-10-02T00:00:00Z'
+      required:
+        - facility_balances
+        - cadence
+        - type
+        - report_date
+        - last_updated
+    ReconciliationReportTransaction:
+      title: ReconciliationReportTransaction
+      type: object
+      description: A transaction that make up the ledger of the facility
+      properties:
+        facility_id:
+          $ref: '#/components/schemas/FacilityId'
+          description: The ID of the facility
+        borrower_id:
+          $ref: '#/components/schemas/ConsumerBorrowerId'
+          description: The ID of the borrower
+      required:
+        - facility_id
+        - borrower_id
+      allOf:
+        - $ref: '#/components/schemas/FacilityTransactionItem'
+    ReconciliationReportTransactions:
+      title: ReconciliationReportTransactions
+      type: array
+      items:
+        $ref: '#/components/schemas/ReconciliationReportTransaction'
+      description: >-
+        A list of transactions for the day that make up the ledger of the
+        facility
+    TransactionReportResponse:
+      title: TransactionReportResponse
+      type: object
+      properties:
+        facility_transactions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReconciliationReportTransactions'
+          description: >-
+            A list of transactions for the day that make up the ledger of the
+            facility
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Payment'
+          description: A list of payments for the day
+        disbursements:
+          type: array
+          items:
+            $ref: '#/components/schemas/Disbursement'
+          description: A list of disbursements for the day
+        cadence:
+          $ref: '#/components/schemas/ReconciliationReportCadence'
+          description: >-
+            The cadence that the report is generated in. For now, "daily"
+            cadence is the only one that exists.
+        type:
+          $ref: '#/components/schemas/ReconciliationReportType'
+          description: >-
+            The type of report that is being generated. For now, "balance" is
+            the only type that exists.
+        report_date:
+          $ref: '#/components/schemas/ISODate'
+          description: >-
+            The date of the report - this is the same as the date in the path
+            parameter.
+        last_updated:
+          type: string
+          format: date-time
+          description: The timestamp when the report was last updated.
+          example: '2024-10-02T00:00:00Z'
+      required:
+        - facility_transactions
+        - payments
+        - disbursements
+        - cadence
+        - type
+        - report_date
+        - last_updated
   securitySchemes:
     BearerAuth:
       type: http
