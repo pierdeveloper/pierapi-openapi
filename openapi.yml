@@ -139,6 +139,8 @@ paths:
                             type: interest_plus_percentage_of_principal
                             value: 500
                             floor: 3000
+                          payment_period: monthly
+                          first_payment_date: '2022-12-31'
                       lender_of_record: lender
                       created_on: '2022-12-31T01:36:52.606Z'
                       decisioned_on: '2023-01-17T05:31:52.955Z'
@@ -218,6 +220,8 @@ paths:
                           type: interest_plus_percentage_of_principal
                           value: 500
                           floor: 3000
+                        payment_period: monthly
+                        first_payment_date: '2022-12-31'
                     lender_of_record: lender
                     created_on: '2022-12-31T01:36:52.606Z'
                     decisioned_on: '2023-01-17T05:31:52.955Z'
@@ -288,6 +292,8 @@ paths:
                         type: interest_plus_percentage_of_principal
                         value: 500
                         floor: 3000
+                      payment_period: monthly
+                      first_payment_date: '2022-12-31'
   /applications/{application_id}/reject:
     post:
       description: >-
@@ -424,6 +430,8 @@ paths:
                           type: interest_plus_percentage_of_principal
                           value: 500
                           floor: 3000
+                        payment_period: monthly
+                        first_payment_date: '2022-12-31'
                     lender_of_record: lender
                     created_on: '2022-12-31T01:36:52.606Z'
                     decisioned_on: '2023-01-17T05:31:52.955Z'
@@ -5446,14 +5454,25 @@ components:
           nullable: true
           description: >-
             The minimum payment due each billing cycle. There is also a flat
-            minimum payment of $15, which is used if the calculated minimum
-            payment is less than $15.
+            minimum payment of \$15, which is used if the calculated minimum
+            payment is less than \$15.
         origination_fee:
           type: integer
           nullable: true
           description: >-
             The origination fee charged to originate the line in basis points
             (e.g. '150' for 1.50%)
+        payment_period:
+          $ref: '#/components/schemas/PaymentPeriod'
+          nullable: true
+          description: >-
+            The repayment frequency for the loan. Accepted values weekly,
+            biweekly, monthly, semi_monthly_first_15th, semi_monthly_last_15th,
+            semi_monthly
+        first_payment_date:
+          type: string
+          nullable: true
+          description: The date of the first payment, in ISO 8601 format (e.g. 2022-12-31)
       required:
         - amount
     LineOfCreditOffer:
