@@ -2193,6 +2193,7 @@ paths:
                     bank_routing_number: '021000021'
                     type: checking
                   transfer_type: standard
+                  settlement_priority: same_day
               Example2:
                 value:
                   amount: 100000
@@ -4761,6 +4762,7 @@ paths:
                   facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
                   amount: 100000
                   transfer_type: standard
+                  settlement_priority: same_day
                   ach_authorization_id: doc_43da3b3f95c745e1985a71e9a00d6c27
               Example2:
                 value:
@@ -6433,9 +6435,39 @@ components:
       type: string
       enum:
         - standard
-        - next_day
-        - same_day
         - none
+      description: These transfer types are passed in by API users to indicate ACH or not.
+    PaymentTransferType:
+      title: PaymentTransferType
+      type: string
+      enum:
+        - standard
+        - none
+        - refund
+        - credit
+        - cancellation
+        - suspense_credit
+      description: >-
+        Transfer types that are not standard/none are set by special operations
+        like the refund endpoint for example. Special types, like refund, will
+        reference the original transaction transfer type of standard/none to
+        determine if ACH was used if this knowledge is needed (e.g. does an ACH
+        refund need to happen or was this ledgering only).
+    DisbursementTransferType:
+      title: DisbursementTransferType
+      type: string
+      enum:
+        - standard
+        - none
+        - refund
+        - cancellation
+        - suspense_refund
+      description: >-
+        Transfer types that are not standard/none are set by special operations
+        like the refund endpoint for example. Special types, like refund, will
+        reference the original transaction transfer type of standard/none to
+        determine if ACH was used if this knowledge is needed (e.g. does an ACH
+        refund need to happen or was this ledgering only).
     TransferStatus:
       title: TransferStatus
       type: string
@@ -6446,6 +6478,14 @@ components:
         - settled
         - failed
         - cancelled
+    SettlementPriorities:
+      title: SettlementPriorities
+      type: string
+      enum:
+        - standard
+        - next_day
+        - same_day
+      description: This determines the network speed used for ACH transfers.
     CreditType:
       title: CreditType
       type: string
@@ -6920,8 +6960,10 @@ components:
           description: Timestamp the disbursement object is created on
           example: '2023-02-27T00:00:00Z'
         transfer_type:
-          $ref: '#/components/schemas/TransferType'
-          description: The type of transfer to use for the disbursement
+          $ref: '#/components/schemas/DisbursementTransferType'
+          description: >-
+            The type of transfer that the disbursement was (ACH, ledger only, or
+            special cases like refunds)
       required:
         - id
         - facility_id
@@ -6943,7 +6985,13 @@ components:
           description: The bank account to disburse to
         transfer_type:
           $ref: '#/components/schemas/TransferType'
-          description: The type of transfer to use for the disbursement
+          description: >-
+            The type of transfer to use for the disbursement (ACH or none
+            [ledger only])
+        settlement_priority:
+          $ref: '#/components/schemas/SettlementPriorities'
+          nullable: true
+          description: The speed at which the transfer should execute when ACH is used
       required:
         - amount
         - transfer_type
@@ -7582,7 +7630,13 @@ components:
           example: 100000
         transfer_type:
           $ref: '#/components/schemas/TransferType'
-          description: The type of ACH transfer
+          description: >-
+            The type of transfer to use for the payment (ACH or none [ledger
+            only])
+        settlement_priority:
+          $ref: '#/components/schemas/SettlementPriorities'
+          nullable: true
+          description: The speed at which the transfer should execute when ACH is used
         ach_authorization_id:
           type: string
           nullable: true
@@ -7611,7 +7665,7 @@ components:
           $ref: '#/components/schemas/TransferStatus'
           description: The status of the payment
         transfer_type:
-          $ref: '#/components/schemas/TransferType'
+          $ref: '#/components/schemas/PaymentTransferType'
           description: The type of ACH transfer
         created_on:
           type: string
