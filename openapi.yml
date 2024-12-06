@@ -53,7 +53,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Create an application
-      security:
+      security: &ref_0
         - BearerAuth: []
       requestBody:
         required: true
@@ -166,8 +166,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: List all applications
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /applications/{application_id}/approve:
     post:
       operationId: applications_approve
@@ -179,6 +178,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/ApplicationId'
+          example: app_f0467657bba948e6a87292e182132848
           examples:
             Example1:
               value: app_f0467657bba948e6a87292e182132848
@@ -252,8 +252,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Approve an application
-      security:
-        - BearerAuth: []
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -308,6 +307,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/ApplicationId'
+          example: app_f0467657bba948e6a87292e182132848
           examples:
             Example1:
               value: app_f0467657bba948e6a87292e182132848
@@ -357,8 +357,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Reject an application
-      security:
-        - BearerAuth: []
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -389,6 +388,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/ApplicationId'
+          example: app_f0467657bba948e6a87292e182132848
           examples:
             Example1:
               value: app_f0467657bba948e6a87292e182132848
@@ -462,8 +462,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Get an application by ID
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /token:
     post:
       description: >-
@@ -584,8 +583,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Create a business borrower
-      security:
-        - BearerAuth: []
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -647,6 +645,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/BusinessBorrowerId'
+          example: bor_18e5a3726b3943cda2635f40e1041ba4
           examples:
             Example1:
               value: bor_18e5a3726b3943cda2635f40e1041ba4
@@ -722,8 +721,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Update a business borrower
-      security:
-        - BearerAuth: []
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -821,8 +819,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Create a consumer borrower
-      security:
-        - BearerAuth: []
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -862,6 +859,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/ConsumerBorrowerId'
+          example: bor_a1d0c30d77104f35b4c842b99132624e
           examples:
             Example1:
               value: bor_a1d0c30d77104f35b4c842b99132624e
@@ -915,8 +913,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Update a consumer borrower
-      security:
-        - BearerAuth: []
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -948,6 +945,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/ConsumerBorrowerId'
+          example: bor_a1d0c30d77104f35b4c842b99132624e
           examples:
             Example1:
               value: bor_a1d0c30d77104f35b4c842b99132624e
@@ -995,8 +993,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Retrieve a borrower by id
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /borrowers:
     get:
       description: Retrieve all borrowers associated with your account
@@ -1086,8 +1083,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: List all borrowers
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /configuration/webhook:
     post:
       description: Set the array of urls to receive webhook events from Pier.
@@ -1129,8 +1125,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Set webhook URLs
-      security:
-        - BearerAuth: []
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -1186,8 +1181,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Reset webhook URLs
-      security:
-        - BearerAuth: []
+      security: *ref_0
     get:
       description: Get the array of `urls` that receives Pier webhooks.
       operationId: configuration_get_webhook_urls
@@ -1222,8 +1216,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Get webhook URLs
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /configuration/webhook-verification:
     get:
       description: The Pier public key to use to verify webhook signatures.
@@ -1261,8 +1254,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Verify a webhook with Pier public key
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /configuration/lending_details:
     post:
       description: Only valid in Starter Mode
@@ -1309,8 +1301,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Set lending details
-      security:
-        - BearerAuth: []
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -1365,8 +1356,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Remove lending details
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /coverage/commercial:
     get:
       description: >-
@@ -1417,8 +1407,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Retrieve commercial lending coverage
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /coverage/consumer:
     get:
       description: >-
@@ -1467,8 +1456,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Retrieve consumer lending coverage
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /rejection_reasons:
     get:
       description: >-
@@ -1568,8 +1556,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Retrieve rejection reasons
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /coverage/check_offers:
     post:
       description: >-
@@ -1619,8 +1606,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Check offers
-      security:
-        - BearerAuth: []
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -1882,8 +1868,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Create a facility
-      security:
-        - BearerAuth: []
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -2100,8 +2085,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: List all facilities
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /facilities/{facility_id}/disbursements:
     post:
       description: >-
@@ -2116,6 +2100,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/FacilityId'
+          example: fac_18e5a3726b3943cda2635f40e1041ba4
           examples:
             Example1:
               value: fac_18e5a3726b3943cda2635f40e1041ba4
@@ -2176,8 +2161,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Create a disbursement for a facility
-      security:
-        - BearerAuth: []
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -2210,6 +2194,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/FacilityId'
+          example: fac_18e5a3726b3943cda2635f40e1041ba4
           examples:
             Example1:
               value: fac_18e5a3726b3943cda2635f40e1041ba4
@@ -2248,8 +2233,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: List disbursements for a facility
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /facilities/{facility_id}/disbursements/{disbursement_id}/test/initiate:
     patch:
       description: Move disbursement to initiated state (_sandbox only_)
@@ -2262,6 +2246,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/FacilityId'
+          example: fac_18e5a3726b3943cda2635f40e1041ba4
           examples:
             Example1:
               value: fac_18e5a3726b3943cda2635f40e1041ba4
@@ -2270,6 +2255,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/DisbursementId'
+          example: dsb_18e5a3726b3943cda2635f40e1041ba4
           examples:
             Example1:
               value: dsb_18e5a3726b3943cda2635f40e1041ba4
@@ -2298,8 +2284,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Move disbursement to initiated state
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /facilities/{facility_id}/disbursements/{disbursement_id}/test/success:
     patch:
       description: Move disbursement to successful state (_sandbox only_)
@@ -2312,6 +2297,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/FacilityId'
+          example: fac_18e5a3726b3943cda2635f40e1041ba4
           examples:
             Example1:
               value: fac_18e5a3726b3943cda2635f40e1041ba4
@@ -2320,6 +2306,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/DisbursementId'
+          example: dsb_18e5a3726b3943cda2635f40e1041ba4
           examples:
             Example1:
               value: dsb_18e5a3726b3943cda2635f40e1041ba4
@@ -2348,8 +2335,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Move disbursement to successful state
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /facilities/{facility_id}/disbursements/{disbursement_id}/test/failed:
     patch:
       description: Move disbursement to failed state (_sandbox only_)
@@ -2362,6 +2348,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/FacilityId'
+          example: fac_18e5a3726b3943cda2635f40e1041ba4
           examples:
             Example1:
               value: fac_18e5a3726b3943cda2635f40e1041ba4
@@ -2370,6 +2357,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/DisbursementId'
+          example: dsb_18e5a3726b3943cda2635f40e1041ba4
           examples:
             Example1:
               value: dsb_18e5a3726b3943cda2635f40e1041ba4
@@ -2398,8 +2386,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Move disbursement to failed state
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /facilities/{facility_id}/create_limit_reduction_notice:
     post:
       description: >-
@@ -2416,6 +2403,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/FacilityId'
+          example: fac_18e5a3726b3943cda2635f40e1041ba4
           examples:
             Example1:
               value: fac_18e5a3726b3943cda2635f40e1041ba4
@@ -2458,8 +2446,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Create a limit reduction notice
-      security:
-        - BearerAuth: []
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -2500,6 +2487,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/FacilityId'
+          example: fac_18e5a3726b3943cda2635f40e1041ba4
           examples:
             Example1:
               value: fac_18e5a3726b3943cda2635f40e1041ba4
@@ -2693,8 +2681,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Update credit limit for a line of credit
-      security:
-        - BearerAuth: []
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -2728,6 +2715,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/FacilityId'
+          example: facility_id
           examples:
             Example1:
               value: facility_id
@@ -2771,8 +2759,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: List all payments for a facility
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /facilities/{facility_id}/credit:
     post:
       description: Credit a facility
@@ -2819,8 +2806,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Credit a facility
-      security:
-        - BearerAuth: []
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -2849,6 +2835,109 @@ paths:
                   description: Payment ID associated with the credit action (if applicable)
               required:
                 - amount
+  /facilities/{facility_id}/disbursements/{disbursement_id}/cancel:
+    post:
+      description: >-
+        Cancels a submitted disbursement before it is sent to the ACH network.
+        Disbursements can only be canceled if they are still in the `pending`
+        state and have not been submitted to the ACH network. After a
+        disbursement is sent to the ACH network, you must wait for the it to
+        settle and then you may refund it instead.
+
+
+        In some cases if you cancel while the disbursement is in the process of
+        being submitted to the ACH network you may see a status of
+        `cancellation_pending` in the response. In this case, you can check the
+        status of the disbursement or wait for a subsequent webhook to see if it
+        was successfully canceled or processed.
+      operationId: facilities_cancelDisbursement
+      tags:
+        - Facilities
+      parameters:
+        - name: facility_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/FacilityId'
+          example: fac_18e5a3726b3943cda2635f40e1041ba4
+          examples:
+            Example1:
+              value: fac_18e5a3726b3943cda2635f40e1041ba4
+            Example2:
+              value: fac_18e5a3726b3943cda2635f40e1041ba4
+        - name: disbursement_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/DisbursementId'
+          example: dsb_18e5a3726b3943cda2635f40e1041ba4
+          examples:
+            Example1:
+              value: dsb_18e5a3726b3943cda2635f40e1041ba4
+            Example2:
+              value: dsb_18e5a3726b3943cda2635f40e1041ba4
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Disbursement'
+              examples:
+                Example1:
+                  value:
+                    id: dsb_18e5a3726b3943cda2635f40e1041ba4
+                    facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                    amount: 100000
+                    status: canceled
+                    failure_reason: null
+                    date: '2023-02-27'
+                    created_on: '2023-02-27T00:00:00Z'
+                    transfer_type: none
+                Example2:
+                  value:
+                    id: dsb_18e5a3726b3943cda2635f40e1041ba4
+                    facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                    amount: 100000
+                    status: cancellation_pending
+                    failure_reason: null
+                    date: '2023-02-27'
+                    created_on: '2023-02-27T00:00:00Z'
+                    transfer_type: none
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '409':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Cancel a disbursement
+      security: *ref_0
   /facilities/{facility_id}/disbursements/{disbursement_id}/refund:
     post:
       description: >-
@@ -2893,6 +2982,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
+        '409':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
         '429':
           description: ''
         '500':
@@ -2902,8 +2997,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Refund a disbursement
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /facilities/{facility_id}/close:
     post:
       description: Closes an active facility by setting its status to `closed`
@@ -2916,6 +3010,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/FacilityId'
+          example: fac_18e5a3726b3943cda2635f40e1041ba4
           examples:
             Example1:
               value: fac_18e5a3726b3943cda2635f40e1041ba4
@@ -3021,8 +3116,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Close a facility
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /facilities/{facility_id}/create_ach_authorization:
     post:
       description: >-
@@ -3041,6 +3135,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/FacilityId'
+          example: fac_18e5a3726b3943cda2635f40e1041ba4
           examples:
             Example1:
               value: fac_18e5a3726b3943cda2635f40e1041ba4
@@ -3083,8 +3178,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Create ACH Authorization
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /facilities/{facility_id}/create_autopay_authorization:
     post:
       description: >-
@@ -3102,6 +3196,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/FacilityId'
+          example: fac_18e5a3726b3943cda2635f40e1041ba4
           examples:
             Example1:
               value: fac_18e5a3726b3943cda2635f40e1041ba4
@@ -3253,8 +3348,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Create autopay ACH authorization
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /facilities/{facility_id}/enable_autopay:
     post:
       description: Enables autopay for a facility
@@ -3267,6 +3361,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/FacilityId'
+          example: fac_18e5a3726b3943cda2635f40e1041ba4
           examples:
             Example1:
               value: fac_18e5a3726b3943cda2635f40e1041ba4
@@ -3451,8 +3546,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Enable autopay for a facility
-      security:
-        - BearerAuth: []
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -3498,6 +3592,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/FacilityId'
+          example: fac_18e5a3726b3943cda2635f40e1041ba4
           examples:
             Example1:
               value: fac_18e5a3726b3943cda2635f40e1041ba4
@@ -3703,8 +3798,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Disable autopay for a facility
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /facilities/{facility_id}/repayment_bank_details:
     post:
       description: Add repayment bank details for a facility
@@ -3717,6 +3811,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/FacilityId'
+          example: fac_18e5a3726b3943cda2635f40e1041ba4
           examples:
             Example1:
               value: fac_18e5a3726b3943cda2635f40e1041ba4
@@ -3922,8 +4017,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Add repayment bank details for a facility
-      security:
-        - BearerAuth: []
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -3949,6 +4043,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/FacilityId'
+          example: fac_18e5a3726b3943cda2635f40e1041ba4
           examples:
             Example1:
               value: fac_18e5a3726b3943cda2635f40e1041ba4
@@ -4154,8 +4249,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Retrieve a facility
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /facilities/disbursements:
     get:
       description: List disbursements for your account
@@ -4198,8 +4292,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: List all disbursements for your account
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /facilities/{facility_id}/statements:
     get:
       description: List statements for a facility
@@ -4213,6 +4306,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/FacilityId'
+          example: fac_18e5a3726b3943cda2635f40e1041ba4
           examples:
             Example1:
               value: fac_18e5a3726b3943cda2635f40e1041ba4
@@ -4299,8 +4393,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: List statements for a facility
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /facilities/{facility_id}/disbursements/{disbursement_id}:
     get:
       description: Retrieve a disbursement by its id
@@ -4314,6 +4407,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/FacilityId'
+          example: fac_18e5a3726b3943cda2635f40e1041ba4
           examples:
             Example1:
               value: fac_18e5a3726b3943cda2635f40e1041ba4
@@ -4323,6 +4417,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/DisbursementId'
+          example: dsb_18e5a3726b3943cda2635f40e1041ba4
           examples:
             Example1:
               value: dsb_18e5a3726b3943cda2635f40e1041ba4
@@ -4371,8 +4466,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Retrieve a disbursement by its id
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /facilities/{facility_id}/payoff_amounts:
     get:
       description: >-
@@ -4390,6 +4484,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/FacilityId'
+          example: fac_18e5a3726b3943cda2635f40e1041ba4
           examples:
             Example1:
               value: fac_18e5a3726b3943cda2635f40e1041ba4
@@ -4444,8 +4539,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Retrieve payoff amounts for a facility
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /loan_agreements:
     post:
       description: >-
@@ -4499,8 +4593,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Create a loan agreement
-      security:
-        - BearerAuth: []
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -4566,8 +4659,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: List all loan agreements
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /loan_agreements/{loan_agreement_id}/sign:
     post:
       description: >-
@@ -4582,6 +4674,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/LoanAgreementId'
+          example: doc_43da3b3f95c745e1985a71e9a00d6c27
           examples:
             Example1:
               value: doc_43da3b3f95c745e1985a71e9a00d6c27
@@ -4629,8 +4722,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Sign a loan agreement
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /loan_agreements/{loan_agreement_id}:
     get:
       description: Retrieve a loan agreement by its id
@@ -4643,6 +4735,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/LoanAgreementId'
+          example: doc_43da3b3f95c745e1985a71e9a00d6c27
           examples:
             Example1:
               value: doc_43da3b3f95c745e1985a71e9a00d6c27
@@ -4684,8 +4777,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Get a loan agreement by id
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /payments:
     post:
       description: >-
@@ -4748,8 +4840,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Submit a loan payment
-      security:
-        - BearerAuth: []
+      security: *ref_0
       requestBody:
         required: true
         content:
@@ -4816,8 +4907,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: List all payments
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /payments/{payment_id}:
     get:
       description: Get a payment by its id
@@ -4830,6 +4920,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/PaymentId'
+          example: pmt_18e5a3726b3943cda2635f40e1041ba4
           examples:
             Example1:
               value: pmt_18e5a3726b3943cda2635f40e1041ba4
@@ -4877,14 +4968,14 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Get a payment by ID
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /payments/{payment_id}/refund:
     post:
       description: >-
         Refunds a specified payment in full. This endpoint is intended for
-        correcting erroneous transactions. Only customers with ACH disabled can
-        refund payments.
+        correcting erroneous transactions. Only payments in the `settled` state
+        can be refunded. This includes customers with ACH disabled because
+        payments go straight to settled.
       operationId: payments_refundPayment
       tags:
         - Payments
@@ -4919,6 +5010,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
+        '409':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
         '429':
           description: ''
         '500':
@@ -4928,8 +5025,97 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Refund a payment
-      security:
-        - BearerAuth: []
+      security: *ref_0
+  /payments/{payment_id}/cancel:
+    post:
+      description: >-
+        Cancels a submitted payment before it is sent to the ACH network.
+        Payments can only be canceled if they are still in the `pending` state
+        and have not been submitted to the ACH network. After a payment is sent
+        to the ACH network, you must wait for the it to settle and then you may
+        refund it instead.
+
+
+        In some cases if you cancel while the payment is in the process of being
+        submitted to the ACH network you may see a status of
+        `cancellation_pending` in the response. In this case, you can check the
+        status of the payment or wait for a subsequent webhook to see if it was
+        successfully canceled or processed.
+      operationId: payments_cancelPayment
+      tags:
+        - Payments
+      parameters:
+        - name: payment_id
+          in: path
+          required: true
+          schema:
+            $ref: '#/components/schemas/PaymentId'
+          example: pmt_18e5a3726b3943cda2635f40e1041ba4
+          examples:
+            Example1:
+              value: pmt_18e5a3726b3943cda2635f40e1041ba4
+            Example2:
+              value: pmt_18e5a3726b3943cda2635f40e1041ba4
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Payment'
+              examples:
+                Example1:
+                  value:
+                    id: pmt_18e5a3726b3943cda2635f40e1041ba4
+                    amount: 100000
+                    facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                    status: canceled
+                    transfer_type: standard
+                    created_on: '2023-02-27T00:00:00Z'
+                    is_autopay: false
+                Example2:
+                  value:
+                    id: pmt_18e5a3726b3943cda2635f40e1041ba4
+                    amount: 100000
+                    facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
+                    status: cancellation_pending
+                    transfer_type: standard
+                    created_on: '2023-02-27T00:00:00Z'
+                    is_autopay: false
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '409':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '429':
+          description: ''
+        '500':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+      summary: Cancel a payment
+      security: *ref_0
   /payments/{payment_id}/test/initiate:
     patch:
       description: Move payment to initiated state (_sandbox only_)
@@ -4942,6 +5128,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/PaymentId'
+          example: pmt_234259b117854d0194bc5864a6c45b42
           examples:
             Example1:
               value: pmt_234259b117854d0194bc5864a6c45b42
@@ -4970,8 +5157,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Move payment to initiated state
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /payments/{payment_id}/test/success:
     patch:
       description: Move payment to successful state (_sandbox only_)
@@ -4984,6 +5170,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/PaymentId'
+          example: pmt_234259b117854d0194bc5864a6c45b42
           examples:
             Example1:
               value: pmt_234259b117854d0194bc5864a6c45b42
@@ -5012,8 +5199,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Move payment to successful state
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /payments/{payment_id}/test/failed:
     patch:
       description: Move payment to failed state (_sandbox only_)
@@ -5026,6 +5212,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/PaymentId'
+          example: pmt_234259b117854d0194bc5864a6c45b42
           examples:
             Example1:
               value: pmt_234259b117854d0194bc5864a6c45b42
@@ -5054,8 +5241,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Move payment to failed state
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /reconciliation/balance-report/{date}:
     get:
       description: >-
@@ -5070,6 +5256,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/ISODate'
+          example: '2024-10-01'
           examples:
             Example1:
               value: '2024-10-01'
@@ -5136,8 +5323,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Get balance report
-      security:
-        - BearerAuth: []
+      security: *ref_0
   /reconciliation/transaction-report/{date}:
     get:
       description: >-
@@ -5153,6 +5339,7 @@ paths:
           required: true
           schema:
             $ref: '#/components/schemas/ISODate'
+          example: '2024-10-01'
           examples:
             Example1:
               value: '2024-10-01'
@@ -5245,8 +5432,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorBody'
       summary: Get transaction report
-      security:
-        - BearerAuth: []
+      security: *ref_0
 components:
   schemas:
     ApplicationId:
@@ -5799,6 +5985,75 @@ components:
           type: string
           nullable: true
           description: The last 4 digits of the borrower's social security number
+        itin:
+          type: string
+          nullable: true
+          description: >-
+            The borrower's 9-digit individual taxpayer identification number
+            (e.g. 345543221)
+        passport:
+          $ref: '#/components/schemas/Passport'
+          nullable: true
+          description: The borrower's passport
+        drivers_license:
+          $ref: '#/components/schemas/DriversLicense'
+          nullable: true
+          description: The borrower's driver license
+    Passport:
+      title: Passport
+      type: object
+      properties:
+        country:
+          type: string
+          description: ISO 3166-1 Alpha-3 code representing the country of issue (e.g. USA)
+          example: USA
+        number:
+          type: string
+          description: The passport number
+          example: PA0940443
+        expiration_date:
+          type: string
+          nullable: true
+          description: The expiration date of the passport (YYYY-MM-DD)
+        issue_date:
+          type: string
+          description: The issue date of the passport (YYYY-MM-DD)
+          example: '2012-12-12'
+      required:
+        - country
+        - number
+        - issue_date
+    DriversLicense:
+      title: DriversLicense
+      type: object
+      properties:
+        country:
+          type: string
+          description: ISO 3166-1 Alpha-3 code representing the country of issue (e.g. USA)
+          example: USA
+        province:
+          type: string
+          description: >-
+            Adapted ISO 3166-2 code with Alpha-3 country code prefix (e.g.
+            USA-CA)
+          example: USA-CA
+        number:
+          type: string
+          description: The passport number
+          example: D9892111
+        expiration_date:
+          type: string
+          nullable: true
+          description: The expiration date of the passport (YYYY-MM-DD)
+        issue_date:
+          type: string
+          description: The issue date of the passport (YYYY-MM-DD)
+          example: '2012-12-12'
+      required:
+        - country
+        - province
+        - number
+        - issue_date
     ConsumerBorrowerId:
       title: ConsumerBorrowerId
       type: string
@@ -6477,7 +6732,8 @@ components:
         - processed
         - settled
         - failed
-        - cancelled
+        - canceled
+        - cancellation_pending
     SettlementPriorities:
       title: SettlementPriorities
       type: string
