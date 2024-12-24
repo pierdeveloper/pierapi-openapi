@@ -2666,7 +2666,19 @@ paths:
                       last_statement_amount: 47000
                     in_grace_period: false
                     in_introductory_promo_period: false
+        '400':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
         '401':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorBody'
+        '404':
           description: ''
           content:
             application/json:
@@ -2697,7 +2709,7 @@ paths:
                   type: string
                   nullable: true
                   description: >-
-                    The document_id from the create_limit_reduction_notice
+                    The document_id from the `create_limit_reduction_notice`
                     endpoint
             examples:
               Example1:
