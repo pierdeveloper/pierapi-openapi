@@ -6455,11 +6455,11 @@ components:
           example: jdough@acme.co
         first_name:
           type: string
-          description: The borrower's first name
+          description: The borrower's first name (min. 2 characters)
           example: Jane
         last_name:
           type: string
-          description: The borrower's last name
+          description: The borrower's last name (min. 2 characters)
           example: Dough
         kyc_completion_date:
           type: string
@@ -6530,11 +6530,11 @@ components:
           example: jdough@acme.co
         first_name:
           type: string
-          description: The borrower's first name
+          description: The borrower's first name (min. 2 characters)
           example: Jane
         last_name:
           type: string
-          description: The borrower's last name
+          description: The borrower's last name (min. 2 characters)
           example: Dough
         kyc_completion_date:
           type: string
@@ -6574,11 +6574,11 @@ components:
           example: jdough@acme.co
         first_name:
           type: string
-          description: The borrower's first name
+          description: The borrower's first name (min. 2 characters)
           example: Jane
         last_name:
           type: string
-          description: The borrower's last name
+          description: The borrower's last name (min. 2 characters)
           example: Dough
         kyc_completion_date:
           type: string
