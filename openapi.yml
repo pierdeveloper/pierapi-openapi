@@ -1739,6 +1739,7 @@ paths:
                         effective_date: '2023-05-12'
                         description: Disbursement
                         transaction_type: DEBIT
+                        category: DISBURSEMENT
                         transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                       - amount: 500000
                         net_amount: -500000
@@ -1746,6 +1747,7 @@ paths:
                         effective_date: '2024-06-02'
                         description: Principal Reduction
                         transaction_type: CREDIT
+                        category: PRINCIPAL_REDUCTION
                         transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                     statements:
                       - id: stmt_deb6aba913d84feb987934f50c32bf03
@@ -1767,6 +1769,7 @@ paths:
                             effective_date: '2023-05-12'
                             description: Disbursement
                             transaction_type: DEBIT
+                            category: DISBURSEMENT
                             transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                           - amount: 500000
                             net_amount: -500000
@@ -1774,6 +1777,7 @@ paths:
                             effective_date: '2024-06-02'
                             description: Principal Reduction
                             transaction_type: CREDIT
+                            category: PRINCIPAL_REDUCTION
                             transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                         payments:
                           - id: pmt_18e5a3726b3943cda2635f40e1041ba4
@@ -1974,6 +1978,7 @@ paths:
                           effective_date: '2023-05-12'
                           description: Disbursement
                           transaction_type: DEBIT
+                          category: DISBURSEMENT
                           transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                         - amount: 500000
                           net_amount: -500000
@@ -1981,6 +1986,7 @@ paths:
                           effective_date: '2024-06-02'
                           description: Principal Reduction
                           transaction_type: CREDIT
+                          category: PRINCIPAL_REDUCTION
                           transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                       statements:
                         - id: stmt_deb6aba913d84feb987934f50c32bf03
@@ -2002,6 +2008,7 @@ paths:
                               effective_date: '2023-05-12'
                               description: Disbursement
                               transaction_type: DEBIT
+                              category: DISBURSEMENT
                               transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                             - amount: 500000
                               net_amount: -500000
@@ -2009,6 +2016,7 @@ paths:
                               effective_date: '2024-06-02'
                               description: Principal Reduction
                               transaction_type: CREDIT
+                              category: PRINCIPAL_REDUCTION
                               transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                           payments:
                             - id: pmt_18e5a3726b3943cda2635f40e1041ba4
@@ -2236,7 +2244,7 @@ paths:
       security: *ref_0
   /facilities/{facility_id}/disbursements/{disbursement_id}/test/initiate:
     patch:
-      description: Move disbursement to initiated state (_sandbox only_)
+      description: Move disbursement to initiated state (*sandbox only*)
       operationId: facilities_disbursementTestInitiate
       tags:
         - Facilities
@@ -2287,7 +2295,7 @@ paths:
       security: *ref_0
   /facilities/{facility_id}/disbursements/{disbursement_id}/test/success:
     patch:
-      description: Move disbursement to successful state (_sandbox only_)
+      description: Move disbursement to successful state (*sandbox only*)
       operationId: facilities_disbursementTestSuccess
       tags:
         - Facilities
@@ -2338,7 +2346,7 @@ paths:
       security: *ref_0
   /facilities/{facility_id}/disbursements/{disbursement_id}/test/failed:
     patch:
-      description: Move disbursement to failed state (_sandbox only_)
+      description: Move disbursement to failed state (*sandbox only*)
       operationId: facilities_disbursementTestFailed
       tags:
         - Facilities
@@ -2570,6 +2578,7 @@ paths:
                         effective_date: '2023-05-12'
                         description: Disbursement
                         transaction_type: DEBIT
+                        category: DISBURSEMENT
                         transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                       - amount: 500000
                         net_amount: -500000
@@ -2577,6 +2586,7 @@ paths:
                         effective_date: '2024-06-02'
                         description: Principal Reduction
                         transaction_type: CREDIT
+                        category: PRINCIPAL_REDUCTION
                         transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                     statements:
                       - id: stmt_deb6aba913d84feb987934f50c32bf03
@@ -2598,6 +2608,7 @@ paths:
                             effective_date: '2023-05-12'
                             description: Disbursement
                             transaction_type: DEBIT
+                            category: DISBURSEMENT
                             transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                           - amount: 500000
                             net_amount: -500000
@@ -2605,6 +2616,7 @@ paths:
                             effective_date: '2024-06-02'
                             description: Principal Reduction
                             transaction_type: CREDIT
+                            category: PRINCIPAL_REDUCTION
                             transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                         payments:
                           - id: pmt_18e5a3726b3943cda2635f40e1041ba4
@@ -3273,6 +3285,7 @@ paths:
                         effective_date: '2023-05-12'
                         description: Disbursement
                         transaction_type: DEBIT
+                        category: DISBURSEMENT
                         transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                       - amount: 500000
                         net_amount: -500000
@@ -3280,6 +3293,7 @@ paths:
                         effective_date: '2024-06-02'
                         description: Principal Reduction
                         transaction_type: CREDIT
+                        category: PRINCIPAL_REDUCTION
                         transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                     statements:
                       - id: stmt_deb6aba913d84feb987934f50c32bf03
@@ -3301,6 +3315,7 @@ paths:
                             effective_date: '2023-05-12'
                             description: Disbursement
                             transaction_type: DEBIT
+                            category: DISBURSEMENT
                             transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                           - amount: 500000
                             net_amount: -500000
@@ -3308,6 +3323,7 @@ paths:
                             effective_date: '2024-06-02'
                             description: Principal Reduction
                             transaction_type: CREDIT
+                            category: PRINCIPAL_REDUCTION
                             transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                         payments:
                           - id: pmt_18e5a3726b3943cda2635f40e1041ba4
@@ -3453,6 +3469,7 @@ paths:
                         effective_date: '2023-05-12'
                         description: Disbursement
                         transaction_type: DEBIT
+                        category: DISBURSEMENT
                         transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                       - amount: 500000
                         net_amount: -500000
@@ -3460,6 +3477,7 @@ paths:
                         effective_date: '2024-06-02'
                         description: Principal Reduction
                         transaction_type: CREDIT
+                        category: PRINCIPAL_REDUCTION
                         transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                     statements:
                       - id: stmt_deb6aba913d84feb987934f50c32bf03
@@ -3481,6 +3499,7 @@ paths:
                             effective_date: '2023-05-12'
                             description: Disbursement
                             transaction_type: DEBIT
+                            category: DISBURSEMENT
                             transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                           - amount: 500000
                             net_amount: -500000
@@ -3488,6 +3507,7 @@ paths:
                             effective_date: '2024-06-02'
                             description: Principal Reduction
                             transaction_type: CREDIT
+                            category: PRINCIPAL_REDUCTION
                             transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                         payments:
                           - id: pmt_18e5a3726b3943cda2635f40e1041ba4
@@ -3687,6 +3707,7 @@ paths:
                         effective_date: '2023-05-12'
                         description: Disbursement
                         transaction_type: DEBIT
+                        category: DISBURSEMENT
                         transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                       - amount: 500000
                         net_amount: -500000
@@ -3694,6 +3715,7 @@ paths:
                         effective_date: '2024-06-02'
                         description: Principal Reduction
                         transaction_type: CREDIT
+                        category: PRINCIPAL_REDUCTION
                         transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                     statements:
                       - id: stmt_deb6aba913d84feb987934f50c32bf03
@@ -3715,6 +3737,7 @@ paths:
                             effective_date: '2023-05-12'
                             description: Disbursement
                             transaction_type: DEBIT
+                            category: DISBURSEMENT
                             transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                           - amount: 500000
                             net_amount: -500000
@@ -3722,6 +3745,7 @@ paths:
                             effective_date: '2024-06-02'
                             description: Principal Reduction
                             transaction_type: CREDIT
+                            category: PRINCIPAL_REDUCTION
                             transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                         payments:
                           - id: pmt_18e5a3726b3943cda2635f40e1041ba4
@@ -3906,6 +3930,7 @@ paths:
                         effective_date: '2023-05-12'
                         description: Disbursement
                         transaction_type: DEBIT
+                        category: DISBURSEMENT
                         transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                       - amount: 500000
                         net_amount: -500000
@@ -3913,6 +3938,7 @@ paths:
                         effective_date: '2024-06-02'
                         description: Principal Reduction
                         transaction_type: CREDIT
+                        category: PRINCIPAL_REDUCTION
                         transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                     statements:
                       - id: stmt_deb6aba913d84feb987934f50c32bf03
@@ -3934,6 +3960,7 @@ paths:
                             effective_date: '2023-05-12'
                             description: Disbursement
                             transaction_type: DEBIT
+                            category: DISBURSEMENT
                             transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                           - amount: 500000
                             net_amount: -500000
@@ -3941,6 +3968,7 @@ paths:
                             effective_date: '2024-06-02'
                             description: Principal Reduction
                             transaction_type: CREDIT
+                            category: PRINCIPAL_REDUCTION
                             transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                         payments:
                           - id: pmt_18e5a3726b3943cda2635f40e1041ba4
@@ -4138,6 +4166,7 @@ paths:
                         effective_date: '2023-05-12'
                         description: Disbursement
                         transaction_type: DEBIT
+                        category: DISBURSEMENT
                         transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                       - amount: 500000
                         net_amount: -500000
@@ -4145,6 +4174,7 @@ paths:
                         effective_date: '2024-06-02'
                         description: Principal Reduction
                         transaction_type: CREDIT
+                        category: PRINCIPAL_REDUCTION
                         transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                     statements:
                       - id: stmt_deb6aba913d84feb987934f50c32bf03
@@ -4166,6 +4196,7 @@ paths:
                             effective_date: '2023-05-12'
                             description: Disbursement
                             transaction_type: DEBIT
+                            category: DISBURSEMENT
                             transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                           - amount: 500000
                             net_amount: -500000
@@ -4173,6 +4204,7 @@ paths:
                             effective_date: '2024-06-02'
                             description: Principal Reduction
                             transaction_type: CREDIT
+                            category: PRINCIPAL_REDUCTION
                             transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                         payments:
                           - id: pmt_18e5a3726b3943cda2635f40e1041ba4
@@ -4353,6 +4385,7 @@ paths:
                           effective_date: '2023-05-12'
                           description: Disbursement
                           transaction_type: DEBIT
+                          category: DISBURSEMENT
                           transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                         - amount: 500000
                           net_amount: -500000
@@ -4360,6 +4393,7 @@ paths:
                           effective_date: '2024-06-02'
                           description: Principal Reduction
                           transaction_type: CREDIT
+                          category: PRINCIPAL_REDUCTION
                           transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                       payments:
                         - id: pmt_18e5a3726b3943cda2635f40e1041ba4
@@ -5046,8 +5080,7 @@ paths:
         and have not been submitted to the ACH network. After a payment is sent
         to the ACH network, you must wait for the it to settle and then you may
         refund it instead.
-
-
+          
         In some cases if you cancel while the payment is in the process of being
         submitted to the ACH network you may see a status of
         `cancellation_pending` in the response. In this case, you can check the
@@ -5130,7 +5163,7 @@ paths:
       security: *ref_0
   /payments/{payment_id}/test/initiate:
     patch:
-      description: Move payment to initiated state (_sandbox only_)
+      description: Move payment to initiated state (*sandbox only*)
       operationId: payments_paymentTestInitiate
       tags:
         - Payments
@@ -5172,7 +5205,7 @@ paths:
       security: *ref_0
   /payments/{payment_id}/test/success:
     patch:
-      description: Move payment to successful state (_sandbox only_)
+      description: Move payment to successful state (*sandbox only*)
       operationId: payments_paymentTestSuccess
       tags:
         - Payments
@@ -5214,7 +5247,7 @@ paths:
       security: *ref_0
   /payments/{payment_id}/test/failed:
     patch:
-      description: Move payment to failed state (_sandbox only_)
+      description: Move payment to failed state (*sandbox only*)
       operationId: payments_paymentTestFailed
       tags:
         - Payments
@@ -5257,8 +5290,8 @@ paths:
   /reconciliation/balance-report/{date}:
     get:
       description: >-
-        Get the balance report for all facilities for a Pier partner for a
-        specific day. The report contains the balance EOD in Pacific Time.
+        Get the balance report for all facilities for a Pier partner  for a
+        specific day. The report contains the balance EOD in  Pacific Time.
       operationId: reconciliationReports_getBalanceReport
       tags:
         - ReconciliationReports
@@ -5339,9 +5372,10 @@ paths:
   /reconciliation/transaction-report/{date}:
     get:
       description: >-
-        Get the transaction report for all facilities for a Pier partner for a
-        specific day. The report contains all transactions for the day that make
-        up the ledger of the facility as well as payments and disbursements.
+        Get the transaction report for all facilities for a Pier partner  for a
+        specific day. The report contains all transactions for the  day that
+        make up the ledger of the facility as well as payments and
+        disbursements.
       operationId: reconciliationReports_getTransactionReport
       tags:
         - ReconciliationReports
@@ -5374,6 +5408,7 @@ paths:
                           effective_date: '2023-05-12'
                           description: Disbursement
                           transaction_type: DEBIT
+                          category: DISBURSEMENT
                           transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                         - facility_id: fac_18e5a3726b3943cda2635f40e1041ba4
                           borrower_id: bor_a1d0c30d77104f35b4c842b99132624e
@@ -5383,6 +5418,7 @@ paths:
                           effective_date: '2024-06-02'
                           description: Principal Reduction
                           transaction_type: CREDIT
+                          category: PRINCIPAL_REDUCTION
                           transaction_iso_timestamp: '2023-05-12T00:00:00.000Z'
                     payments:
                       - id: pmt_18e5a3726b3943cda2635f40e1041ba4
@@ -5575,14 +5611,14 @@ components:
           nullable: true
           description: >-
             If the application is rejected, a list containing 1-4 rejection
-            reason(s). The Rejection Reasons endpoint provides a list of valid
+            reason(s).  The Rejection Reasons endpoint provides a list of valid
             reasons and descriptors
         requested_amount:
           type: integer
           nullable: true
           description: >-
             If the borrower requests an amount in their application, the
-            requested loan or credit line amount in cents (e.g. 500000 for
+            requested  loan or credit line amount in cents (e.g. 500000 for
             $5,000)
         status:
           $ref: '#/components/schemas/ApplicationStatus'
@@ -5623,7 +5659,7 @@ components:
           nullable: true
           description: >-
             The time in days between the last statement's closing date and the
-            next statement's closing date. For consumer lines of credit, the
+            next statement's closing date.  For consumer lines of credit, the
             minimum is '21'
         finance_charge:
           type: integer
@@ -6109,10 +6145,10 @@ components:
           nullable: true
           description: >-
             An array of objects representing owners of the business and those
-            who control the funds of the business.
+            who control the funds of the business. 
 
             If no one owns more than 25% of the business, just the individual
-            who has ultimate control of the funds must be included.
+            who has ultimate control of the funds must be included. 
 
             A maximum of 5 objects can be added.
         business_contact:
@@ -6170,10 +6206,10 @@ components:
             $ref: '#/components/schemas/BeneficialOwnersResponse'
           description: >-
             An array of objects representing owners of the business and those
-            who control the funds of the business.
+            who control the funds of the business. 
 
             If no one owns more than 25% of the business, just the individual
-            who has ultimate control of the funds must be included.
+            who has ultimate control of the funds must be included. 
 
             A maximum of 5 objects can be added.
         business_contact:
@@ -6236,10 +6272,10 @@ components:
             $ref: '#/components/schemas/BeneficialOwners'
           description: >-
             An array of objects representing owners of the business and those
-            who control the funds of the business.
+            who control the funds of the business. 
 
             If no one owns more than 25% of the business, just the individual
-            who has ultimate control of the funds must be included.
+            who has ultimate control of the funds must be included. 
 
             A maximum of 5 objects can be added.
         business_contact:
@@ -6299,10 +6335,10 @@ components:
           nullable: true
           description: >-
             An array of objects representing owners of the business and those
-            who control the funds of the business.
+            who control the funds of the business. 
 
             If no one owns more than 25% of the business, just the individual
-            who has ultimate control of the funds must be included.
+            who has ultimate control of the funds must be included. 
 
             A maximum of 5 objects can be added.
         business_contact:
@@ -6470,7 +6506,7 @@ components:
         kyc_status:
           $ref: '#/components/schemas/KycStatus'
           nullable: true
-          description: Kyc status of a consumer (_sandbox only_)
+          description: Kyc status of a consumer (*sandbox only*)
         government_identifiers:
           $ref: '#/components/schemas/GovernmentIdentifiers'
           nullable: true
@@ -6505,7 +6541,7 @@ components:
         kyc_status:
           $ref: '#/components/schemas/KycStatus'
           nullable: true
-          description: Kyc status of a consumer (_sandbox only_)
+          description: Kyc status of a consumer (*sandbox only*)
       required:
         - address
         - date_of_birth
@@ -6716,9 +6752,9 @@ components:
         - suspense_credit
       description: >-
         Transfer types that are not standard/none are set by special operations
-        like the refund endpoint for example. Special types, like refund, will
+        like the refund endpoint for example.  Special types, like refund, will
         reference the original transaction transfer type of standard/none to
-        determine if ACH was used if this knowledge is needed (e.g. does an ACH
+        determine  if ACH was used if this knowledge is needed (e.g. does an ACH
         refund need to happen or was this ledgering only).
     DisbursementTransferType:
       title: DisbursementTransferType
@@ -6731,9 +6767,9 @@ components:
         - suspense_refund
       description: >-
         Transfer types that are not standard/none are set by special operations
-        like the refund endpoint for example. Special types, like refund, will
+        like the refund endpoint for example.  Special types, like refund, will
         reference the original transaction transfer type of standard/none to
-        determine if ACH was used if this knowledge is needed (e.g. does an ACH
+        determine  if ACH was used if this knowledge is needed (e.g. does an ACH
         refund need to happen or was this ledgering only).
     TransferStatus:
       title: TransferStatus
@@ -7581,6 +7617,9 @@ components:
         description:
           type: string
           description: A description of the transaction
+        category:
+          $ref: '#/components/schemas/FacilityTransactionCategory'
+          description: The category of the transaction
         transaction_type:
           $ref: '#/components/schemas/FacilityTransactionType'
           description: >-
@@ -7597,6 +7636,7 @@ components:
         - transaction_date
         - effective_date
         - description
+        - category
         - transaction_type
         - transaction_iso_timestamp
     FacilityTransactionType:
@@ -7606,6 +7646,138 @@ components:
         - NONE
         - CREDIT
         - DEBIT
+    FacilityTransactionCategory:
+      title: FacilityTransactionCategory
+      type: string
+      enum:
+        - DRAWER_RESERVE_PURCHASE_IN_FROM_RESERVE_BANK
+        - REVERSE_PURCHASE_IN_FROM_RESERVE_BANK
+        - CASH_DRAWER_SELL_OFF_FUNDS_OUT_TO_RESERVE
+        - REVERSE_SELL_OFF_FUNDS_OUT_TO_RESERVE
+        - CASH_DRAWER_RESERVE_BANK_DEPOSIT_OUT
+        - REVERSE_BANK_DEPOSIT_OUT
+        - CASH_DRAWER_RESERVE_RECONCILING_ERROR_CORRECTION
+        - REVERSE_RECONCILING_ERROR_CORRECTION
+        - TRUST_DEPOSIT
+        - REVERSE_TRUST_DEPOSIT
+        - TRUST_DISBURSEMENT
+        - REVERSE_TRUST_DISBURSEMENT
+        - TRUST_DISBURSEMENT_SERVICING_FEE
+        - REVERSE_TRUST_DISBURSEMENT_SERVICING_FEE
+        - TRUST_RECEIVABLE_SERVICING_FEE
+        - REVERSE_TRUST_RECEIVABLE_SERVICING_FEE
+        - SUBSIDIZED_INTEREST_RECEIVABLE
+        - REVERSE_SUBSIDIZED_INTEREST_RECEIVABLE
+        - SUBSIDIZED_INTEREST_PAYABLE
+        - REVERSE_SUBSIDIZED_INTEREST_PAYABLE
+        - REVERSE_DEALER_RESERVE_RECEIVABLE
+        - DISBURSEMENT
+        - REVERSE_DISBURSEMENT
+        - CRED_LINE_LIMIT
+        - REVERSE_CRED_LINE_LIMIT
+        - PRECOMPUTED_INTEREST
+        - REVERSE_PRECOMPUTED_INTEREST
+        - FA_PRECOMPUTED_INTEREST
+        - REVERSE_FA_PRECOMPUTED_INTEREST
+        - PRINCIPAL_BILLING
+        - REVERSE_PRINCIPAL_BILLING
+        - INTEREST_BILLING
+        - REVERSE_INTEREST_BILLING
+        - PRINCIPAL_AND_INTEREST_BILLING
+        - REVERSE_PRINCIPAL_AND_INTEREST_BILLING
+        - PRINCIPAL_BALLOON_BILLING
+        - REVERSE_PRINCIPAL_BALLOON_BILLING
+        - INTEREST_BALLOON_BILLING
+        - REVERSE_INTEREST_BALLOON_BILLING
+        - DEFERRED_INTEREST_BILLING
+        - REVERSE_DEFERRED_INTEREST_BILLING
+        - ADB_INTEREST_BILLING
+        - REVERSE_ADB_INTEREST_BILLING
+        - ADB_INTEREST_BILLING_ADJUSTMENT
+        - REVERSE_ADB_INTEREST_BILLING_ADJUSTMENT
+        - LATE_FEE
+        - REVERSE_LATE_FEE
+        - CREDIT_LINE_ADVANCE_FEE
+        - REVERSE_CREDIT_LINE_ADVANCE_FEE
+        - CREDIT_LINE_OVERDRAFT_FEE
+        - REVERSE_CREDIT_LINE_OVERDRAFT_FEE
+        - IMPOUND_ASSESSMENT
+        - REVERSE_IMPOUND_ASSESSMENT
+        - NSF_FEE
+        - REVERSE_NSF_FEE
+        - AMORTIZED_INCOME_FEE
+        - REVERSE_AMORTIZED_INCOME_FEE
+        - AMORTIZATION_OF_INCOME_FEE
+        - REVERSE_AMORTIZATION_OF_INCOME_FEE
+        - AMORTIZED_EXPENSE_FEE
+        - REVERSE_AMORTIZED_EXPENSE_FEE
+        - AMORTIZATION_OF_EXPENSE_FEE
+        - REVERSE_AMORTIZATION_OF_EXPENSE_FEE
+        - PRINCIPAL_PAYMENT
+        - REVERSE_PRINCIPAL_PAYMENT
+        - INTEREST_PAYMENT
+        - REVERSE_INTEREST_PAYMENT
+        - P_PLUS_I_PRINCIPAL_PAYMENT
+        - REVERSE_P_PLUS_I_PRINCIPAL_PAYMENT
+        - P_PLUS_I_INTEREST_PAYMENT
+        - REVERSE_P_PLUS_I_INTEREST_PAYMENT
+        - PRINCIPAL_BALLOON_PAYMENT
+        - REVERSE_PRINCIPAL_BALLOON_PAYMENT
+        - INTEREST_BALLOON_PAYMENT
+        - REVERSE_INTEREST_BALLOON_PAYMENT
+        - DEFERRED_INTEREST_PAYMENT
+        - REVERSE_DEFERRED_INTEREST_PAYMENT
+        - RULE_OF_78S_ACTUARIAL_PAYMENT
+        - REVERSE_RULE_OF_78S_ACTUARIAL_PAYMENT
+        - PRINCIPAL_REDUCTION
+        - REVERSE_PRINCIPAL_REDUCTION
+        - INTEREST_REDUCTION
+        - REVERSE_INTEREST_REDUCTION
+        - FEE_REDUCTION
+        - REVERSE_FEE_REDUCTION
+        - LATE_FEE_REDUCTION
+        - DEFERRED_INTEREST_REDUCTION
+        - REVERSE_DEFERRED_INTEREST_REDUCTION
+        - LATE_FEE_PAYMENT
+        - REVERSE_LATE_FEE_PAYMENT
+        - CREDIT_LINE_ADVANCE_FEE_PAYMENT
+        - REVERSE_CREDIT_LINE_ADVANCE_FEE_PAYMENT
+        - CREDIT_LINE_OVERDRAFT_FEE_PAYMENT
+        - REVERSE_CREDIT_LINE_OVERDRAFT_FEE_PAYMENT
+        - DOWN_PAYMENT
+        - REVERSE_DOWN_PAYMENT
+        - IMPOUND_PAYMENT
+        - REVERSE_IMPOUND_PAYMENT
+        - NSF_FEE_PAYMENT
+        - REVERSE_NSF_FEE_PAYMENT
+        - INTEREST_INCOME
+        - REVERSE_INTEREST_INCOME
+        - DISCOUNT_INCOME
+        - REVERSE_DISCOUNT_INCOME
+        - SHORT_TERM_CAPITAL_GAIN
+        - REVERSE_SHORT_TERM_CAPITAL_GAIN
+        - LONG_TERM_CAPITAL_GAIN
+        - REVERSE_LONG_TERM_CAPITAL_GAIN
+        - INTEREST_FREE_PRINCIPAL_ADJ
+        - REVERSE_INTEREST_FREE_PRINCIPAL_ADJ
+        - INTEREST_FREE_INTEREST_ADJ
+        - REVERSE_INTEREST_FREE_INTEREST_ADJ
+        - CAPITALIZE_OVERPAID_INTEREST
+        - REVERSE_CAPITALIZE_OVERPAID_INTEREST
+        - UNEARNED_ADDON_INTEREST_REDUCTION
+        - REVERSE_UNEARNED_ADDON_INTEREST_REDUCTION
+        - UNEARNED_ADDON_INTEREST_ADDITION
+        - REVERSE_UNEARNED_ADDON_INTEREST_ADDITION
+        - CAPITALIZE_INTEREST
+        - REVERSE_CAPITALIZE_INTEREST
+        - COMPOUND_INTEREST_BALANCE_ADJUSTMENT
+        - REVERSE_COMPOUND_INTEREST_BALANCE_ADJUSTMENT
+        - CAPITALIZE_DEFERRED_INTEREST
+        - REVERSE_CAPITALIZE_DEFERRED_INTEREST
+        - CAPITALIZE_OVERPAID_DEFERRED_INTEREST
+        - REVERSE_CAPITALIZE_OVERPAID_DEFERRED_INTEREST
+        - SERVICING_FEE
+        - REVERSE_SERVICING_FEE
     FacilityTransactionItems:
       title: FacilityTransactionItems
       type: array
@@ -7988,29 +8160,29 @@ components:
         balance:
           type: integer
           description: >-
-            The balance EOD in Pacific Time in cents for the facility. This
-            field matches the facility balance field and handles showing balance
-            based on if the facility is in grace period or not.
+            The balance EOD in Pacific Time in cents for the facility.  This
+            field matches the facility balance field and handles  showing
+            balance based on if the facility is in grace period  or not.
           example: 100000
         payoff_balance:
           type: integer
           description: >-
-            The payoff balance in cents for the facility. During grace period
-            this is the principal balance; out of grace this is the
+            The payoff balance in cents for the facility. During grace  period
+            this is the principal balance; out of grace this is  the
             current/total balance.
           example: 100000
         current_balance:
           type: integer
           description: >-
-            The current balance in cents for the facility. Regardless of grace
+            The current balance in cents for the facility. Regardless of  grace
             period this always includes the entire balance (principal, interest,
             fees).
           example: 100000
         interest_balance:
           type: integer
           description: >-
-            The interest balance in cents for the facility. This is the interest
-            accrued on the facility.
+            The interest balance in cents for the facility. This is the 
+            interest accrued on the facility.
           example: 0
         in_grace_period:
           type: boolean
@@ -8052,12 +8224,12 @@ components:
           $ref: '#/components/schemas/ReconciliationReportCadence'
           description: >-
             The cadence that the report is generated in. For now, "daily"
-            cadence is the only one that exists.
+            cadence is the only  one that exists.
         type:
           $ref: '#/components/schemas/ReconciliationReportType'
           description: >-
             The type of report that is being generated. For now, "balance" is
-            the only type that exists.
+            the only type  that exists.
         report_date:
           $ref: '#/components/schemas/ISODate'
           description: >-
@@ -8123,12 +8295,12 @@ components:
           $ref: '#/components/schemas/ReconciliationReportCadence'
           description: >-
             The cadence that the report is generated in. For now, "daily"
-            cadence is the only one that exists.
+            cadence is the only  one that exists.
         type:
           $ref: '#/components/schemas/ReconciliationReportType'
           description: >-
             The type of report that is being generated. For now, "balance" is
-            the only type that exists.
+            the only type  that exists.
         report_date:
           $ref: '#/components/schemas/ISODate'
           description: >-
