@@ -134,7 +134,6 @@ paths:
                               term_type: daily
                           interest_rate: 0
                           late_payment_fee: 0
-                          origination_fee: 0
                           minimum_payment:
                             type: interest_plus_percentage_of_principal
                             value: 500
@@ -215,7 +214,6 @@ paths:
                             term_type: daily
                         interest_rate: 0
                         late_payment_fee: 0
-                        origination_fee: 0
                         minimum_payment:
                           type: interest_plus_percentage_of_principal
                           value: 500
@@ -286,7 +284,6 @@ paths:
                           term_type: daily
                       interest_rate: 0
                       late_payment_fee: 0
-                      origination_fee: 0
                       minimum_payment:
                         type: interest_plus_percentage_of_principal
                         value: 500
@@ -425,7 +422,6 @@ paths:
                             term_type: daily
                         interest_rate: 0
                         late_payment_fee: 0
-                        origination_fee: 0
                         minimum_payment:
                           type: interest_plus_percentage_of_principal
                           value: 500
@@ -1683,7 +1679,9 @@ paths:
                           term: 90
                           term_type: daily
                       interest_rate: 0
-                      origination_fee: 0
+                      origination_fee:
+                        type: deducted
+                        fee: 0
                       payment_period: monthly
                       late_payment_fee: 0
                       first_payment_date: '2022-12-31'
@@ -1922,7 +1920,9 @@ paths:
                             term: 90
                             term_type: daily
                         interest_rate: 0
-                        origination_fee: 0
+                        origination_fee:
+                          type: deducted
+                          fee: 0
                         payment_period: monthly
                         late_payment_fee: 0
                         first_payment_date: '2022-12-31'
@@ -2522,7 +2522,9 @@ paths:
                           term: 90
                           term_type: daily
                       interest_rate: 0
-                      origination_fee: 0
+                      origination_fee:
+                        type: deducted
+                        fee: 0
                       payment_period: monthly
                       late_payment_fee: 0
                       first_payment_date: '2022-12-31'
@@ -3061,7 +3063,9 @@ paths:
                           term: 90
                           term_type: daily
                       interest_rate: 0
-                      origination_fee: 0
+                      origination_fee:
+                        type: deducted
+                        fee: 0
                       payment_period: monthly
                       late_payment_fee: 0
                       first_payment_date: '2022-12-31'
@@ -3249,7 +3253,6 @@ paths:
                       type: revolving_line_of_credit_offer
                       interest_rate: 200
                       late_payment_fee: 0
-                      origination_fee: 0
                       id: off_2e60b8c4fb7e4a10835e5a7e0641a5d8
                       minimum_payment:
                         type: interest_plus_percentage_of_principal
@@ -3416,7 +3419,9 @@ paths:
                           term: 90
                           term_type: daily
                       interest_rate: 0
-                      origination_fee: 0
+                      origination_fee:
+                        type: deducted
+                        fee: 0
                       payment_period: monthly
                       late_payment_fee: 0
                       first_payment_date: '2022-12-31'
@@ -3651,7 +3656,9 @@ paths:
                           term: 90
                           term_type: daily
                       interest_rate: 0
-                      origination_fee: 0
+                      origination_fee:
+                        type: deducted
+                        fee: 0
                       payment_period: monthly
                       late_payment_fee: 0
                       first_payment_date: '2022-12-31'
@@ -3874,7 +3881,9 @@ paths:
                           term: 90
                           term_type: daily
                       interest_rate: 0
-                      origination_fee: 0
+                      origination_fee:
+                        type: deducted
+                        fee: 0
                       payment_period: monthly
                       late_payment_fee: 0
                       first_payment_date: '2022-12-31'
@@ -4110,7 +4119,9 @@ paths:
                           term: 90
                           term_type: daily
                       interest_rate: 0
-                      origination_fee: 0
+                      origination_fee:
+                        type: deducted
+                        fee: 0
                       payment_period: monthly
                       late_payment_fee: 0
                       first_payment_date: '2022-12-31'
@@ -5692,12 +5703,6 @@ components:
             The minimum payment due each billing cycle. There is also a flat
             minimum payment of \$15, which is used if the calculated minimum
             payment is less than \$15.
-        origination_fee:
-          type: integer
-          nullable: true
-          description: >-
-            The origination fee charged to originate the line in basis points
-            (e.g. '150' for 1.50%)
         payment_period:
           $ref: '#/components/schemas/PaymentPeriod'
           nullable: true
@@ -5741,7 +5746,7 @@ components:
             The interest rate (in basis points) charged on the loan principal
             (e.g. 750 for 7.50%)
         origination_fee:
-          type: integer
+          $ref: '#/components/schemas/OriginationFee'
           nullable: true
           description: >-
             The origination fee charged to originate the loan in basis points
@@ -5799,7 +5804,7 @@ components:
           $ref: '#/components/schemas/Term'
           description: The term of the advance
         origination_fee:
-          type: integer
+          $ref: '#/components/schemas/OriginationFee'
           nullable: true
           description: >-
             The origination fee charged to originate the line in basis points
@@ -5989,6 +5994,27 @@ components:
           type: boolean
           nullable: true
           description: Whether or not there is bankruptcy history
+    OriginationFee:
+      title: OriginationFee
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/OriginationFeeType'
+          description: >-
+            The type of origination fee. Accepted values are deducted and
+            capitalized
+        fee:
+          type: integer
+          description: The origination fee in bps
+      required:
+        - type
+        - fee
+    OriginationFeeType:
+      title: OriginationFeeType
+      type: string
+      enum:
+        - deducted
+        - capitalized
     AuthRequest:
       title: AuthRequest
       type: object
